@@ -1,0 +1,17 @@
+# 一時ファイル・セッションログ・自動生成ログ
+tmp/
+etc/
+logs/
+
+# 先頭 _ は全階層で管理外（顧客資料・鍵・納品物の実体）
+_*
+
+# ビルド出力
+dist/
+
+# ローカル設定。共有するものだけ名指しで許可する
+.claude/*
+!.claude/settings.json
+!.claude/commands/
+!.claude/agents/
+!.claude/skills/
