@@ -1,0 +1,540 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>新Mac mini / Mac Studio 2026 調査</title>
+<style>
+:root {
+	--navy1: #12224d;
+	--navy2: #2f5fbf;
+	--ink: #1c2330;
+	--ink-soft: #4a5568;
+	--line: #d9dfe8;
+	--code-bg: #f4f6fa;
+	--accent: var(--navy1);
+	--accent2: var(--navy2);
+	--soft: #f2f5fb;
+}
+/* 5章構成: 色相は 280 から 0 まで 70 刻み */
+.ch01 { --accent: hsl(280,78%,25%); --accent2: hsl(280,58%,65%); --soft: hsl(280,28%,95%); }
+.ch02 { --accent: hsl(210,78%,25%); --accent2: hsl(210,58%,65%); --soft: hsl(210,28%,95%); }
+.ch03 { --accent: hsl(140,78%,25%); --accent2: hsl(140,58%,65%); --soft: hsl(140,28%,95%); }
+.ch04 { --accent: hsl(70,78%,25%);  --accent2: hsl(70,58%,65%);  --soft: hsl(70,28%,95%); }
+.ch05 { --accent: hsl(0,78%,25%);   --accent2: hsl(0,58%,65%);   --soft: hsl(0,28%,95%); }
+
+* { box-sizing: border-box; }
+body {
+	margin: 0;
+	background: #fff;
+	color: var(--ink);
+	font-size: 15.5px;
+	line-height: 1.85;
+	font-family: "Segoe UI", "Yu Gothic UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+.titlebar {
+	background: linear-gradient(135deg, var(--navy1), var(--navy2));
+	color: #fff;
+	padding: 34px 30px 30px;
+}
+.titlebar .inner { max-width: 1600px; margin: 0 auto; }
+.titlebar h1 { font-size: 2.05em; margin: 0 0 8px; color: #fff; line-height: 1.35; }
+.titlebar p { margin: 4px 0 0; color: #d6e2ff; font-size: 0.95em; }
+.titlebar code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+
+.wrap { max-width: 1600px; margin: 0 auto; padding: 0 30px; }
+.backlink { margin: 20px 0 0; font-size: 0.95em; }
+.backlink a { color: var(--navy2); }
+
+section {
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	padding: 4px 26px 26px;
+	margin: 34px 0;
+}
+section h1 {
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	font-size: 1.5em;
+	padding: 14px 20px;
+	margin: 26px 0 20px;
+	border-radius: 8px;
+	box-shadow: 0 5px 16px rgba(0,0,0,0.18);
+}
+section h1 code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+h2 {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(90deg, var(--soft), #fff);
+	color: var(--accent);
+	font-size: 1.25em;
+	padding: 6px 12px;
+	margin: 30px 0 12px;
+}
+h3 {
+	display: inline-block;
+	border-bottom: 2px dotted var(--accent2);
+	padding-bottom: 3px;
+	margin: 20px 0 8px;
+	font-size: 1.08em;
+	color: var(--ink);
+}
+p { margin: 10px 0; }
+ul, ol { margin: 10px 0; padding-left: 1.6em; }
+li { margin: 4px 0; }
+
+code {
+	background: var(--code-bg);
+	border: 1px solid var(--line);
+	color: #17335f;
+	padding: 1px 5px;
+	border-radius: 4px;
+	font-size: 0.92em;
+}
+pre {
+	border-left: 5px solid var(--accent2);
+	background: var(--code-bg);
+	color: var(--ink);
+	padding: 13px 16px;
+	border-radius: 0 6px 6px 0;
+	overflow-x: auto;
+	font-size: 0.9em;
+	line-height: 1.6;
+}
+pre code { background: none; border: none; padding: 0; color: inherit; }
+
+.tablewrap { overflow-x: auto; margin: 14px 0; }
+table {
+	border-collapse: collapse;
+	width: 100%;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 2px 9px rgba(0,0,0,0.09);
+	font-size: 0.96em;
+}
+th {
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	text-align: left;
+	padding: 9px 12px;
+	font-weight: 700;
+}
+th code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+td {
+	padding: 9px 12px;
+	vertical-align: top;
+	border-bottom: 1px solid var(--line);
+	background: #fff;
+}
+tr:nth-child(even) td { background: #fafbfe; }
+.nowrap { white-space: nowrap; }
+.num { text-align: right; white-space: nowrap; }
+.hi td { box-shadow: inset 4px 0 0 #1d7a3c; }
+
+.badge {
+	display: inline-block;
+	color: #fff;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-size: 0.84em;
+	font-weight: 700;
+	white-space: nowrap;
+}
+.b-ok { background: linear-gradient(100deg,#1d7a3c,#45b56c); }
+.b-ng  { background: linear-gradient(100deg,#a51f22,#e05a5c); }
+.b-none { background: linear-gradient(100deg,#5a6472,#97a1ae); }
+.b-warn { background: linear-gradient(100deg,#b8620a,#f0a548); }
+
+.callout {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border-radius: 0 8px 8px 0;
+	padding: 12px 16px;
+	margin: 16px 0;
+}
+.callout strong { color: var(--accent); }
+
+ol.toc {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	padding: 0;
+	margin: 16px 0 6px;
+	counter-reset: toc;
+}
+ol.toc li { counter-increment: toc; margin: 0; }
+ol.toc a {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+	width: 310px;
+	max-width: 100%;
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	text-decoration: none;
+	padding: 9px 13px;
+	border-radius: 6px;
+	font-size: 0.95em;
+	line-height: 1.45;
+}
+ol.toc a::before { content: counter(toc) ". "; font-weight: 700; }
+
+.shot {
+	max-width: 100%;
+	height: auto;
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	background: #fff;
+}
+.heroshot { max-width: 620px; }
+
+footer {
+	max-width: 1600px;
+	margin: 0 auto;
+	padding: 18px 30px 40px;
+	font-size: 0.95em;
+}
+footer a { color: var(--navy2); }
+</style>
+</head>
+<body>
+
+<div class="titlebar">
+	<div class="inner">
+		<h1>新Mac mini / Mac Studio 2026 調査</h1>
+		<p class="lead">予約受付が始まった M6・M5 Pro・M5 Max・M5 Ultra 搭載機を、Apple 公式ストアの構成別価格で比較</p>
+		<p class="date">📅 作成: 2026-08-26 / 更新: 2026-09-19</p>
+	</div>
+</div>
+
+<div class="wrap">
+	<p class="backlink">&laquo; <a href="../../README.html">README に戻る</a></p>
+
+	<div class="callout callout-important">
+		<p><strong>この資料は 2026-09-05 時点の情報です。</strong>価格・在庫・キャンペーンはその後変わっています。最新の比較は <a href="r260916-01-ローカルLLM機種比較.html">ローカルLLM 機種比較 2026</a> を参照してください。</p>
+	</div>
+
+	<h2>目次</h2>
+	<ol class="toc">
+		<li class="ch01"><a href="#ch01">調査の対象と前回からの変化</a></li>
+		<li class="ch02"><a href="#ch02">Mac mini（M6 / M5 Pro）</a></li>
+		<li class="ch03"><a href="#ch03">Mac Studio（M5 Max / M5 Ultra）</a></li>
+		<li class="ch04"><a href="#ch04">HP ZGX Nano G1n との比較</a></li>
+		<li class="ch05"><a href="#ch05">判断材料</a></li>
+	</ol>
+
+	<section class="ch01" id="ch01">
+		<h1>調査の対象と前回からの変化</h1>
+
+		<p>Apple 公式ストアで <strong>Mac mini と Mac Studio の新モデルが予約受付を開始</strong>していました。価格はすべて、購入画面で実際に構成を選択して取得した金額です（カタログの「〜円から」ではありません）。</p>
+
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>製品</th><th>搭載チップ</th><th>発売</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">Mac mini</td><td class="nowrap">M6 / M5 Pro</td><td class="nowrap">2026年9月22日</td></tr>
+					<tr><td class="nowrap">Mac Studio</td><td class="nowrap">M5 Max / M5 Ultra</td><td class="nowrap">予約受付中</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h2>前回調査の結論が覆りました</h2>
+		<p>本プロジェクトの別レポートで「<strong>Mac Studio は 96GB が上限</strong>」「据置型で 128GB を積めるのは GB10 搭載機だけ」と結論していましたが、新モデルで前提が変わりました。</p>
+
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>項目</th><th>前回調査（M4 Max / M3 Ultra）</th><th>今回（M5 Max / M5 Ultra）</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">Mac Studio 最大メモリ</td><td class="num">96GB</td><td class="num"><strong>256GB</strong>（実際に選択できる範囲）</td></tr>
+					<tr><td class="nowrap">最大メモリ帯域</td><td class="num">819 GB/s（M3 Ultra）</td><td class="num"><strong>1.2 TB/s</strong>（M5 Ultra）</td></tr>
+					<tr><td class="nowrap">128GB構成</td><td>存在しない</td><td><span class="badge b-ok">追加</span> M5 Max で選べる</td></tr>
+					<tr><td class="nowrap">Mac mini 最大メモリ</td><td class="num">48GB（M4 Pro）</td><td class="num">64GB（M5 Pro）</td></tr>
+					<tr><td class="nowrap">96GB / 4TB の価格</td><td class="num">1,169,800 円</td><td class="num">1,219,800 円<br><span style="font-size:0.88em;color:var(--ink-soft)">+50,000円で帯域1.47倍</span></td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="callout callout-important">
+			<p><strong>仕様ページには 512GB の記載がありますが、購入画面では選べません。</strong> 技術仕様には「512GBユニファイドメモリ（36コアCPUと80コアGPU搭載M5 Ultra）」とありますが、予約時点のメモリ選択肢は 96GB と 256GB の2つだけでした。512GB構成は現時点では注文できません。</p>
+		</div>
+	</section>
+
+	<section class="ch02" id="ch02">
+		<h1>Mac mini（M6 / M5 Pro）</h1>
+
+		<p><img class="shot heroshot" src="images/apple_mac_mini_m6.jpg" alt="Apple Mac mini（M6）"></p>
+
+		<p>12.7cm四方の筐体はそのままで、ポートが前面・背面に配置されています。2.5Gb Ethernet、Wi-Fi 7、Bluetooth 6 に対応。<strong>複数台をクラスタリングして、より大規模なローカルAIモデルを実行できる</strong>と Apple 自身が明記しています。</p>
+
+		<h2>チップの仕様</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>項目</th><th>M6</th><th>M5 Pro</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">CPU</td><td class="nowrap">12コア</td><td class="nowrap">最大18コア</td></tr>
+					<tr><td class="nowrap">GPU</td><td class="nowrap">12コア</td><td class="nowrap">最大20コア</td></tr>
+					<tr><td class="nowrap">Neural Engine</td><td class="nowrap">デュアル16コア</td><td class="nowrap">16コア</td></tr>
+					<tr><td class="nowrap">メモリ帯域</td><td class="num">最大 170 GB/s</td><td class="num"><strong>307 GB/s</strong></td></tr>
+					<tr><td class="nowrap">選べるメモリ</td><td class="nowrap">16 / 24 / 32GB</td><td class="nowrap">24 / 48 / <strong>64GB</strong></td></tr>
+					<tr><td class="nowrap">ストレージ</td><td class="nowrap">256GB〜2TB</td><td class="nowrap">512GB〜8TB</td></tr>
+					<tr><td class="nowrap">Thunderbolt</td><td class="nowrap">4（×3）</td><td class="nowrap">5（×3・最大120Gb/s）</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h2>構成別価格</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>構成</th><th>メモリ</th><th>帯域</th><th>ストレージ</th><th>価格</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">M6 12コアCPU/12コアGPU</td><td class="num">16GB</td><td class="num">170 GB/s</td><td class="nowrap">256GB</td><td class="num">149,800 円</td></tr>
+					<tr><td class="nowrap">M6 12コアCPU/12コアGPU</td><td class="num">32GB</td><td class="num">170 GB/s</td><td class="nowrap">1TB</td><td class="num">311,800 円</td></tr>
+					<tr><td class="nowrap">M6 12コアCPU/12コアGPU</td><td class="num">32GB</td><td class="num">170 GB/s</td><td class="nowrap">2TB</td><td class="num">401,800 円</td></tr>
+					<tr><td class="nowrap">M5 Pro 15コアCPU/16コアGPU</td><td class="num">24GB</td><td class="num">307 GB/s</td><td class="nowrap">512GB</td><td class="num">299,800 円</td></tr>
+					<tr><td class="nowrap">M5 Pro 15コアCPU/16コアGPU</td><td class="num">64GB</td><td class="num">307 GB/s</td><td class="nowrap">1TB</td><td class="num">533,800 円</td></tr>
+					<tr><td class="nowrap">M5 Pro 18コアCPU/20コアGPU</td><td class="num">64GB</td><td class="num">307 GB/s</td><td class="nowrap">1TB</td><td class="num">569,800 円</td></tr>
+					<tr class="hi"><td class="nowrap">M5 Pro 18コアCPU/20コアGPU</td><td class="num">64GB</td><td class="num">307 GB/s</td><td class="nowrap">4TB</td><td class="num"><strong>839,800 円</strong></td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h2>公開されているLLM性能の指標</h2>
+		<p>Apple は LM Studio での「最初のトークン生成までの時間」を比較指標として公開しています。いずれも M1 搭載 Mac mini を基準とした倍率です。</p>
+
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>搭載チップ</th><th>M1比の倍率</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">M5 Pro</td><td class="num"><strong>22.3倍</strong></td></tr>
+					<tr><td class="nowrap">M6</td><td class="num">13.5倍</td></tr>
+					<tr><td class="nowrap">M4 Pro</td><td class="num">5.6倍</td></tr>
+					<tr><td class="nowrap">M4</td><td class="num">2.8倍</td></tr>
+					<tr><td class="nowrap">M2 Pro</td><td class="num">2.6倍</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="callout callout-important">
+			<p><strong>これはプロンプト処理（最初のトークンまでの時間）の指標で、トークン生成速度そのものではありません。</strong> 生成速度はメモリ帯域に律速されるため、M6 の 170GB/s と M5 Pro の 307GB/s の差がそのまま効きます。M6 が M4 Pro より上の倍率を示していても、帯域では M5 Pro が 1.8倍あります。</p>
+		</div>
+	</section>
+
+	<section class="ch03" id="ch03">
+		<h1>Mac Studio（M5 Max / M5 Ultra）</h1>
+
+		<p><img class="shot heroshot" src="images/apple_mac_studio_m5.jpg" alt="Apple Mac Studio（M5 Max / M5 Ultra）"></p>
+
+		<p>筐体サイズは 19.7 × 19.7 × 9.5cm で従来と同じです。Thunderbolt 5 ×4、10Gb Ethernet、Wi-Fi 7、Bluetooth 6、Apple N1 ワイヤレスチップを搭載。最大消費電力は 480W です。</p>
+
+		<h2>チップの仕様</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>項目</th><th>M5 Max</th><th>M5 Ultra</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">CPU</td><td class="nowrap">18コア<br>（6スーパーコア + 12高性能コア）</td><td class="nowrap">30〜36コア<br>（10スーパーコア + 20高性能コア）</td></tr>
+					<tr><td class="nowrap">GPU</td><td class="nowrap">32 または 40コア</td><td class="nowrap">64 または 80コア</td></tr>
+					<tr><td class="nowrap">Neural Engine</td><td class="nowrap">16コア</td><td class="nowrap">32コア</td></tr>
+					<tr><td class="nowrap">メモリ帯域</td><td class="num">460 GB/s（32コアGPU）<br><strong>614 GB/s</strong>（40コアGPU）</td><td class="num"><strong>1.2 TB/s</strong></td></tr>
+					<tr><td class="nowrap">選べるメモリ</td><td class="nowrap">36GB（32コアGPU）<br>48 / 64 / <strong>128GB</strong>（40コアGPU）</td><td class="nowrap">96GB（64コアGPU）<br><strong>256GB</strong>（80コアGPU）</td></tr>
+					<tr><td class="nowrap">ストレージ</td><td class="nowrap">512GB〜8TB</td><td class="nowrap">1TB〜16TB</td></tr>
+					<tr><td class="nowrap">重量</td><td class="num">2.7 kg</td><td class="num">3.6 kg</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p>メモリ容量は前世代と同様に <strong>CPU/GPUコア構成に固定</strong>されています。128GB を選ぶには 40コアGPU の M5 Max、256GB を選ぶには 80コアGPU の M5 Ultra が必要です。</p>
+
+		<h2>構成別価格</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>構成</th><th>メモリ</th><th>帯域</th><th>ストレージ</th><th>価格</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">M5 Max 18コアCPU/32コアGPU</td><td class="num">36GB</td><td class="num">460 GB/s</td><td class="nowrap">512GB</td><td class="num">419,800 円</td></tr>
+					<tr><td class="nowrap">M5 Max 18コアCPU/40コアGPU</td><td class="num">128GB</td><td class="num">614 GB/s</td><td class="nowrap">1TB</td><td class="num">941,800 円</td></tr>
+					<tr class="hi"><td class="nowrap">M5 Max 18コアCPU/40コアGPU</td><td class="num">128GB</td><td class="num">614 GB/s</td><td class="nowrap">4TB</td><td class="num"><strong>1,211,800 円</strong></td></tr>
+					<tr><td class="nowrap">M5 Ultra 30コアCPU/64コアGPU</td><td class="num">96GB</td><td class="num">1.2 TB/s</td><td class="nowrap">1TB</td><td class="num">949,800 円</td></tr>
+					<tr><td class="nowrap">M5 Ultra 30コアCPU/64コアGPU</td><td class="num">96GB</td><td class="num">1.2 TB/s</td><td class="nowrap">4TB</td><td class="num">1,219,800 円</td></tr>
+					<tr><td class="nowrap">M5 Ultra 36コアCPU/80コアGPU</td><td class="num">256GB</td><td class="num">1.2 TB/s</td><td class="nowrap">1TB</td><td class="num">1,903,800 円</td></tr>
+					<tr><td class="nowrap">M5 Ultra 36コアCPU/80コアGPU</td><td class="num">256GB</td><td class="num">1.2 TB/s</td><td class="nowrap">4TB</td><td class="num">2,173,800 円</td></tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+	<section class="ch04" id="ch04">
+		<h1>HP ZGX Nano G1n との比較</h1>
+
+		<p>本プロジェクトの別レポートで比較した <strong>HP ZGX Nano G1n（GB10 / 128GB / 4TB / キャンペーン価格 税込 998,800円 / 帯域 273GB/s）</strong>を基準に、新Macを並べます。</p>
+
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>比較条件</th><th>機種</th><th>メモリ / 帯域</th><th>価格</th><th>HPとの差</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">基準</td><td class="nowrap">HP ZGX Nano G1n</td><td class="nowrap">128GB / 273 GB/s</td><td class="num">998,800 円</td><td class="num">—</td></tr>
+					<tr class="hi">
+						<td class="nowrap"><strong>同容量128GB</strong></td>
+						<td class="nowrap">Mac Studio M5 Max</td>
+						<td class="nowrap">128GB / <strong>614 GB/s</strong></td>
+						<td class="num">1,211,800 円</td>
+						<td class="num">+213,000 円<br><span style="font-size:0.88em;color:var(--ink-soft)">帯域2.25倍</span></td>
+					</tr>
+					<tr>
+						<td class="nowrap">帯域最優先</td>
+						<td class="nowrap">Mac Studio M5 Ultra</td>
+						<td class="nowrap">96GB / <strong>1.2 TB/s</strong></td>
+						<td class="num">1,219,800 円</td>
+						<td class="num">+221,000 円<br><span style="font-size:0.88em;color:var(--ink-soft)">帯域4.4倍・容量は−32GB</span></td>
+					</tr>
+					<tr>
+						<td class="nowrap">容量最優先</td>
+						<td class="nowrap">Mac Studio M5 Ultra</td>
+						<td class="nowrap"><strong>256GB</strong> / 1.2 TB/s</td>
+						<td class="num">2,173,800 円</td>
+						<td class="num">+1,175,000 円<br><span style="font-size:0.88em;color:var(--ink-soft)">容量2倍・帯域4.4倍</span></td>
+					</tr>
+					<tr class="hi">
+						<td class="nowrap"><strong>価格優先</strong></td>
+						<td class="nowrap">Mac mini M5 Pro</td>
+						<td class="nowrap">64GB / 307 GB/s</td>
+						<td class="num"><strong>839,800 円</strong></td>
+						<td class="num"><strong>−159,000 円</strong><br><span style="font-size:0.88em;color:var(--ink-soft)">容量は半分・帯域1.12倍</span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p>いずれもストレージ 4TB で揃えた比較です。同容量128GBでは Mac 側が21万円高くなり、その差が帯域 2.25倍の対価にあたります。</p>
+
+		<div class="callout callout-tip">
+			<p><strong>Mac mini M5 Pro の 64GB 構成は、GB10 搭載機より 16万円安くなります。</strong> 容量は半分の 64GB ですが帯域は 307GB/s で GB10 を上回ります。扱うモデルが 64GB に収まるなら、価格と速度の両方で優位に立つ構成です。</p>
+		</div>
+	</section>
+
+	<section class="ch05" id="ch05">
+		<h1>判断材料</h1>
+
+		<h2>実測を基準にした速度の見当</h2>
+
+		<p>前世代の <strong>M4 Max・128GB で 200B 級 MoE（3bit・約 90GB）が 9〜10 tok/s</strong> という実測が公開されています（J-Tech Japan・2026-08-28）。デコード速度は帯域に律速されるため、この実測を基準に新モデルの見当が付きます。</p>
+
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>機種</th><th>メモリ帯域</th><th>M4 Max 比</th><th>90GB モデルでの速度</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">MacBook Pro M4 Max 128GB（前世代）</td><td class="num">546 GB/s</td><td class="num">基準</td><td class="num"><strong>9〜10 tok/s</strong>（実測）</td></tr>
+					<tr><td class="nowrap">Mac mini M6</td><td class="num">170 GB/s</td><td class="num">0.31倍</td><td class="nowrap">— 32GB上限で載らない</td></tr>
+					<tr><td class="nowrap">Mac mini M5 Pro</td><td class="num">307 GB/s</td><td class="num">0.56倍</td><td class="nowrap">— 64GB上限で載らない</td></tr>
+					<tr><td class="nowrap">Mac Studio M5 Max 128GB</td><td class="num">614 GB/s</td><td class="num">1.12倍</td><td class="num">約 10〜11 tok/s（推定）</td></tr>
+					<tr><td class="nowrap">Mac Studio M5 Ultra 96GB</td><td class="num">1.2 TB/s</td><td class="num">2.20倍</td><td class="nowrap">約 20 tok/s 相当だが余裕がない</td></tr>
+					<tr><td class="nowrap">Mac Studio M5 Ultra 256GB</td><td class="num">1.2 TB/s</td><td class="num">2.20倍</td><td class="num">約 20 tok/s（推定）</td></tr>
+					<tr><td class="nowrap">HP ZGX Nano G1n（GB10）</td><td class="num">273 GB/s</td><td class="num">0.50倍</td><td class="num">約 4.5〜5 tok/s（推定）</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="callout callout-important">
+			<p><strong>Mac mini は帯域ではなく容量で外れます。</strong> M5 Pro の 307 GB/s は GB10 を上回りますが、64GB 上限のため 90GB のモデルが載りません。M5 Ultra の 96GB 構成も、KV キャッシュ（64k で 2.3 GiB）を足すと余裕がほとんど残らないため、この規模を狙うなら 128GB 以上が実質的な条件になります。</p>
+		</div>
+
+		<h2>扱うモデルサイズから逆算する</h2>
+		<p>4bit量子化でのモデルサイズを基準に、必要なメモリ容量から候補を絞ります。KVキャッシュの余裕として数GBを別に見てください。</p>
+
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>動かしたいモデル</th><th>必要メモリの目安</th><th>推奨構成</th><th>価格</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">7〜14B</td><td class="num">5〜9 GB</td><td class="nowrap">Mac mini M6 / 16GB</td><td class="num">149,800 円</td></tr>
+					<tr><td class="nowrap">32B</td><td class="num">約 19 GB</td><td class="nowrap">Mac mini M6 / 32GB</td><td class="num">311,800 円</td></tr>
+					<tr><td class="nowrap">70B</td><td class="num">約 40 GB</td><td class="nowrap">Mac mini M5 Pro / 64GB</td><td class="num">569,800 円〜</td></tr>
+					<tr><td class="nowrap">120B級</td><td class="num">約 70 GB</td><td class="nowrap">Mac Studio M5 Max / 128GB</td><td class="num">941,800 円〜</td></tr>
+					<tr><td class="nowrap">200B超</td><td class="num">120 GB 以上</td><td class="nowrap">Mac Studio M5 Ultra / 256GB<br>または HP ZGX Nano G1n</td><td class="num">1,903,800 円〜<br>（HPは 998,800 円）</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h2>Mac と GB10 搭載機の使い分け</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>観点</th><th>新Mac が有利</th><th>HP ZGX Nano G1n が有利</th></tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="nowrap">メモリ帯域</td>
+						<td><span class="badge b-ok">307GB/s〜1.2TB/s</span> 全構成で GB10 の 273GB/s を上回る</td>
+						<td>—</td>
+					</tr>
+					<tr>
+						<td class="nowrap">最大容量</td>
+						<td><span class="badge b-ok">256GB</span> GB10 の2倍。ただし217万円</td>
+						<td>128GB を <strong>99.9万円</strong>で。容量あたりの単価は最安</td>
+					</tr>
+					<tr>
+						<td class="nowrap">エコシステム</td>
+						<td>macOS + Metal / MLX。汎用PCとして日常利用も兼ねられる</td>
+						<td><span class="badge b-ok">CUDA</span> DGX OS 7。既存のCUDA資産がそのまま動く</td>
+					</tr>
+					<tr>
+						<td class="nowrap">クラスタ構成</td>
+						<td>複数台のクラスタリングに対応（exo・LM Studio Bionic）</td>
+						<td><span class="badge b-ok">ConnectX-7 200GbE</span> で2台直結</td>
+					</tr>
+					<tr>
+						<td class="nowrap">消費電力</td>
+						<td>Mac mini は小型・低消費。Mac Studio は最大480W</td>
+						<td><span class="badge b-ok">240W</span> TypeCアダプター（89%変換効率）</td>
+					</tr>
+					<tr>
+						<td class="nowrap">価格</td>
+						<td>64GB 構成なら GB10 より16万円安い。128GB 以上では GB10 が下回る</td>
+						<td>128GB という容量では最も安い</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="callout callout-important">
+			<p><strong>新Macの登場で「容量はGB10、帯域はMac」という前回の整理が崩れました。</strong> M5 Ultra は容量でも帯域でも GB10 を上回り、代わりに価格差が100万円以上に開きます。逆に Mac mini M5 Pro は容量が半分でも価格と帯域で優位です。容量・帯域・価格の3軸が絡むため、動かすモデルのサイズを先に決めないと選べません。</p>
+		</div>
+
+		<h2>参照元</h2>
+		<ul>
+			<li>Apple 公式（<code>apple.com/jp/mac-mini/</code>・<code>apple.com/jp/mac-studio/specs/</code>）— チップ仕様・メモリ帯域・構成上限・LM Studio 性能指標</li>
+			<li>Apple 公式ストア（<code>apple.com/jp/shop/buy-mac/</code>）— 通常価格。構成を実際に選択して取得</li>
+			<li>取得日: 2026-08-26 / Mac mini 発売日: 2026-09-22</li>
+		</ul>
+
+		<p>関連レポート: <a href="gb10-ai-workstation-comparison.html">GB10搭載AIワークステーション 価格比較調査</a>、<a href="env-pc-spec.html">実行環境PC スペック調査</a>、<a href="hp-summersale-llm-pc.html">HP BIGサマーセール第2弾 LLM用途評価</a></p>
+	</section>
+</div>
+
+<footer>
+	<p>&laquo; <a href="../../README.html">README に戻る</a></p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,501 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>実行環境PC スペック調査</title>
+<style>
+:root {
+	--navy1: #12224d;
+	--navy2: #2f5fbf;
+	--ink: #1c2330;
+	--ink-soft: #4a5568;
+	--line: #d9dfe8;
+	--code-bg: #f4f6fa;
+	--accent: var(--navy1);
+	--accent2: var(--navy2);
+	--soft: #f2f5fb;
+}
+/* 6章構成: 色相は 280 から 0 まで 56 刻み */
+.ch01 { --accent: hsl(280,78%,25%); --accent2: hsl(280,58%,65%); --soft: hsl(280,28%,95%); }
+.ch02 { --accent: hsl(224,78%,25%); --accent2: hsl(224,58%,65%); --soft: hsl(224,28%,95%); }
+.ch03 { --accent: hsl(168,78%,25%); --accent2: hsl(168,58%,65%); --soft: hsl(168,28%,95%); }
+.ch04 { --accent: hsl(112,78%,25%); --accent2: hsl(112,58%,65%); --soft: hsl(112,28%,95%); }
+.ch05 { --accent: hsl(56,78%,25%);  --accent2: hsl(56,58%,65%);  --soft: hsl(56,28%,95%); }
+.ch06 { --accent: hsl(0,78%,25%);   --accent2: hsl(0,58%,65%);   --soft: hsl(0,28%,95%); }
+
+* { box-sizing: border-box; }
+body {
+	margin: 0;
+	background: #fff;
+	color: var(--ink);
+	font-size: 15.5px;
+	line-height: 1.85;
+	font-family: "Segoe UI", "Yu Gothic UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+.titlebar {
+	background: linear-gradient(135deg, var(--navy1), var(--navy2));
+	color: #fff;
+	padding: 34px 30px 30px;
+}
+.titlebar .inner { max-width: 1600px; margin: 0 auto; }
+.titlebar h1 { font-size: 2.05em; margin: 0 0 8px; color: #fff; line-height: 1.35; }
+.titlebar p { margin: 4px 0 0; color: #d6e2ff; font-size: 0.95em; }
+.titlebar code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+
+.wrap { max-width: 1600px; margin: 0 auto; padding: 0 30px; }
+.backlink { margin: 20px 0 0; font-size: 0.95em; }
+.backlink a { color: var(--navy2); }
+
+section {
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	padding: 4px 26px 26px;
+	margin: 34px 0;
+}
+section h1 {
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	font-size: 1.5em;
+	padding: 14px 20px;
+	margin: 26px 0 20px;
+	border-radius: 8px;
+	box-shadow: 0 5px 16px rgba(0,0,0,0.18);
+}
+section h1 code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+h2 {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(90deg, var(--soft), #fff);
+	color: var(--accent);
+	font-size: 1.25em;
+	padding: 6px 12px;
+	margin: 30px 0 12px;
+}
+h3 {
+	display: inline-block;
+	border-bottom: 2px dotted var(--accent2);
+	padding-bottom: 3px;
+	margin: 20px 0 8px;
+	font-size: 1.08em;
+	color: var(--ink);
+}
+p { margin: 10px 0; }
+ul, ol { margin: 10px 0; padding-left: 1.6em; }
+li { margin: 4px 0; }
+
+code {
+	background: var(--code-bg);
+	border: 1px solid var(--line);
+	color: #17335f;
+	padding: 1px 5px;
+	border-radius: 4px;
+	font-size: 0.92em;
+}
+pre {
+	border-left: 5px solid var(--accent2);
+	background: var(--code-bg);
+	color: var(--ink);
+	padding: 13px 16px;
+	border-radius: 0 6px 6px 0;
+	overflow-x: auto;
+	font-size: 0.9em;
+	line-height: 1.6;
+}
+pre code { background: none; border: none; padding: 0; color: inherit; }
+
+.tablewrap { overflow-x: auto; margin: 14px 0; }
+table {
+	border-collapse: collapse;
+	width: 100%;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 2px 9px rgba(0,0,0,0.09);
+	font-size: 0.96em;
+}
+th {
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	text-align: left;
+	padding: 9px 12px;
+	font-weight: 700;
+}
+th code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+td {
+	padding: 9px 12px;
+	vertical-align: top;
+	border-bottom: 1px solid var(--line);
+	background: #fff;
+}
+tr:nth-child(even) td { background: #fafbfe; }
+.nowrap { white-space: nowrap; }
+.num { text-align: right; white-space: nowrap; }
+
+.badge {
+	display: inline-block;
+	color: #fff;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-size: 0.84em;
+	font-weight: 700;
+	white-space: nowrap;
+}
+.b-ok { background: linear-gradient(100deg,#1d7a3c,#45b56c); }
+.b-ng  { background: linear-gradient(100deg,#a51f22,#e05a5c); }
+.b-none { background: linear-gradient(100deg,#5a6472,#97a1ae); }
+.b-warn { background: linear-gradient(100deg,#b8620a,#f0a548); }
+
+.callout {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border-radius: 0 8px 8px 0;
+	padding: 12px 16px;
+	margin: 16px 0;
+}
+.callout strong { color: var(--accent); }
+
+ol.toc {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	padding: 0;
+	margin: 16px 0 6px;
+	counter-reset: toc;
+}
+ol.toc li { counter-increment: toc; margin: 0; }
+ol.toc a {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+	width: 310px;
+	max-width: 100%;
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	text-decoration: none;
+	padding: 9px 13px;
+	border-radius: 6px;
+	font-size: 0.95em;
+	line-height: 1.45;
+}
+ol.toc a::before { content: counter(toc) ". "; font-weight: 700; }
+
+.shot {
+	max-width: 100%;
+	height: auto;
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	background: #fff;
+}
+.photocell { width: 220px; }
+.photocell img { max-width: 200px; }
+
+footer {
+	max-width: 1600px;
+	margin: 0 auto;
+	padding: 18px 30px 40px;
+	font-size: 0.95em;
+}
+footer a { color: var(--navy2); }
+</style>
+</head>
+<body>
+
+<div class="titlebar">
+	<div class="inner">
+		<h1>実行環境PC スペック調査</h1>
+		<p class="lead">Claude Code が動作しているホストマシンのハードウェア構成と、ローカルAI用途での実力評価</p>
+		<p class="date">📅 作成: 2026-08-24 / 更新: 2026-09-19</p>
+	</div>
+</div>
+
+<div class="wrap">
+	<p class="backlink">&laquo; <a href="../../README.html">README に戻る</a></p>
+
+	<div class="callout callout-important">
+		<p><strong>この資料は 2026-09-05 時点の情報です。</strong>価格・在庫・キャンペーンはその後変わっています。最新の比較は <a href="r260916-01-ローカルLLM機種比較.html">ローカルLLM 機種比較 2026</a> を参照してください。</p>
+	</div>
+
+	<h2>目次</h2>
+	<ol class="toc">
+		<li class="ch01"><a href="#ch01">調査対象と調査方法</a></li>
+		<li class="ch02"><a href="#ch02">システム構成の全体像</a></li>
+		<li class="ch03"><a href="#ch03">CPU: Core i7-11370H</a></li>
+		<li class="ch04"><a href="#ch04">GPU: RTX 3050 Ti Laptop / Iris Xe</a></li>
+		<li class="ch05"><a href="#ch05">メモリ・ストレージ・周辺</a></li>
+		<li class="ch06"><a href="#ch06">AI用途で見たときの評価</a></li>
+	</ol>
+
+	<section class="ch01" id="ch01">
+		<h1>調査対象と調査方法</h1>
+
+		<p>本レポートは、Claude Code のセッションが動作しているホストマシンそのものを調査したものです。カタログ値ではなく、実機から取得した値を記載しています。</p>
+
+		<h2>調査手段</h2>
+		<p>すべて PowerShell から実行しました。ベンチマークは実施しておらず、構成情報の取得のみです。</p>
+		<pre><code class="language-powershell">Get-CimInstance Win32_ComputerSystem   # メーカー・モデル・搭載メモリ総量
+Get-CimInstance Win32_Processor        # CPU
+Get-CimInstance Win32_VideoController  # GPU
+Get-CimInstance Win32_PhysicalMemory   # メモリモジュール個別
+Get-CimInstance Win32_DiskDrive        # 物理ディスク
+Get-Volume                             # ボリューム使用量
+nvidia-smi                             # VRAM・compute capability
+Get-NetAdapter                         # ネットワーク</code></pre>
+
+		<h2>記載方針</h2>
+		<p>ホスト名・マシン名・ユーザー名・シリアル番号は本レポートに記載しません。製品モデル名までを記載対象としています。</p>
+
+		<div class="callout">
+			<p><strong>調査日時点の状態です。</strong> ストレージ空き容量やバッテリー残量のように時間で変わる値は、2026-08-24 時点のスナップショットとして読んでください。</p>
+		</div>
+	</section>
+
+	<section class="ch02" id="ch02">
+		<h1>システム構成の全体像</h1>
+
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>項目</th><th>値</th><th>補足</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">メーカー</td><td class="nowrap">HP</td><td>—</td></tr>
+					<tr><td class="nowrap">モデル</td><td class="nowrap">HP Pavilion Gaming Laptop 15-dk2xxx</td><td>個人向けゲーミングノート。SKU <code>46L17PA#ABJ</code>（日本向け）</td></tr>
+					<tr><td class="nowrap">製品ファミリ</td><td class="nowrap">103C_5335KV HP Pavilion</td><td>—</td></tr>
+					<tr><td class="nowrap">マザーボード</td><td class="nowrap">HP 88E5 (rev 76.41)</td><td>ノート専用基板</td></tr>
+					<tr><td class="nowrap">BIOS</td><td class="nowrap">Insyde F.21</td><td>リリース 2022-10-24。以降更新されていない</td></tr>
+					<tr><td class="nowrap">OS</td><td class="nowrap">Windows 11 Home</td><td>Version 10.0.26200 / Build 26200</td></tr>
+					<tr><td class="nowrap">アーキテクチャ</td><td class="nowrap">64 ビット</td><td>x64-based PC</td></tr>
+					<tr><td class="nowrap">OSインストール日</td><td class="nowrap">2024-11-22</td><td>—</td></tr>
+					<tr><td class="nowrap">物理メモリ総量</td><td class="num">16,913,522,688 バイト</td><td>約 15.75 GiB（16 GB 構成）</td></tr>
+					<tr><td class="nowrap">論理プロセッサ数</td><td class="num">8</td><td>物理4コア + Hyper-Threading</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h2>仮想化の状態</h2>
+		<p>ここは値の読み方に注意が必要です。<code>Win32_Processor</code> の <code>VirtualizationFirmwareEnabled</code> は <code>False</code> を返しますが、これは仮想化支援が無効という意味ではありません。</p>
+
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>プロパティ</th><th>値</th><th>解釈</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap"><code>VirtualizationFirmwareEnabled</code></td><td class="nowrap">False</td><td>Hyper-V が既に起動している環境では、この値は <code>False</code> として報告される</td></tr>
+					<tr><td class="nowrap"><code>HypervisorPresent</code></td><td class="nowrap">True</td><td><span class="badge b-ok">稼働中</span> ハイパーバイザーが動作している</td></tr>
+					<tr><td class="nowrap">仮想ネットワークアダプタ</td><td class="nowrap">vEthernet (WSL)</td><td>Hyper-V Virtual Ethernet Adapter が 10 Gbps でリンクアップ済み</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p>つまり <strong>WSL2 が実際に動作しており、仮想化支援は有効に機能しています</strong>。<code>VirtualizationFirmwareEnabled: False</code> だけを見て「BIOS で仮想化が無効」と判断すると誤ります。</p>
+	</section>
+
+	<section class="ch03" id="ch03">
+		<h1>CPU: Core i7-11370H</h1>
+
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>項目</th><th>値</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">製品名</td><td>11th Gen Intel Core i7-11370H @ 3.30GHz</td></tr>
+					<tr><td class="nowrap">識別</td><td><code>Intel64 Family 6 Model 140 Stepping 1</code>（Tiger Lake-H35 世代）</td></tr>
+					<tr><td class="nowrap">物理コア数</td><td class="num">4</td></tr>
+					<tr><td class="nowrap">論理プロセッサ数</td><td class="num">8</td></tr>
+					<tr><td class="nowrap">基準クロック</td><td class="num">3,302 MHz</td></tr>
+					<tr><td class="nowrap">L2 キャッシュ</td><td class="num">5,120 KB</td></tr>
+					<tr><td class="nowrap">L3 キャッシュ</td><td class="num">12,288 KB</td></tr>
+					<tr><td class="nowrap">ソケット</td><td class="nowrap">U3E1（BGA・交換不可）</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p>4コア8スレッドの薄型ノート向け H35 シリーズです。ビルドやテスト実行のような並列処理では、同世代でも6〜8コアのモデルと比べて頭打ちになりやすい構成です。</p>
+
+		<div class="callout callout-important">
+			<p><strong>BGA実装のため CPU の交換はできません。</strong> このマシンで性能を伸ばす余地はメモリとストレージに限られます。</p>
+		</div>
+	</section>
+
+	<section class="ch04" id="ch04">
+		<h1>GPU: RTX 3050 Ti Laptop / Iris Xe</h1>
+
+		<p>GPU は2基搭載のハイブリッド構成です。省電力時は内蔵GPU、負荷時にディスクリートGPUへ切り替わります。</p>
+
+		<h2>NVIDIA GeForce RTX 3050 Ti Laptop GPU（ディスクリート）</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>項目</th><th>値</th><th>備考</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">VRAM</td><td class="num">4,096 MiB</td><td><span class="badge b-warn">4 GB</span> ローカルLLMではここが最大の制約になる</td></tr>
+					<tr><td class="nowrap">Compute Capability</td><td class="num">8.6</td><td>Ampere 世代。CUDA・Tensor Core 利用可</td></tr>
+					<tr><td class="nowrap">ドライバ（nvidia-smi）</td><td class="nowrap">592.82</td><td>取得日 2026-08-24</td></tr>
+					<tr><td class="nowrap">ドライバ（WMI表記）</td><td class="nowrap">32.0.15.9282</td><td>2026-06-03</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h2>Intel Iris Xe Graphics（内蔵）</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>項目</th><th>値</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">共有メモリ</td><td class="num">約 2,048 MB</td></tr>
+					<tr><td class="nowrap">ドライバ</td><td class="nowrap">32.0.101.7088（2026-06-17）</td></tr>
+					<tr><td class="nowrap">表示解像度</td><td class="nowrap">1920 × 1080</td></tr>
+					<tr><td class="nowrap">リフレッシュレート</td><td class="num">143 Hz</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p>内蔵ディスプレイは 1920×1080 の 144 Hz クラスのパネルで、実測 143 Hz で駆動しています。画面出力は Iris Xe 側が担当しており、RTX 3050 Ti には解像度・リフレッシュレートが報告されていません（典型的な Optimus 構成）。</p>
+	</section>
+
+	<section class="ch05" id="ch05">
+		<h1>メモリ・ストレージ・周辺</h1>
+
+		<h2>メモリ</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>スロット</th><th>容量</th><th>速度</th><th>製造元</th><th>型番</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">Bottom - Slot 1 (left)</td><td class="num">8 GB</td><td class="num">3,200 MT/s</td><td class="nowrap">SK Hynix</td><td class="nowrap"><code>HMA81GS6DJR8N-XN</code></td></tr>
+					<tr><td class="nowrap">Bottom - Slot 2 (right)</td><td class="num">8 GB</td><td class="num">3,200 MT/s</td><td class="nowrap">SK Hynix</td><td class="nowrap"><code>HMA81GS6DJR8N-XN</code></td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p>DDR4-3200 の 8 GB モジュール2枚でデュアルチャネル動作しています。設定クロックも 3,200 MT/s で、定格通りです。</p>
+
+		<div class="callout callout-important">
+			<p><strong>2スロットとも埋まっています。</strong> 増設ではなく交換が必要で、32 GB にするには両方入れ替えることになります。デュアルチャネル DDR4-3200 の理論帯域は <strong>約 51.2 GB/s</strong>（3,200 MT/s × 8 バイト × 2ch）です。この数字は後の章で AI ワークステーションと比較します。</p>
+		</div>
+
+		<h2>ストレージ</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>項目</th><th>値</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">モデル</td><td class="nowrap">KIOXIA KXG60ZNV1T02（NVMe）</td></tr>
+					<tr><td class="nowrap">容量</td><td class="num">1,024,203,640,320 バイト（約 1 TB）</td></tr>
+					<tr><td class="nowrap">パーティション数</td><td class="num">3</td></tr>
+					<tr><td class="nowrap">C: 総容量</td><td class="num">952.6 GB</td></tr>
+					<tr><td class="nowrap">C: 空き容量</td><td class="num">400.7 GB</td></tr>
+					<tr><td class="nowrap">ファイルシステム</td><td class="nowrap">NTFS</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p>KIOXIA KXG60 は PCIe 3.0 x4 世代の NVMe SSD です。空き 400 GB は確保されており、大きめのモデルファイルを置く余地はあります。</p>
+
+		<h2>ネットワークと電源</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>項目</th><th>値</th><th>状態</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">Wi-Fi</td><td class="nowrap">Intel Wi-Fi 6 AX201 160MHz</td><td>リンク速度 866.7 Mbps <span class="badge b-ok">接続中</span></td></tr>
+					<tr><td class="nowrap">仮想アダプタ</td><td class="nowrap">Hyper-V Virtual Ethernet (WSL)</td><td>10 Gbps <span class="badge b-ok">稼働中</span></td></tr>
+					<tr><td class="nowrap">有線LAN</td><td class="nowrap">—</td><td><span class="badge b-none">未接続</span></td></tr>
+					<tr><td class="nowrap">バッテリー</td><td class="nowrap">設計電圧 12,784 mV</td><td>残量 100%</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p>調査時点ではネットワーク接続は Wi-Fi 6 のみで、有線 LAN は接続されていません。</p>
+	</section>
+
+	<section class="ch06" id="ch06">
+		<h1>AI用途で見たときの評価</h1>
+
+		<p>このマシンで大規模言語モデルをローカル実行する場合、決定的な制約は <strong>VRAM 4 GB</strong> です。同じ 2026 年に選択肢となる AI 専用ワークステーション（本調査の別レポートで比較した HP ZGX Nano G1n）と並べると、差が一目で分かります。</p>
+
+		<h2>環境PC と AI専用機の比較</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>項目</th><th>この環境PC</th><th>HP ZGX Nano G1n（AI専用機）</th><th>差</th></tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="nowrap">外観</td>
+						<td class="photocell"><img class="shot" src="images/env_hp_pavilion_gaming_15dk2.png" alt="HP Pavilion Gaming Laptop 15-dk2 本体"></td>
+						<td class="photocell"><img class="shot" src="images/hp_zgx_nano_g1n.jpg" alt="HP ZGX Nano G1n AI Station 本体"></td>
+						<td>ノート型 / 手のひらサイズ据置型</td>
+					</tr>
+					<tr><td class="nowrap">形態</td><td>15インチ ノートPC</td><td>デスクトップ（150×150×51 mm）</td><td>—</td></tr>
+					<tr><td class="nowrap">CPU</td><td>Intel Core i7-11370H<br>4コア8スレッド</td><td>NVIDIA GB10 Grace Blackwell<br>Arm 20コア（X925×10 + A725×10）</td><td>コア数 <strong>5倍</strong></td></tr>
+					<tr><td class="nowrap">AIに使えるメモリ</td><td class="num">4 GB（VRAM）</td><td class="num">128 GB（統合メモリ）</td><td><span class="badge b-ng">32倍差</span></td></tr>
+					<tr><td class="nowrap">メモリ帯域</td><td class="num">約 51.2 GB/s<br>（DDR4-3200 2ch）</td><td class="num">273 GB/s<br>（LPDDR5x 256bit）</td><td><strong>約 5.3倍</strong></td></tr>
+					<tr><td class="nowrap">システムメモリ</td><td class="num">16 GB（交換で最大32GB）</td><td class="num">128 GB（オンボード・増設不可）</td><td>—</td></tr>
+					<tr><td class="nowrap">ストレージ</td><td>KIOXIA 1 TB NVMe（PCIe 3.0）</td><td>4 TB NVMe SED（PCIe 4.0 x4）</td><td>容量 4倍</td></tr>
+					<tr><td class="nowrap">GPU世代</td><td>Ampere（compute 8.6）</td><td>Blackwell</td><td>2世代差</td></tr>
+					<tr><td class="nowrap">OS</td><td>Windows 11 Home</td><td>NVIDIA DGX OS 7（Ubuntuベース）</td><td>—</td></tr>
+					<tr><td class="nowrap">価格</td><td>ゲーミングノート（実売10万円台）</td><td class="num">998,800 円<br><span style="font-size:0.88em;color:var(--ink-soft)">税込・キャンペーン価格<br>定価 2,125,200 円</span></td><td>—</td></tr>
+					<tr><td class="nowrap">ネットワーク</td><td>Wi-Fi 6 AX201（866.7 Mbps）</td><td>ConnectX-7 <strong>200GbE</strong> ＋ 10GbE ＋ Wi-Fi 7</td><td>—</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p>比較対象の HP ZGX Nano G1n の価格・仕様は、日本HP のキャンペーンページと公式スペック表に基づきます。詳細は <a href="gb10-ai-workstation-comparison.html">GB10搭載AIワークステーション 価格比較調査</a> を参照してください。</p>
+
+		<h2>実際に何ができるか</h2>
+
+		<h3>できること</h3>
+		<ul>
+			<li>7B クラスのモデルを 4bit 量子化して動かす（VRAM 4 GB にぎりぎり収まる範囲）</li>
+			<li>CPU + システムメモリへのオフロードを併用した推論（速度は大きく落ちる）</li>
+			<li>WSL2 上での CUDA 開発・動作確認。compute capability 8.6 なので Ampere 向けカーネルはそのまま動く</li>
+			<li>コード生成・編集の実務作業（本セッションのような用途）</li>
+		</ul>
+
+		<h3>厳しいこと</h3>
+		<ul>
+			<li><span class="badge b-ng">不可</span> 70B クラス以上のモデルを GPU に載せる（4 GB では量子化しても入らない）</li>
+			<li><span class="badge b-ng">不可</span> 200B パラメータ級モデルのファインチューニング（GB10 機の売り文句にあたる領域）</li>
+			<li><span class="badge b-warn">要注意</span> 長いコンテキストでの推論。KVキャッシュが VRAM を急速に食い潰す</li>
+			<li><span class="badge b-warn">要注意</span> 学習用途全般。4 GB ではバッチサイズを極端に絞る必要がある</li>
+		</ul>
+
+		<div class="callout callout-important">
+			<p><strong>ボトルネックは VRAM の一点に集約されます。</strong> CPU が 4 コアであることや DDR4 世代であることよりも、GPU メモリ 4 GB という上限が扱えるモデルサイズを直接決めています。AI 用途を本格化させる場合、このマシンのメモリ増設やストレージ交換では解決せず、統合メモリを大量に持つ別の機材が必要になります。</p>
+		</div>
+
+		<h2>調査結果のまとめ</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>観点</th><th>評価</th><th>理由</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">開発機としての実用性</td><td><span class="badge b-ok">十分</span></td><td>4C8T・16 GB・空き 400 GB。コード作業と WSL2 利用に問題なし</td></tr>
+					<tr><td class="nowrap">小規模ローカルLLM</td><td><span class="badge b-warn">限定的</span></td><td>7B 級 4bit 量子化が上限</td></tr>
+					<tr><td class="nowrap">中〜大規模モデル</td><td><span class="badge b-ng">不可</span></td><td>VRAM 4 GB が絶対的な壁</td></tr>
+					<tr><td class="nowrap">アップグレード余地</td><td><span class="badge b-warn">小</span></td><td>CPU は BGA、メモリは全スロット占有済み。交換のみ</td></tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+</div>
+
+<footer>
+	<p>&laquo; <a href="../../README.html">README に戻る</a></p>
+</footer>
+
+</body>
+</html>

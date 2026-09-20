@@ -1,0 +1,378 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI PC 調査プロジェクト</title>
+<style>
+:root {
+	--navy1: #12224d;
+	--navy2: #2f5fbf;
+	--ink: #1c2330;
+	--ink-soft: #4a5568;
+	--line: #d9dfe8;
+	--code-bg: #f4f6fa;
+	--accent: var(--navy1);
+	--accent2: var(--navy2);
+	--soft: #f2f5fb;
+}
+/* 3章構成: 色相は 280 / 140 / 0 */
+.ch01 { --accent: hsl(280,78%,25%); --accent2: hsl(280,58%,65%); --soft: hsl(280,28%,95%); }
+.ch02 { --accent: hsl(140,78%,25%); --accent2: hsl(140,58%,65%); --soft: hsl(140,28%,95%); }
+.ch03 { --accent: hsl(0,78%,25%);   --accent2: hsl(0,58%,65%);   --soft: hsl(0,28%,95%); }
+
+* { box-sizing: border-box; }
+body {
+	margin: 0;
+	background: #fff;
+	color: var(--ink);
+	font-size: 15.5px;
+	line-height: 1.85;
+	font-family: "Segoe UI", "Yu Gothic UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+.titlebar {
+	background: linear-gradient(135deg, var(--navy1), var(--navy2));
+	color: #fff;
+	padding: 34px 30px 30px;
+}
+.titlebar .inner { max-width: 1600px; margin: 0 auto; }
+.titlebar h1 { font-size: 2.05em; margin: 0 0 8px; color: #fff; line-height: 1.35; }
+.titlebar p { margin: 4px 0 0; color: #d6e2ff; font-size: 0.95em; }
+.titlebar code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+
+.wrap { max-width: 1600px; margin: 0 auto; padding: 0 30px 40px; }
+
+section {
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	padding: 4px 26px 26px;
+	margin: 34px 0;
+}
+section h1 {
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	font-size: 1.5em;
+	padding: 14px 20px;
+	margin: 26px 0 20px;
+	border-radius: 8px;
+	box-shadow: 0 5px 16px rgba(0,0,0,0.18);
+}
+section h1 code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+h2 {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(90deg, var(--soft), #fff);
+	color: var(--accent);
+	font-size: 1.25em;
+	padding: 6px 12px;
+	margin: 30px 0 12px;
+}
+h3 {
+	display: inline-block;
+	border-bottom: 2px dotted var(--accent2);
+	padding-bottom: 3px;
+	margin: 20px 0 8px;
+	font-size: 1.08em;
+	color: var(--ink);
+}
+p { margin: 10px 0; }
+ul { margin: 10px 0; padding-left: 1.6em; }
+li { margin: 4px 0; }
+
+code {
+	background: var(--code-bg);
+	border: 1px solid var(--line);
+	color: #17335f;
+	padding: 1px 5px;
+	border-radius: 4px;
+	font-size: 0.92em;
+}
+pre {
+	border-left: 5px solid var(--accent2);
+	background: var(--code-bg);
+	color: var(--ink);
+	padding: 13px 16px;
+	border-radius: 0 6px 6px 0;
+	overflow-x: auto;
+	font-size: 0.9em;
+	line-height: 1.6;
+}
+pre code { background: none; border: none; padding: 0; color: inherit; }
+
+.tablewrap { overflow-x: auto; margin: 14px 0; }
+table {
+	border-collapse: collapse;
+	width: 100%;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 2px 9px rgba(0,0,0,0.09);
+	font-size: 0.96em;
+}
+th {
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	text-align: left;
+	padding: 9px 12px;
+	font-weight: 700;
+}
+th code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+td {
+	padding: 9px 12px;
+	vertical-align: top;
+	border-bottom: 1px solid var(--line);
+	background: #fff;
+}
+tr:nth-child(even) td { background: #fafbfe; }
+.nowrap { white-space: nowrap; }
+.num { text-align: right; white-space: nowrap; }
+
+.badge {
+	display: inline-block;
+	color: #fff;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-size: 0.84em;
+	font-weight: 700;
+	white-space: nowrap;
+}
+.b-ok { background: linear-gradient(100deg,#1d7a3c,#45b56c); }
+.b-ng  { background: linear-gradient(100deg,#a51f22,#e05a5c); }
+.b-none { background: linear-gradient(100deg,#5a6472,#97a1ae); }
+.b-warn { background: linear-gradient(100deg,#b8620a,#f0a548); }
+
+.callout {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border-radius: 0 8px 8px 0;
+	padding: 12px 16px;
+	margin: 16px 0;
+}
+.callout strong { color: var(--accent); }
+
+ol.toc {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	padding: 0;
+	margin: 16px 0 6px;
+	counter-reset: toc;
+}
+ol.toc li { counter-increment: toc; margin: 0; }
+ol.toc a {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+	width: 310px;
+	max-width: 100%;
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	text-decoration: none;
+	padding: 9px 13px;
+	border-radius: 6px;
+	font-size: 0.95em;
+	line-height: 1.45;
+}
+ol.toc a::before { content: counter(toc) ". "; font-weight: 700; }
+
+.doclink {
+	display: block;
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	text-decoration: none;
+	padding: 12px 18px;
+	border-radius: 8px;
+	font-weight: 700;
+	font-size: 1.05em;
+	box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+	margin: 10px 0 4px;
+}
+.docdate {
+	margin: 0 0 8px;
+	font-size: 0.9em;
+	color: var(--ink-soft, #4a5568);
+	background: none;
+}
+.shot {
+	max-width: 100%;
+	height: auto;
+	border: 1px solid var(--line);
+	border-radius: 6px;
+	background: #fff;
+}
+.photocell { width: 180px; }
+.photocell img { max-width: 165px; }
+</style>
+</head>
+<body>
+
+<div class="titlebar">
+	<div class="inner">
+		<h1>AI PC 調査プロジェクト</h1>
+		<p class="lead">実行環境PCの実力測定と、少し規模の大きいローカルLLMが動作するPCの国内価格比較</p>
+		<p class="date">📅 作成: 2026-08-24 / 更新: 2026-09-20</p>
+	</div>
+</div>
+
+<div class="wrap">
+
+	<h2>目次</h2>
+	<ol class="toc">
+		<li class="ch01"><a href="#ch01">このプロジェクトについて</a></li>
+		<li class="ch02"><a href="#ch02">調査ドキュメント</a></li>
+		<li class="ch03"><a href="#ch03">調査結果の要点</a></li>
+	</ol>
+
+	<section class="ch01" id="ch01">
+		<h1>このプロジェクトについて</h1>
+
+		<p>ローカルでAIモデルを動かすためのマシン選定を目的とした調査プロジェクトです。2つの問いを扱っています。</p>
+
+		<ul>
+			<li><strong>いま使っているPCで何ができるのか</strong> — 実行環境の実測スペックと、ローカルLLM用途での限界</li>
+			<li><strong>買うとしたら何がいくらなのか</strong> — 少し規模の大きいローカルLLMが動作するPCの国内価格比較</li>
+		</ul>
+
+		<h2>調査に使った手段</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>対象</th><th>手段</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">環境PC のスペック</td><td>PowerShell（<code>Get-CimInstance</code>・<code>nvidia-smi</code>・<code>Get-NetAdapter</code>）</td></tr>
+					<tr><td class="nowrap">各社の価格・仕様</td><td>WebFetch → claude-in-chrome → PlayWright（共有環境）の順に切り替え</td></tr>
+					<tr><td class="nowrap">製品画像の取得</td><td>PlayWright ヘッドレスChromium。公式・正規流通ドメインに限定して9件取得</td></tr>
+					<tr><td class="nowrap">HP の価格・確定仕様</td><td>日本HP のキャンペーンページと公式スペック表（jp.ext.hp.com）</td></tr>
+					<tr><td class="nowrap">Apple Mac の構成・価格</td><td>Apple公式ストアで PlayWright により実際に構成を選択して取得（2026-08-25）</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="callout callout-important">
+			<p><strong>価格調査は途中で手段を変えています。</strong> 当初は個人ブログの比較表に依拠していましたが、一次情報で検証したところ8件中3件が誤りでした。誤りはいずれも<strong>構成の違う機種を同じ製品名で並べていた</strong>ことに起因します。</p>
+		</div>
+
+		<h2>このリポジトリの決めごと</h2>
+		<a class="doclink" href="notes/90_rules/local-rule.html">📄 ローカルルール</a>
+		<p class="docdate">📅 作成: 2026-09-05 / 更新: 2026-09-05</p>
+		<p>このリポジトリは公開しているため、<strong>金額の扱いに決めごとがあります</strong>。個別に受領した見積の金額と学割価格は載せず、メーカーが掲載している価格・定価・公式ストアの構成価格だけを使っています。比較表の基準価格と差額も、すべて公開情報から組み立てています。</p>
+	</section>
+
+	<section class="ch02" id="ch02">
+		<h1>調査ドキュメント</h1>
+
+		<h2>ローカルLLM 機種比較 2026</h2>
+		<a class="doclink" href="notes/01_research/r260916-01-ローカルLLM機種比較.html">📄 ローカルLLM 機種比較 2026</a>
+		<p class="docdate">📅 作成: 2026-09-16 / 更新: 2026-09-20</p>
+		<p><strong>いま購入できる構成だけ</strong>を対象に、統合メモリ <strong>64GB / 128GB / 256GB</strong> × ストレージ <strong>2TB / 4TB / 8TB</strong> で全機種を並べた統合版。GB10 搭載機 7 機種と Apple 4 機種を OS・在庫つきで比較し、Qwen・Gemma・GLM・Kimi がどこまで動くかを判定しています。手元の環境PCとの距離、統合メモリを持たない選択肢、これから出る機種も収録しました。</p>
+
+		<h2>統合メモリ別 ローカルLLM 実機比較 2026</h2>
+		<a class="doclink" href="notes/01_research/r260902-01-統合メモリ別LLM実機比較.html">📄 統合メモリ別 ローカルLLM 実機比較 2026</a>
+		<p class="docdate">📅 作成: 2026-09-02 / 更新: 2026-09-19</p>
+		<p>HP ZGX Nano G1n・Mac mini・Mac Studio を統合メモリ <strong>64GB / 128GB / 256GB</strong> × ストレージ <strong>2TB / 4TB / 最大</strong>で並べて比較。Qwen・Gemma・GLM・Kimi の量子化サイズを実測値で並べ、<strong>各容量で動く総パラメータとモデルサイズの上限</strong>を判定しています。ストレージ段を変えると 128GB の最安機種が入れ替わることも示しました。</p>
+
+		<h2>新Mac mini / Mac Studio 2026 調査</h2>
+		<a class="doclink" href="notes/01_research/apple-new-mac-2026.html">📄 新Mac mini / Mac Studio 2026 調査</a>
+		<p class="docdate">📅 作成: 2026-08-26 / 更新: 2026-09-19</p>
+		<p>予約受付が始まった M6・M5 Pro・M5 Max・M5 Ultra 搭載機の構成別価格を、<strong>Apple 公式ストアの構成別価格</strong>で収録。メモリ最大256GB・帯域1.2TB/s への更新により、前回の「Mac Studio は96GB上限」という結論が覆っています。</p>
+
+		<h2>HP BIGサマーセール第2弾 LLM用途評価</h2>
+		<a class="doclink" href="notes/01_research/hp-summersale-llm-pc.html">📄 HP BIGサマーセール第2弾 LLM用途評価</a>
+		<p class="docdate">📅 作成: 2026-08-26 / 更新: 2026-09-19</p>
+		<p>セール掲載55構成（ノートPC 28・ゲーミングPC 27）を <strong>VRAM容量基準</strong>で評価。ノートPCページに該当機がない理由、VRAM別の全構成一覧、デスクトップのVRAM上限が16GBという逆転構造、動かせるモデル規模の目安を収録しています。</p>
+
+		<h2>GB10搭載AIワークステーション 価格比較調査</h2>
+		<a class="doclink" href="notes/01_research/gb10-ai-workstation-comparison.html">📄 GB10搭載AIワークステーション 価格比較調査</a>
+		<p class="docdate">📅 作成: 2026-08-24 / 更新: 2026-09-19</p>
+		<p>NVIDIA GB10 Grace Blackwell を搭載した8機種を、ストレージ4TBの同一構成に揃えて価格比較。製品画像付きの比較表、二次情報の誤りを一次情報で訂正した記録、および <strong>公式スペック表でしか分からない確定仕様</strong>（ConnectX-7 が 200GbE、電源が 240W TypeC など）を収録しています。</p>
+
+		<h2>実行環境PC スペック調査</h2>
+		<a class="doclink" href="notes/01_research/env-pc-spec.html">📄 実行環境PC スペック調査</a>
+		<p class="docdate">📅 作成: 2026-08-24 / 更新: 2026-09-19</p>
+		<p>Claude Code が動作しているホストマシン（HP Pavilion Gaming Laptop 15-dk2xxx）の実測スペックと、AI用途での評価。CPU・GPU・メモリ・ストレージ・ネットワークの構成情報と、AI専用機との定量比較を収録しています。</p>
+	</section>
+
+	<section class="ch03" id="ch03">
+		<h1>調査結果の要点</h1>
+
+		<h2>環境PC の限界は VRAM 4 GB</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>比較軸</th><th>環境PC</th><th>HP ZGX Nano G1n</th><th>差</th></tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="nowrap">外観</td>
+						<td class="photocell"><img class="shot" src="notes/01_research/images/env_hp_pavilion_gaming_15dk2.png" alt="HP Pavilion Gaming Laptop 15-dk2"></td>
+						<td class="photocell"><img class="shot" src="notes/01_research/images/hp_zgx_nano_g1n.jpg" alt="HP ZGX Nano G1n"></td>
+						<td>—</td>
+					</tr>
+					<tr><td class="nowrap">AIに使えるメモリ</td><td class="num">4 GB（VRAM）</td><td class="num">128 GB（統合）</td><td><span class="badge b-ng">32倍差</span></td></tr>
+					<tr><td class="nowrap">メモリ帯域</td><td class="num">約 51.2 GB/s</td><td class="num">273 GB/s</td><td>約 5.3倍</td></tr>
+					<tr><td class="nowrap">CPUコア数</td><td class="num">4コア8スレッド</td><td class="num">Arm 20コア</td><td>5倍</td></tr>
+					<tr><td class="nowrap">扱えるモデル規模</td><td>7B級 4bit量子化が上限</td><td>最大 2,000億パラメータ</td><td>—</td></tr>
+					<tr><td class="nowrap">価格</td><td>ゲーミングノート（実売10万円台）</td><td class="num">998,800 円（税込・キャンペーン価格）</td><td>—</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p>開発機としては十分に実用的ですが、中〜大規模モデルのローカル実行は VRAM 4 GB が絶対的な壁になります。CPU は BGA 実装、メモリは2スロットとも占有済みで、アップグレードでこの壁は越えられません。</p>
+
+		<h2>GB10機は性能が全機種同一、差は保証と価格だけ</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>順位</th><th>製品</th><th>価格（税込・4TB構成）</th><th>保証</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="num">1</td><td class="nowrap"><strong>HP ZGX Nano G1n</strong></td><td class="num"><strong>998,800 円</strong><br><span style="font-size:0.88em;color:var(--ink-soft)">キャンペーン価格<br>定価 2,125,200 円</span></td><td>1年センドバック</td></tr>
+					<tr><td class="num">2</td><td class="nowrap">NVIDIA DGX Spark</td><td class="num">1,078,000 円〜</td><td>販売店依存</td></tr>
+					<tr><td class="num">3</td><td class="nowrap">Lenovo ThinkStation PGX</td><td class="num">1,092,300 円</td><td>1年</td></tr>
+					<tr><td class="num">4</td><td class="nowrap">MSI EdgeXpert</td><td class="num">1,110,659 円</td><td><span class="badge b-warn">第三者出品</span></td></tr>
+					<tr><td class="num">5</td><td class="nowrap">GIGABYTE AI TOP ATOM</td><td class="num">1,230,000 円〜</td><td>販売店依存</td></tr>
+					<tr><td class="num">6</td><td class="nowrap">Dell Pro Max with GB10</td><td class="num">1,278,847 円</td><td><span class="badge b-ok">オンサイト可</span></td></tr>
+					<tr><td class="num">7</td><td class="nowrap">Lenovo ThinkStation PGX</td><td class="num">1,399,970 円</td><td><span class="badge b-ok">3年プレミア</span></td></tr>
+					<tr><td class="num">8</td><td class="nowrap">Acer Veriton GN100</td><td class="num">1,799,820 円</td><td>公式直販</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p>8機種すべてが NVIDIA のリファレンス設計で、SoC・メモリ128GB・帯域273GB/s・本体サイズまで一致します。最安と最高値の差 80万円は、すべて保証内容と流通経路の差です。</p>
+
+		<h2>Apple Mac は「容量か帯域か」の選択になる</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>機種</th><th>メモリ</th><th>メモリ帯域</th><th>ストレージ</th><th>価格（税込）</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap"><strong>HP ZGX Nano G1n</strong></td><td class="num">128GB</td><td class="num">273 GB/s</td><td class="nowrap">4TB</td><td class="num">998,800 円</td></tr>
+					<tr><td class="nowrap">Mac Studio M4 Max</td><td class="num">64GB</td><td class="num">546 GB/s</td><td class="nowrap">4TB</td><td class="num">923,800 円</td></tr>
+					<tr><td class="nowrap">Mac Studio M3 Ultra</td><td class="num">96GB</td><td class="num">819 GB/s</td><td class="nowrap">4TB</td><td class="num">1,169,800 円</td></tr>
+					<tr><td class="nowrap">MacBook Pro 16" M5 Max</td><td class="num">128GB</td><td class="num">614 GB/s</td><td class="nowrap">4TB</td><td class="num">1,389,800 円</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p>Mac はメモリをCPU/GPU構成ごとに固定で選ぶ方式で、<strong>据置型の Mac Studio は 96GB が上限</strong>です。128GB を積めるのはノート型の MacBook Pro M5 Max だけでした。一方でメモリ帯域は Mac が 2.0〜3.0倍あり、LLM の推論速度に効きます。</p>
+
+		<div class="callout callout-important">
+			<p><strong>モデルが 96GB に収まるかどうかが分岐点です。</strong> 収まるなら帯域3倍の Mac Studio M3 Ultra が推論では有利になり、超えるなら据置型では GB10 搭載機しか選べません。加えて CUDA 資産がある場合は macOS への移植コストが上乗せされます。</p>
+		</div>
+
+		<p>いずれも Web 掲載価格での比較です。法人向けの構成では個別見積で下がる余地があるため、実際の調達額はこの表より低くなり得ます。</p>
+
+		<div class="callout callout-warning">
+			<p><strong>HP の順位はキャンペーンが続いていることが前提です。</strong> 500台限定で、予定数に達すると終了します。終了後は定価 2,125,200 円に戻り、最安は純正 DGX Spark（1,078,000円〜）か Lenovo 4TB（1,092,300円）へ移ります。</p>
+		</div>
+	</section>
+
+</div>
+
+</body>
+</html>

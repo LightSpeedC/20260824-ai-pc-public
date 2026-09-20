@@ -1,0 +1,993 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ローカルLLM 機種比較 2026</title>
+<style>
+:root {
+	--navy1: #12224d;
+	--navy2: #2f5fbf;
+	--ink: #1c2330;
+	--ink-soft: #4a5568;
+	--line: #d9dfe8;
+	--code-bg: #f4f6fa;
+	--link: #1a4fa0;
+	--accent: var(--navy1);
+	--accent2: var(--navy2);
+	--soft: #f2f5fb;
+}
+/* 12章構成: 色相は 280 から 0 まで 25.45 刻み */
+.ch01 { --accent: hsl(280,78%,25%);   --accent2: hsl(280,58%,55%);   --soft: hsl(280,28%,95%); }
+.ch02 { --accent: hsl(254.5,78%,25%); --accent2: hsl(254.5,58%,55%); --soft: hsl(254.5,28%,95%); }
+.ch03 { --accent: hsl(229.1,78%,25%); --accent2: hsl(229.1,58%,55%); --soft: hsl(229.1,28%,95%); }
+.ch04 { --accent: hsl(203.6,78%,25%); --accent2: hsl(203.6,58%,55%); --soft: hsl(203.6,28%,95%); }
+.ch05 { --accent: hsl(178.2,78%,25%); --accent2: hsl(178.2,58%,55%); --soft: hsl(178.2,28%,95%); }
+.ch06 { --accent: hsl(152.7,78%,25%); --accent2: hsl(152.7,58%,55%); --soft: hsl(152.7,28%,95%); }
+.ch07 { --accent: hsl(127.3,78%,25%); --accent2: hsl(127.3,58%,55%); --soft: hsl(127.3,28%,95%); }
+.ch08 { --accent: hsl(101.8,78%,25%); --accent2: hsl(101.8,58%,55%); --soft: hsl(101.8,28%,95%); }
+.ch09 { --accent: hsl(76.4,78%,25%);  --accent2: hsl(76.4,58%,55%);  --soft: hsl(76.4,28%,95%); }
+.ch10 { --accent: hsl(50.9,78%,25%);  --accent2: hsl(50.9,58%,55%);  --soft: hsl(50.9,28%,95%); }
+.ch11 { --accent: hsl(25.5,78%,25%);  --accent2: hsl(25.5,58%,55%);  --soft: hsl(25.5,28%,95%); }
+.ch12 { --accent: hsl(0,78%,25%);     --accent2: hsl(0,58%,55%);     --soft: hsl(0,28%,95%); }
+
+* { box-sizing: border-box; }
+
+body {
+	margin: 0;
+	font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", Meiryo, sans-serif;
+	font-size: 15.5px;
+	line-height: 1.85;
+	color: var(--ink);
+	background: #fff;
+}
+
+.titlebar {
+	background: linear-gradient(135deg, var(--navy1), var(--navy2));
+	color: #fff;
+	padding: 34px 30px 30px;
+}
+.titlebar .inner { max-width: 1600px; margin: 0 auto; }
+.titlebar h1 { font-size: 2.05em; margin: 0 0 8px; color: #fff; line-height: 1.35; }
+.titlebar .lead { margin: 4px 0 0; color: #d6e2ff; font-size: 0.95em; }
+.titlebar .date { margin: 8px 0 0; color: #c8d8ff; font-size: 0.9em; }
+.titlebar code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+
+.wrap { max-width: 1600px; margin: 0 auto; padding: 0 30px; }
+.backlink { margin: 20px 0 0; font-size: 0.95em; }
+.backlink a { color: var(--navy2); background: none; }
+
+section {
+	background: linear-gradient(180deg, var(--soft), #fff);
+	padding: 4px 26px 26px;
+	margin: 34px 0;
+	border: 1px solid var(--line);
+	border-radius: 10px;
+}
+
+section h1 {
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	padding: 14px 20px;
+	margin: 26px 0 20px;
+	border-radius: 8px;
+	font-size: 1.5em;
+	box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+section h1 code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+
+h2 {
+	background: linear-gradient(90deg, var(--soft), #fff);
+	color: var(--accent);
+	border-left: 6px solid var(--accent);
+	padding: 6px 12px;
+	margin: 30px 0 12px;
+	font-size: 1.22em;
+}
+
+h3 {
+	color: var(--accent);
+	background: none;
+	border-bottom: 2px dotted var(--accent2);
+	display: inline-block;
+	padding-bottom: 3px;
+	margin: 20px 0 8px;
+	font-size: 1.06em;
+}
+
+a { color: var(--link); background: none; }
+
+code {
+	background: var(--code-bg);
+	border: 1px solid var(--line);
+	color: #17335f;
+	border-radius: 4px;
+	padding: 1px 5px;
+	font-size: 0.92em;
+}
+
+pre {
+	background: var(--code-bg);
+	border: 1px solid var(--line);
+	border-left: 5px solid var(--accent2);
+	border-radius: 6px;
+	padding: 13px 16px;
+	overflow-x: auto;
+	color: var(--ink);
+	font-size: 0.92em;
+	line-height: 1.6;
+}
+pre code { background: none; border: none; padding: 0; color: inherit; }
+
+.tablewrap { overflow-x: auto; margin: 14px 0; }
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+	background: #fff;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+	font-size: 0.96em;
+}
+th {
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	padding: 9px 12px;
+	text-align: left;
+	white-space: nowrap;
+}
+td {
+	padding: 9px 12px;
+	border-top: 1px solid var(--line);
+	background: #fff;
+	color: var(--ink);
+	vertical-align: top;
+}
+tr:nth-child(even) td { background: #fafbfe; }
+td.num { text-align: right; white-space: nowrap; }
+td.nowrap { white-space: nowrap; }
+.hi td { box-shadow: inset 4px 0 0 #1d7a3c; }
+
+.badge {
+	display: inline-block;
+	padding: 1px 9px;
+	border-radius: 999px;
+	color: #fff;
+	font-size: 0.86em;
+	font-weight: 700;
+	white-space: nowrap;
+	margin-right: 4px;
+}
+.b-ok { background: linear-gradient(100deg, #1d7a3c, #45b56c); }
+.b-ng { background: linear-gradient(100deg, #a51f22, #e05a5c); }
+.b-warn { background: linear-gradient(100deg, #b8620a, #f0a548); }
+.b-none { background: linear-gradient(100deg, #5a6472, #97a1ae); }
+
+.callout {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border-radius: 0 8px 8px 0;
+	padding: 12px 18px;
+	margin: 16px 0;
+	color: var(--ink);
+}
+.callout strong { color: var(--accent); background: none; }
+
+ol.toc {
+	list-style: none;
+	counter-reset: toc;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	padding: 0;
+	margin: 22px 0 8px;
+}
+ol.toc li { counter-increment: toc; margin: 0; }
+ol.toc a {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+	width: 310px;
+	max-width: 100%;
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	text-decoration: none;
+	padding: 9px 14px;
+	border-radius: 8px;
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.45;
+}
+ol.toc a::before { content: counter(toc) ". "; font-weight: 700; }
+
+.shot {
+	max-width: 100%;
+	height: auto;
+	border: 1px solid var(--line);
+	border-radius: 6px;
+	background: #fff;
+}
+.photocell { width: 170px; }
+.photocell img { max-width: 155px; }
+
+.srclist { margin: 10px 0; padding-left: 1.6em; }
+.srclist li { margin: 6px 0; }
+
+footer {
+	max-width: 1600px;
+	margin: 0 auto;
+	padding: 18px 30px 30px;
+	font-size: 0.95em;
+	color: var(--ink-soft);
+	background: none;
+}
+footer a { color: var(--navy2); background: none; }
+</style>
+</head>
+<body>
+
+<div class="titlebar">
+	<div class="inner">
+		<h1>ローカルLLM 機種比較 2026</h1>
+		<p class="lead">いま購入できる構成だけを対象に、統合メモリ 64GB・128GB・256GB × ストレージ 2TB・4TB・8TB で並べ、どのモデルがどこまで動くかを判定する</p>
+		<p class="date">📅 作成: 2026-09-16 / 更新: 2026-09-20</p>
+	</div>
+</div>
+
+<div class="wrap">
+	<p class="backlink">&laquo; <a href="../../README.html">README に戻る</a></p>
+
+	<ol class="toc">
+		<li class="ch01"><a href="#ch01">調査の条件と対象</a></li>
+		<li class="ch02"><a href="#ch02">機種一覧とOS</a></li>
+		<li class="ch03"><a href="#ch03">価格</a></li>
+		<li class="ch04"><a href="#ch04">メモリ帯域と生成速度</a></li>
+		<li class="ch05"><a href="#ch05">対象モデルの量子化サイズ</a></li>
+		<li class="ch06"><a href="#ch06">容量別に動くモデルの判定</a></li>
+		<li class="ch07"><a href="#ch07">MoEとQATが効く理由</a></li>
+		<li class="ch08"><a href="#ch08">手元の環境PCとの距離</a></li>
+		<li class="ch09"><a href="#ch09">統合メモリを持たない選択肢</a></li>
+		<li class="ch10"><a href="#ch10">これから出る機種</a></li>
+		<li class="ch11"><a href="#ch11">結論</a></li>
+		<li class="ch12"><a href="#ch12">参照元</a></li>
+	</ol>
+
+	<section class="ch01" id="ch01">
+		<h1>調査の条件と対象</h1>
+
+		<p>ローカルで大規模言語モデルを動かすためのマシンを選ぶ、という目的で機種を並べます。<strong>載せるのは、その時点で実際に注文できたものだけ</strong>です。カタログに存在しても購入画面で選べない構成は、比較の対象になりません。</p>
+
+		<h2>対象を絞った条件</h2>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>条件</th><th>内容</th><th>絞った理由</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">統合メモリ</td><td>64GB / 128GB / 256GB</td><td>この3段で動かせるモデルの階層が変わる</td></tr>
+				<tr><td class="nowrap">ストレージ</td><td>2TB / 4TB / 8TB</td><td>量子化モデルは1本で数十〜数百GBあり、必要量で価格が変わる</td></tr>
+				<tr><td class="nowrap">形態</td><td>据置型とノート型の両方</td><td>128GB はノート型でも積めるため、可搬性も選択肢に入る</td></tr>
+				<tr><td class="nowrap">LLM</td><td>Qwen / Gemma / GLM / Kimi</td><td>いずれも重みが公開され、GGUF が配布されている</td></tr>
+				<tr><td class="nowrap">価格</td><td>メーカー直販・正規販売店・通販の掲載価格</td><td>在庫があって注文できるものに限る</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>載せなかったもの</h2>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>対象</th><th>理由</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">統合メモリ 512GB</td><td><span class="badge b-ng">選べない</span> Mac Studio の仕様ページには記載があるが、購入画面のメモリ選択肢は 96GB と 256GB の2つだけ。注文する導線が無い</td></tr>
+				<tr><td class="nowrap">Lenovo ThinkStation PGX<br>（正規流通分）</td><td><span class="badge b-ng">在庫なし</span> 国内の正規販売店はいずれも在庫切れで、次回入荷が未定。通販の第三者出品のみ購入可</td></tr>
+				<tr><td class="nowrap">終了したセールの価格</td><td><span class="badge b-ng">期限切れ</span> 期間が過ぎたセールの金額は、いま払える額ではない</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout callout-important">
+			<p><strong>価格と在庫は取得した時点のものです。</strong>本レポートの価格はすべて 2026-09-20 に確認しました。キャンペーンは入れ替わり、在庫は日々動きます。実際に購入するときは、各ページで必ず最新の状態を確認してください。<strong>とくに GB10 搭載機は、4日前の調査から最安機種の順位が入れ替わっています。</strong></p>
+		</div>
+	</section>
+
+	<section class="ch02" id="ch02">
+		<h1>機種一覧とOS</h1>
+
+		<p>統合メモリを大量に積める機種は、大きく3系統に分かれます。<strong>OS がそのまま使えるソフトウェア資産を決める</strong>ため、価格と並ぶ選定軸になります。</p>
+
+		<h2>NVIDIA GB10 搭載機</h2>
+
+		<p><img class="shot" style="max-width:420px" src="images/hp_zgx_nano_g1n.jpg" alt="HP ZGX Nano G1n AI Station 本体"></p>
+
+		<p>GB10 搭載機は <strong>NVIDIA DGX Spark のリファレンス設計をそのまま採用した OEM 機</strong>です。SoC・メモリ容量・帯域・本体サイズまで各社で一致するため、<strong>比較は性能ではなく調達条件の比較</strong>になります。</p>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>項目</th><th>全機種で共通の値</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">SoC</td><td>NVIDIA GB10 Grace Blackwell Superchip</td></tr>
+				<tr><td class="nowrap">CPU</td><td>Arm 20コア（Cortex-X925 ×10 + Cortex-A725 ×10）</td></tr>
+				<tr><td class="nowrap">統合メモリ</td><td>128GB LPDDR5x・256bit・<strong>273 GB/s</strong><span class="badge b-warn">オンボード・増設不可</span></td></tr>
+				<tr><td class="nowrap">AI性能</td><td>1 PFLOPS（FP4）／1,000 TOPS</td></tr>
+				<tr><td class="nowrap">ネットワーク</td><td>NVIDIA ConnectX-7（200GbE・2台連結用）、10GbE RJ45、Wi-Fi 7、Bluetooth 5.4</td></tr>
+				<tr><td class="nowrap">電源</td><td>240W USB TypeC アダプター（89% 変換効率）</td></tr>
+				<tr><td class="nowrap">本体サイズ</td><td>150 × 150 × 約 51 mm</td></tr>
+				<tr><td class="nowrap"><strong>OS</strong></td><td><strong>NVIDIA DGX OS</strong>（Ubuntu Linux Pro ベース）。CUDA と NVIDIA AI ソフトウェアスタックがプリロード済み</td></tr>
+				<tr><td class="nowrap">付属品</td><td><span class="badge b-none">キーボードなし</span> <span class="badge b-none">マウスなし</span> モニターも別途必要</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>Apple Mac</h2>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>機種</th><th>形態</th><th>統合メモリ</th><th>帯域</th><th>ストレージ</th><th>OS</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">Mac mini M5 Pro</td><td class="nowrap">据置</td><td class="nowrap">24 / 48 / <strong>64GB</strong></td><td class="num">307 GB/s</td><td class="nowrap">512GB〜8TB</td><td class="nowrap">macOS</td></tr>
+				<tr><td class="nowrap">Mac Studio M5 Max</td><td class="nowrap">据置</td><td class="nowrap">48 / 64 / <strong>128GB</strong></td><td class="num">614 GB/s</td><td class="nowrap">512GB〜8TB</td><td class="nowrap">macOS</td></tr>
+				<tr><td class="nowrap">Mac Studio M5 Ultra</td><td class="nowrap">据置</td><td class="nowrap">96 / <strong>256GB</strong></td><td class="num">1.2 TB/s</td><td class="nowrap">1TB〜16TB</td><td class="nowrap">macOS</td></tr>
+				<tr><td class="nowrap">MacBook Pro 16インチ M5 Max</td><td class="nowrap"><strong>ノート</strong></td><td class="nowrap">48 / 64 / <strong>128GB</strong></td><td class="num">614 GB/s</td><td class="nowrap">2TB〜8TB</td><td class="nowrap">macOS</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<p>メモリ容量は <strong>CPU/GPU のコア構成に固定</strong>されています。128GB を選ぶには 40コアGPU の M5 Max、256GB を選ぶには 80コアGPU の M5 Ultra が必要です。</p>
+
+		<div class="callout">
+			<p><strong>OS の違いは、そのまま移植コストになります。</strong>GB10 側は DGX OS で CUDA がそのまま動くため、既存の CUDA 資産を持ち込めます。Mac 側は Metal と MLX で、CUDA 前提のコードは書き換えが要ります。逆に Mac は汎用機として日常利用も兼ねられます。<strong>どちらが有利かは、いま何を持っているかで決まります。</strong></p>
+		</div>
+
+		<h2>在庫と入手先</h2>
+
+		<p>2026-09-20 時点で確認した状態です。</p>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>機種</th><th>入手先</th><th>在庫・納期</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">NVIDIA DGX Spark</td><td class="nowrap">Amazon</td><td><span class="badge b-ok">販売中</span></td></tr>
+				<tr><td class="nowrap">HP ZGX Nano G1n</td><td class="nowrap">HP 直販</td><td><span class="badge b-ok">受付中</span> 期間限定キャンペーン（9/30 まで）</td></tr>
+				<tr><td class="nowrap">MSI EdgeXpert</td><td class="nowrap">Amazon</td><td><span class="badge b-ok">販売中</span></td></tr>
+				<tr><td class="nowrap">GIGABYTE AI TOP ATOM</td><td class="nowrap">ソフマップ<br>ビックカメラ.com</td><td><span class="badge b-ok">販売中</span></td></tr>
+				<tr><td class="nowrap">Acer Veriton GN100</td><td class="nowrap">Acer 公式ストア</td><td><span class="badge b-ok">在庫あり</span> 送料無料・発送まで通常3〜5営業日。セール価格は 9/25 まで</td></tr>
+				<tr><td class="nowrap">Dell Pro Max with GB10</td><td class="nowrap">Dell 直販</td><td><span class="badge b-ok">受注可</span> 受注後 10日〜2週間で納品。カートに追加できる状態</td></tr>
+				<tr><td class="nowrap">ASUS Ascent GX10</td><td class="nowrap">Amazon</td><td><span class="badge b-ok">販売中</span> ただし 1TB 構成のみ</td></tr>
+				<tr><td class="nowrap">Lenovo ThinkStation PGX</td><td class="nowrap">正規販売店</td><td><span class="badge b-ng">在庫なし</span> 次回入荷未定。通販の第三者出品のみ購入可</td></tr>
+				<tr><td class="nowrap">Apple 各機種</td><td class="nowrap">Apple 公式ストア</td><td><span class="badge b-ok">在庫あり</span> 全構成で「最短で翌日に無料でお届け」</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout callout-warning">
+			<p><strong>Amazon 掲載分は出品者と保証条件を個別に確認してください。</strong>本レポートは「注文できるか」で載せる・載せないを決めており、販路の質までは揃えていません。メーカー保証が国内で受けられるか、並行輸入でないかは、購入前に販売ページで確かめる必要があります。</p>
+		</div>
+	</section>
+
+	<section class="ch03" id="ch03">
+		<h1>価格</h1>
+
+		<p>すべて税込・2026-09-20 時点です。Apple は購入画面で構成を選択して取得した金額で、カタログの「〜円から」ではありません。</p>
+
+		<h2>統合メモリ × ストレージの一覧</h2>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>統合メモリ</th><th>機種</th><th>2TB</th><th>4TB</th><th>8TB</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">64GB</td><td class="nowrap">Mac mini M5 Pro</td><td class="num"><strong>659,800 円</strong></td><td class="num">839,800 円</td><td class="num">1,199,800 円</td></tr>
+				<tr class="hi"><td class="nowrap">128GB</td><td class="nowrap">HP ZGX Nano G1n</td><td class="num">—</td><td class="num"><strong>1,098,900 円</strong></td><td class="num">—</td></tr>
+				<tr><td class="nowrap">128GB</td><td class="nowrap">Mac Studio M5 Max</td><td class="num"><strong>1,031,800 円</strong></td><td class="num">1,211,800 円</td><td class="num">1,571,800 円</td></tr>
+				<tr><td class="nowrap">128GB</td><td class="nowrap">MacBook Pro 16インチ M5 Max</td><td class="num">1,209,800 円</td><td class="num">1,389,800 円</td><td class="num">1,749,800 円</td></tr>
+				<tr><td class="nowrap">256GB</td><td class="nowrap">Mac Studio M5 Ultra</td><td class="num">1,993,800 円</td><td class="num">2,173,800 円</td><td class="num">2,533,800 円</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout">
+			<p><strong>GB10 搭載機にストレージの選択肢はありません。</strong>直販で買えるのは 4TB 構成の1点だけで、2TB にも 8TB にもできません。<strong>8TB の段は Apple だけの比較になります。</strong></p>
+		</div>
+
+		<h2>4TB で揃えた GB10 搭載機</h2>
+
+		<p>GB10 搭載機は性能が同一なので、価格と保証だけの比較になります。安い順です。</p>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>製品</th><th>価格（税込）</th><th>最安との差</th><th>入手先</th><th>保証・注記</th></tr></thead>
+			<tbody>
+				<tr class="hi">
+					<td class="nowrap"><strong>NVIDIA DGX Spark</strong></td>
+					<td class="num"><strong>1,084,511 円</strong></td>
+					<td class="num">基準</td>
+					<td class="nowrap">Amazon</td>
+					<td>リファレンスそのもの。ソフトウェア情報が最も見つけやすい。<span class="badge b-warn">要確認</span> 出品者・保証条件は個別確認</td>
+				</tr>
+				<tr class="hi">
+					<td class="nowrap"><strong>HP ZGX Nano G1n</strong></td>
+					<td class="num"><strong>1,098,900 円</strong><br><span style="font-size:0.88em;color:var(--ink-soft)">定価 2,125,200 円</span></td>
+					<td class="num">+14,389 円</td>
+					<td class="nowrap">HP 直販</td>
+					<td><span class="badge b-ok">メーカー直販</span> 1年センドバック。<span class="badge b-warn">期間限定 9/30 まで</span></td>
+				</tr>
+				<tr>
+					<td class="nowrap">MSI EdgeXpert</td>
+					<td class="num">1,110,659 円</td>
+					<td class="num">+26,148 円</td>
+					<td class="nowrap">Amazon</td>
+					<td><span class="badge b-warn">要確認</span> 出品者・保証条件は個別確認</td>
+				</tr>
+				<tr>
+					<td class="nowrap">GIGABYTE AI TOP ATOM</td>
+					<td class="num">1,366,800 円</td>
+					<td class="num">+282,289 円</td>
+					<td class="nowrap">ソフマップ<br>ビックカメラ.com</td>
+					<td>型番 ATAGB10-9001</td>
+				</tr>
+				<tr>
+					<td class="nowrap">Acer Veriton GN100</td>
+					<td class="num">1,386,000 円<br><span style="font-size:0.88em;color:var(--ink-soft)">通常 1,999,800 円</span></td>
+					<td class="num">+301,489 円</td>
+					<td class="nowrap">Acer 公式ストア</td>
+					<td><span class="badge b-ok">在庫あり</span> セール価格は 9/25 まで</td>
+				</tr>
+				<tr>
+					<td class="nowrap">Dell Pro Max with GB10</td>
+					<td class="num">2,140,820 円<br><span style="font-size:0.88em;color:var(--ink-soft)">配送料込</span></td>
+					<td class="num">+1,056,309 円</td>
+					<td class="nowrap">Dell 直販</td>
+					<td><span class="badge b-ok">オンサイト保守</span> 12ヶ月。受注後 10日〜2週間で納品</td>
+				</tr>
+				<tr>
+					<td class="nowrap">Lenovo ThinkStation PGX</td>
+					<td class="num">2,176,790 円</td>
+					<td class="num">+1,092,279 円</td>
+					<td class="nowrap">通販（第三者出品）</td>
+					<td><span class="badge b-ng">正規流通は在庫なし</span></td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout callout-important">
+			<p><strong>同じ性能のものが、入手先だけで109万円違います。</strong>最安の DGX Spark と最高値の Lenovo で動作性能は変わりません。差額は保証・流通経路・在庫状況への対価です。<strong>上位2機種の差は約1.4万円しかなく、その差で「通販の掲載価格」と「メーカー直販の保証付き」が入れ替わります。</strong>金額だけで決める幅ではありません。</p>
+		</div>
+
+		<h3>ストレージ容量が揃わないもの</h3>
+
+		<p>ASUS Ascent GX10 は統合メモリこそ 128GB ですが、<strong>流通している構成はストレージ 1TB</strong> です。同一構成で比べられないため、上の表からは外しました。</p>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>製品</th><th>メモリ</th><th>ストレージ</th><th>価格（税込）</th><th>入手先</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">ASUS Ascent GX10<br><span style="font-size:0.88em;color:var(--ink-soft)">GX10-GG0003BN</span></td><td class="nowrap">128GB</td><td class="nowrap"><strong>1TB</strong></td><td class="num">1,663,894 円</td><td class="nowrap">Amazon</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout">
+			<p><strong>容量が4分の1で、価格は 4TB 機より高くなっています。</strong>統合メモリだけを見て「128GB 機の最安」と判断すると外します。<strong>GB10 搭載機を比べるときは、ストレージ容量を必ず型番で確かめてください。</strong></p>
+		</div>
+
+		<h2>統合メモリ 1GB あたりの単価</h2>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>機種</th><th>メモリ</th><th>2TB 時</th><th>4TB 時</th><th>8TB 時</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">Mac mini M5 Pro</td><td class="nowrap">64GB</td><td class="num">10,309 円/GB</td><td class="num">13,122 円/GB</td><td class="num">18,747 円/GB</td></tr>
+				<tr><td class="nowrap">HP ZGX Nano G1n</td><td class="nowrap">128GB</td><td class="num">—</td><td class="num">8,585 円/GB</td><td class="num">—</td></tr>
+				<tr><td class="nowrap">Mac Studio M5 Max</td><td class="nowrap">128GB</td><td class="num">8,061 円/GB</td><td class="num">9,467 円/GB</td><td class="num">12,280 円/GB</td></tr>
+				<tr><td class="nowrap">MacBook Pro 16インチ M5 Max</td><td class="nowrap">128GB</td><td class="num">9,452 円/GB</td><td class="num">10,858 円/GB</td><td class="num">13,670 円/GB</td></tr>
+				<tr><td class="nowrap">Mac Studio M5 Ultra</td><td class="nowrap">256GB</td><td class="num"><strong>7,788 円/GB</strong></td><td class="num"><strong>8,491 円/GB</strong></td><td class="num"><strong>9,898 円/GB</strong></td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout">
+			<p><strong>容量あたりで最も安いのは 256GB の Mac Studio M5 Ultra です。</strong>総額は最も高いものの、1GB あたりでは全段で最安になります。<strong>大きく積むほど単価は下がります。</strong>逆に 64GB の Mac mini は、8TB まで積むと 1GB あたり 18,747 円になり、最も割高な買い方になります。</p>
+		</div>
+
+		<h2>メモリ帯域 1GB/s あたりの単価</h2>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>機種</th><th>帯域</th><th>2TB 時</th><th>4TB 時</th><th>8TB 時</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">Mac mini M5 Pro</td><td class="num">307 GB/s</td><td class="num">2,149 円</td><td class="num">2,735 円</td><td class="num">3,908 円</td></tr>
+				<tr><td class="nowrap">HP ZGX Nano G1n</td><td class="num">273 GB/s</td><td class="num">—</td><td class="num">4,025 円</td><td class="num">—</td></tr>
+				<tr><td class="nowrap">Mac Studio M5 Max</td><td class="num">614 GB/s</td><td class="num"><strong>1,681 円</strong></td><td class="num">1,974 円</td><td class="num">2,560 円</td></tr>
+				<tr><td class="nowrap">MacBook Pro 16インチ M5 Max</td><td class="num">614 GB/s</td><td class="num">1,971 円</td><td class="num">2,263 円</td><td class="num">2,850 円</td></tr>
+				<tr><td class="nowrap">Mac Studio M5 Ultra</td><td class="num">1.2 TB/s</td><td class="num">1,662 円</td><td class="num"><strong>1,812 円</strong></td><td class="num"><strong>2,112 円</strong></td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<p><strong>帯域あたりでは GB10 搭載機が最も高くつきます。</strong>GB10 の強みは 128GB を 110万円未満で積めることにあり、速度あたりの効率ではありません。</p>
+	</section>
+
+	<section class="ch04" id="ch04">
+		<h1>メモリ帯域と生成速度</h1>
+
+		<p>生成（decode）の速さは、演算性能ではなく<strong>メモリ帯域</strong>で決まります。1トークンを出すたびに重みを読み直すため、読み出しの速さが上限になります。</p>
+
+		<h2>MoE では「活性パラメータ」だけを読む</h2>
+
+		<p>Mixture of Experts（MoE）のモデルは、総パラメータのうち一部の専門家（expert）だけを1トークンごとに使います。<strong>容量は総パラメータで決まり、速度は活性パラメータで決まります。</strong>この分離があるため、総パラメータが 1000億を超えるモデルでも、活性が数十億なら実用的な速度で回ります。</p>
+
+		<h2>実測を基準にした見当</h2>
+
+		<p>前世代の <strong>M4 Max・128GB で 200B 級 MoE（3bit・約 90GB）が 9〜10 tok/s</strong> という実測が公開されています。デコード速度は帯域に律速されるため、この実測を基準に各機種の見当が付きます。</p>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>機種</th><th>メモリ帯域</th><th>M4 Max 比</th><th>90GB のモデルでの速度</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">MacBook Pro M4 Max 128GB（前世代）</td><td class="num">546 GB/s</td><td class="num">基準</td><td class="num"><strong>9〜10 tok/s</strong>（実測）</td></tr>
+				<tr><td class="nowrap">Mac Studio M5 Ultra 256GB</td><td class="num">1.2 TB/s</td><td class="num">2.20×</td><td class="num">約 20 tok/s（推定）</td></tr>
+				<tr><td class="nowrap">Mac Studio M5 Max 128GB</td><td class="num">614 GB/s</td><td class="num">1.12×</td><td class="num">約 10〜11 tok/s（推定）</td></tr>
+				<tr><td class="nowrap">MacBook Pro 16インチ M5 Max 128GB</td><td class="num">614 GB/s</td><td class="num">1.12×</td><td class="num">約 10〜11 tok/s（推定）</td></tr>
+				<tr><td class="nowrap">Mac mini M5 Pro 64GB</td><td class="num">307 GB/s</td><td class="num">0.56×</td><td class="nowrap">— 64GB 上限で載らない</td></tr>
+				<tr><td class="nowrap">GB10 搭載機 128GB</td><td class="num">273 GB/s</td><td class="num">0.50×</td><td class="num">約 4.5〜5 tok/s（推定）</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout callout-important">
+			<p><strong>同じ 128GB でも、生成速度は 2.25 倍違います。</strong>GB10 搭載機と Mac Studio M5 Max は載せられるモデルが同じですが、帯域比がそのまま速度差になります。<strong>128GB を選ぶ判断は、容量ではなく帯域と価格の比較です。</strong></p>
+		</div>
+
+		<h2>KV キャッシュがメモリを追加で食う</h2>
+
+		<p>モデル本体のほかに、文脈を保持する KV キャッシュがメモリを消費します。モデルの大きさに対しては小さいものの、容量ぎりぎりの構成では効きます。次章以降の判定では、OS と合わせた余裕をあらかじめ差し引いています。</p>
+	</section>
+
+	<section class="ch05" id="ch05">
+		<h1>対象モデルの量子化サイズ</h1>
+
+		<p>Qwen・Gemma・GLM・Kimi の各系列について、公開されている GGUF の実サイズを並べます。数値は配布元が示すファイルサイズです。</p>
+
+		<h2>Qwen</h2>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>モデル</th><th>総 / 活性</th><th>形式</th><th>4bit 級サイズ</th><th>小さい量子化</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">Qwen3.8-27B</td><td class="nowrap">27B（dense）</td><td class="nowrap">dense</td><td class="num">約 17 GB</td><td>—</td></tr>
+				<tr><td class="nowrap">Qwen3.6-35B-A3B</td><td class="nowrap">35B / 3B</td><td class="nowrap">MoE</td><td class="num">22.7 GB</td><td class="num">2bit 12.6 GB</td></tr>
+				<tr><td class="nowrap">Qwen3.8-Flash-Next</td><td class="nowrap">125B / 6B</td><td class="nowrap">MoE</td><td class="num">93.7 GB</td><td class="num">1bit 72.5 GB<br>2bit 78.9 GB<br>3bit 90 GB</td></tr>
+				<tr><td class="nowrap">Qwen3-235B-A22B</td><td class="nowrap">235B / 22B</td><td class="nowrap">MoE</td><td class="num">142 GB</td><td class="num">3bit 約 112 GB</td></tr>
+				<tr><td class="nowrap">Qwen3.8-Max</td><td class="nowrap">2.4T / 95B</td><td class="nowrap">MoE</td><td class="num">—</td><td>FP8 で約 2.5 TB</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>Gemma</h2>
+
+		<p>Gemma 4 は全変種に <strong>QAT（Quantization Aware Training）</strong>のチェックポイントが用意されています。学習の段階で量子化を織り込むため、4bit でも精度の低下が小さいのが特徴です。</p>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>モデル</th><th>総 / 活性</th><th>形式</th><th>BF16</th><th>QAT 4bit</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">Gemma 4 E2B</td><td class="nowrap">2B</td><td class="nowrap">dense</td><td class="num">11.4 GB</td><td class="num">2.9 GB</td></tr>
+				<tr><td class="nowrap">Gemma 4 E4B</td><td class="nowrap">4B</td><td class="nowrap">dense</td><td class="num">17.9 GB</td><td class="num">4.5 GB</td></tr>
+				<tr><td class="nowrap">Gemma 4 12B</td><td class="nowrap">12B</td><td class="nowrap">dense</td><td class="num">26.7 GB</td><td class="num">6.7 GB</td></tr>
+				<tr><td class="nowrap">Gemma 4 26B-A4B</td><td class="nowrap">26B / 4B</td><td class="nowrap">MoE</td><td class="num">57.7 GB</td><td class="num">14.4 GB</td></tr>
+				<tr><td class="nowrap">Gemma 4 31B</td><td class="nowrap">31B</td><td class="nowrap">dense</td><td class="num">69.9 GB</td><td class="num">17.5 GB</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout">
+			<p><strong>Gemma 4 の GGUF は 4bit 相当が1本だけ配布されています。</strong>配布元によれば、それより高い精度の量子化は精度が上がらず劣化するため用意していないとのことです。選択の余地がない代わりに、迷う必要もありません。</p>
+		</div>
+
+		<h2>GLM</h2>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>モデル</th><th>総 / 活性</th><th>1bit</th><th>2bit</th><th>3bit</th><th>4bit</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">GLM-4.6</td><td class="nowrap">355B / 32B</td><td class="num">84 GB</td><td class="num">115〜135 GB</td><td class="num">145〜158 GB</td><td class="num">204 GB</td></tr>
+				<tr><td class="nowrap">GLM-5</td><td class="nowrap">744B / 40B</td><td class="num">176 GB</td><td class="num">241 GB</td><td>—</td><td>—</td></tr>
+				<tr><td class="nowrap">GLM-5.2</td><td class="nowrap">744B / 40B</td><td class="num">223 GB</td><td class="num">239 GB</td><td class="num">290〜360 GB</td><td class="num">372〜475 GB</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>Kimi</h2>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>モデル</th><th>総 / 活性</th><th>最小の量子化</th><th>2bit</th><th>4bit</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">Kimi K2（初代）</td><td class="nowrap">1T / 32B</td><td class="num">1.8bit 230〜244 GB</td><td class="num">382 GB</td><td class="num">621 GB</td></tr>
+				<tr><td class="nowrap">Kimi K2.6</td><td class="nowrap">1T</td><td>—</td><td class="num">340 GB</td><td class="num">584 GB</td></tr>
+				<tr><td class="nowrap">Kimi K2.7 Code</td><td class="nowrap">1T / 32B</td><td>—</td><td class="num">339 GB</td><td class="num">584 GB</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout">
+			<p><strong>Kimi は現行世代で 1bit 級の配布がなくなりました。</strong>初代 K2 には 1.8bit（230〜244GB）がありましたが、K2.6 と K2.7 は 2bit（339〜340GB）が最小です。256GB の機体でも現行世代は入りません。</p>
+		</div>
+	</section>
+
+	<section class="ch06" id="ch06">
+		<h1>容量別に動くモデルの判定</h1>
+
+		<h2>実効容量の見方</h2>
+
+		<p>統合メモリの全量をモデルに使えるわけではありません。OS と他のプロセス、それに KV キャッシュを差し引いた分が使える上限になります。ここでは次の目安で判定します。</p>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>統合メモリ</th><th>OS等の控え</th><th>KV等の控え</th><th>モデルに使える目安</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">64GB</td><td class="num">8 GB</td><td class="num">6 GB</td><td class="num">約 50 GB</td></tr>
+				<tr><td class="nowrap">128GB</td><td class="num">10 GB</td><td class="num">8 GB</td><td class="num">約 110 GB</td></tr>
+				<tr><td class="nowrap">256GB</td><td class="num">12 GB</td><td class="num">10 GB</td><td class="num">約 234 GB</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout">
+			<p><strong>Mac は既定でGPUに割り当てる上限が全量より低く設定されています。</strong>大きなモデルを載せるときは割り当て上限を引き上げる設定が要ります。上表はその調整を行った前提の数値です。調整しない場合、使える量はさらに小さくなります。</p>
+		</div>
+
+		<h2>64GB（Mac mini M5 Pro）で動くもの</h2>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>判定</th><th>モデル</th><th>量子化</th><th>サイズ</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Gemma 4 31B</td><td class="nowrap">QAT 4bit</td><td class="num">17.5 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Gemma 4 26B-A4B</td><td class="nowrap">QAT 4bit</td><td class="num">14.4 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Qwen3.6-35B-A3B</td><td class="nowrap">4bit</td><td class="num">22.7 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Qwen3.8-27B</td><td class="nowrap">4bit</td><td class="num">約 17 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-warn">条件付き</span></td><td class="nowrap">Gemma 4 31B</td><td class="nowrap">BF16（無量子化）</td><td class="num">69.9 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">Qwen3.8-Flash-Next</td><td class="nowrap">1bit でも</td><td class="num">72.5 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">GLM-4.6 以上</td><td class="nowrap">1bit でも</td><td class="num">84 GB 以上</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<p><strong>64GB の上限</strong>は、総パラメータで <strong>35B 前後</strong>、モデルサイズで <strong>50GB 程度</strong>です。4bit なら 100B 級の MoE に手が届きそうに見えますが、実際には Qwen3.8-Flash-Next（125B）の最小量子化 72.5GB でも入りません。</p>
+
+		<h2>128GB（GB10 搭載機 / Mac Studio M5 Max / MacBook Pro M5 Max）で動くもの</h2>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>判定</th><th>モデル</th><th>量子化</th><th>サイズ</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Qwen3.8-Flash-Next</td><td class="nowrap">4bit (IQ4_XS)</td><td class="num">93.7 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">GLM-4.6</td><td class="nowrap">2bit (IQ2_XXS)</td><td class="num">115 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Qwen3-235B-A22B</td><td class="nowrap">3bit</td><td class="num">約 112 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-warn">条件付き</span></td><td class="nowrap">GLM-4.6</td><td class="nowrap">2bit (Q2_K_XL)</td><td class="num">135 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">Qwen3-235B-A22B</td><td class="nowrap">4bit</td><td class="num">142 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">GLM-5 / GLM-5.2</td><td class="nowrap">1bit でも</td><td class="num">176 GB 以上</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">Kimi K2 系</td><td class="nowrap">最小でも</td><td class="num">230 GB 以上</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<p><strong>128GB の上限</strong>は、総パラメータで <strong>235B〜355B</strong>、モデルサイズで <strong>110GB 程度</strong>です。ただし 235B・355B を載せるには 2〜3bit まで落とす必要があり、4bit で快適に使えるのは 125B 級までです。</p>
+
+		<div class="callout">
+			<p><strong>128GB は「4bit で 125B 級」か「2bit で 355B 級」の分かれ道になります。</strong>同じ容量でも、量子化を深めて大きいモデルを載せるか、精度を保って中規模を載せるかで性格が変わります。品質を優先するなら 4bit の 125B 級のほうが安定します。</p>
+		</div>
+
+		<h2>256GB（Mac Studio M5 Ultra）で動くもの</h2>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>判定</th><th>モデル</th><th>量子化</th><th>サイズ</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Qwen3-235B-A22B</td><td class="nowrap">4bit (Q4_K_M)</td><td class="num">142 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">GLM-4.6</td><td class="nowrap">4bit (Q4_K_XL)</td><td class="num">204 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">GLM-5</td><td class="nowrap">2bit (IQ2_XXS)</td><td class="num">241 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">GLM-5.2</td><td class="nowrap">2bit (IQ2_M)</td><td class="num">239 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-warn">条件付き</span></td><td class="nowrap">Kimi K2（初代）</td><td class="nowrap">1.8bit</td><td class="num">230〜244 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">Kimi K2.6 / K2.7</td><td class="nowrap">2bit が最小</td><td class="num">339〜340 GB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">Qwen3.8-Max</td><td class="nowrap">—</td><td class="num">約 2.5 TB</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<p><strong>256GB の上限</strong>は、総パラメータで <strong>744B</strong>、モデルサイズで <strong>234GB 程度</strong>です。1兆パラメータ級（Kimi K2 系）は、初代の 1.8bit がぎりぎり入るかどうかで、現行世代は入りません。</p>
+
+		<h2>3段のまとめ</h2>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>統合メモリ</th><th>該当機種</th><th>モデルに使える目安</th><th>4bit で動く総パラメータ</th><th>低ビットまで落として動く総パラメータ</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">64GB</td><td class="nowrap">Mac mini M5 Pro</td><td class="num">約 50 GB</td><td class="nowrap">35B 級</td><td class="nowrap">35B 級（変わらず）</td></tr>
+				<tr><td class="nowrap">128GB</td><td class="nowrap">GB10 搭載機<br>Mac Studio M5 Max<br>MacBook Pro M5 Max</td><td class="num">約 110 GB</td><td class="nowrap">125B 級</td><td class="nowrap">355B 級（2bit）</td></tr>
+				<tr><td class="nowrap">256GB</td><td class="nowrap">Mac Studio M5 Ultra</td><td class="num">約 234 GB</td><td class="nowrap">355B 級</td><td class="nowrap">744B 級（2bit）</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout">
+			<p><strong>容量を2倍にすると、動かせる総パラメータはおよそ3倍に伸びます。</strong>64GB→128GB で 35B→125B、128GB→256GB で 125B→355B（いずれも 4bit）です。低ビットまで許容すればさらに一段上がります。この非線形さは、大きいモデルほど MoE で活性が抑えられており、低ビット量子化の劣化も相対的に小さいことによります。</p>
+		</div>
+	</section>
+
+	<section class="ch07" id="ch07">
+		<h1>MoEとQATが効く理由</h1>
+
+		<h2>MoE は容量と速度を切り離す</h2>
+
+		<p>dense（密）モデルは、1トークンごとに全パラメータを読みます。MoE は専門家を切り替えて一部だけを使うため、読む量が総パラメータより大幅に小さくなります。</p>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>モデル</th><th>形式</th><th>総</th><th>活性</th><th>活性の割合</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">Gemma 4 31B</td><td class="nowrap">dense</td><td class="nowrap">31B</td><td class="nowrap">31B</td><td class="num">100%</td></tr>
+				<tr><td class="nowrap">Qwen3.6-35B-A3B</td><td class="nowrap">MoE</td><td class="nowrap">35B</td><td class="nowrap">3B</td><td class="num">8.6%</td></tr>
+				<tr><td class="nowrap">Qwen3.8-Flash-Next</td><td class="nowrap">MoE</td><td class="nowrap">125B</td><td class="nowrap">6B</td><td class="num">4.8%</td></tr>
+				<tr><td class="nowrap">Qwen3-235B-A22B</td><td class="nowrap">MoE</td><td class="nowrap">235B</td><td class="nowrap">22B</td><td class="num">9.4%</td></tr>
+				<tr><td class="nowrap">GLM-5.2</td><td class="nowrap">MoE</td><td class="nowrap">744B</td><td class="nowrap">40B</td><td class="num">5.4%</td></tr>
+				<tr><td class="nowrap">Kimi K2.7</td><td class="nowrap">MoE</td><td class="nowrap">1000B</td><td class="nowrap">32B</td><td class="num">3.2%</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<p>活性の割合は、モデルが大きくなるほど小さくなる傾向にあります。1兆パラメータの Kimi K2.7 でも活性は 32B で、Gemma 4 31B の dense と同程度です。<strong>載せられれば、速度は総パラメータほど不利にならない</strong>ということです。</p>
+
+		<div class="callout">
+			<p><strong>MoE で節約できるのは読み出し量だけで、置き場所は節約できません。</strong>どの専門家が呼ばれるかは入力ごとに変わるため、全パラメータをメモリに置いておく必要があります。統合メモリの容量が壁になるのはこのためです。</p>
+		</div>
+
+		<h2>QAT は量子化の劣化を先に織り込む</h2>
+
+		<p>通常の量子化は、学習が終わった重みを後から丸めます。QAT は学習の過程に量子化を混ぜ込むため、4bit にしても品質の落ち込みが小さくなります。Gemma 4 は全変種に QAT を用意しており、4bit で BF16 の約4分の1（メモリ使用量で約72%減）に収まります。</p>
+	</section>
+
+	<section class="ch08" id="ch08">
+		<h1>手元の環境PCとの距離</h1>
+
+		<p>比較の出発点として、いま使っている一般的なゲーミングノートがどこに位置するかを示します。<strong>決定的な制約は VRAM です。</strong></p>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>比較軸</th><th>ゲーミングノート（2021年前後の構成）</th><th>128GB 機（GB10 搭載機）</th><th>差</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">AI に使えるメモリ</td><td class="num">4 GB（VRAM）</td><td class="num">128 GB（統合）</td><td><span class="badge b-ng">32倍差</span></td></tr>
+				<tr><td class="nowrap">メモリ帯域</td><td class="num">約 51.2 GB/s<br>（DDR4-3200 2ch）</td><td class="num">273 GB/s<br>（LPDDR5x 256bit）</td><td><strong>約 5.3倍</strong></td></tr>
+				<tr><td class="nowrap">システムメモリ</td><td class="num">16 GB（交換で最大32GB）</td><td class="num">128 GB（オンボード・増設不可）</td><td>—</td></tr>
+				<tr><td class="nowrap">CPU</td><td class="nowrap">4コア8スレッド</td><td class="nowrap">Arm 20コア</td><td>5倍</td></tr>
+				<tr><td class="nowrap">扱えるモデル規模</td><td>7B 級 4bit 量子化が上限</td><td>125B 級 4bit（総パラメータ 355B まで）</td><td>—</td></tr>
+				<tr><td class="nowrap">OS</td><td class="nowrap">Windows 11</td><td class="nowrap">NVIDIA DGX OS</td><td>—</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout callout-important">
+			<p><strong>VRAM 4GB は、アップグレードでは越えられない壁です。</strong>CPU は BGA 実装で交換できず、メモリを 32GB に増やしても VRAM は増えません。システムメモリへオフロードすれば大きいモデルも一応動きますが、帯域が 51.2 GB/s しかないため実用的な速度になりません。<strong>開発機としては十分でも、中〜大規模モデルのローカル実行は別のマシンが要ります。</strong></p>
+		</div>
+	</section>
+
+	<section class="ch09" id="ch09">
+		<h1>統合メモリを持たない選択肢</h1>
+
+		<p>統合メモリ機ではなく、ディスクリート GPU を積んだ一般的な PC を選ぶ道もあります。ただし <strong>VRAM の上限が低く、本レポートの3段のいずれにも届きません</strong>。構造的な理由を残しておきます。</p>
+
+		<h2>NPU の TOPS 値は判断材料にならない</h2>
+
+		<p>AI PC として売られる機種は「最大 45 TOPS」「最大 85 TOPS NPU」といった数値を前面に出しますが、<strong>これは LLM の生成速度を意味しません</strong>。生成はメモリ帯域に律速されるため、演算性能の指標を見ても速度は分かりません。NPU は小さなモデルの推論や画像処理の加速に効くもので、大きな LLM を載せる能力とは別の話です。</p>
+
+		<h2>デスクトップの VRAM 上限はノートより低いことがある</h2>
+
+		<p>価格の高さと VRAM 容量は一致しません。デスクトップの最上位モデルでも VRAM 16GB に留まる一方、ノート型では 24GB の構成が存在します。</p>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>形態</th><th>VRAM 最大</th><th>該当する GPU</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">デスクトップ</td><td class="num">16GB</td><td>RTX 5080 クラス</td></tr>
+				<tr><td class="nowrap">ノート</td><td class="num"><strong>24GB</strong></td><td>RTX 5090 Laptop</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<p>つまり <strong>VRAM 24GB を求めるならノート型しか選択肢がない</strong>という逆転が起きます。価格順に選ぶと外します。</p>
+
+		<h2>メモリスロットを使い切っている構成がある</h2>
+
+		<p>安価な構成では、システムメモリが <code>8GB×2</code> でスロットを使い切っていることがあります。32GB にするには増設ではなく<strong>交換</strong>が必要です。VRAM に収まらない分をシステムメモリへオフロードする使い方では、この容量が次のボトルネックになるため、交換用メモリの費用を初期コストに含めて見積もる必要があります。</p>
+
+		<h2>Radeon 構成は安いが不利</h2>
+
+		<p>同じ VRAM 16GB でも、Radeon 構成のほうが数万円安く手に入ります。ただし Windows での ROCm 対応が限定的で、llama.cpp は Vulkan バックエンド頼りになります。<strong>差額で CUDA が使えるかどうかが変わる</strong>ため、LLM 用途では GeForce を選ぶ価値があります。</p>
+
+		<div class="callout callout-important">
+			<p><strong>VRAM 24GB では、本レポートで扱ったモデルはほとんど動きません。</strong>4bit の 35B 級（22.7GB）がぎりぎり載るかどうかで、125B 級には遠く届きません。<strong>統合メモリ機を検討する理由は、ここにあります。</strong></p>
+		</div>
+	</section>
+
+	<section class="ch10" id="ch10">
+		<h1>これから出る機種</h1>
+
+		<p>購入できないため比較表には入れていませんが、<strong>容量の段そのものを変える機種</strong>が出ます。</p>
+
+		<h2>GMKtec EVO-X5 Pro</h2>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>項目</th><th>内容</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">CPU</td><td>AMD Ryzen AI Max+ PRO 495（Zen 5・16コア32スレッド）</td></tr>
+				<tr><td class="nowrap">GPU</td><td>Radeon 8065S（RDNA 3.5・40 CU）</td></tr>
+				<tr><td class="nowrap">NPU</td><td>AMD XDNA 2（55 TOPS）</td></tr>
+				<tr><td class="nowrap">統合メモリ</td><td><strong>最大 192GB</strong> LPDDR5X-8533（256bit）</td></tr>
+				<tr><td class="nowrap">メモリ帯域</td><td class="num"><strong>273 GB/s</strong></td></tr>
+				<tr><td class="nowrap">GPU 割り当て</td><td>最大 160GB</td></tr>
+				<tr><td class="nowrap">ストレージ</td><td>最大 24TB（PCIe 4.0 M.2 2280 × 3基）</td></tr>
+				<tr><td class="nowrap">発売日</td><td class="nowrap">2026年9月28日</td></tr>
+				<tr><td class="nowrap">価格</td><td><span class="badge b-warn">未公開</span> 日本公式サイトに製品ページはあるが、価格も購入導線も未掲載</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout callout-important">
+			<p><strong>帯域は GB10 搭載機と同じ 273 GB/s で、容量だけが 128GB から 192GB へ伸びます。</strong>両者は 256bit の LPDDR5X という同じ構成で、速度はほぼ並びます。<strong>128GB では載らなかった GLM-5 の 1bit（176GB）が、192GB なら入る計算になります。</strong>ただし実効容量は OS の控えを引いた分になるため、余裕はほとんど残りません。</p>
+		</div>
+
+		<p>価格が公開されていないため、費用対効果は判断できません。<strong>128GB 機と 256GB 機の中間をいくら埋めるか</strong>が、この機種が選択肢になるかどうかを決めます。</p>
+	</section>
+
+	<section class="ch11" id="ch11">
+		<h1>結論</h1>
+
+		<h2>容量の3段が、そのまま使えるモデルの階層になる</h2>
+
+		<p>統合メモリの容量は、動かせるモデルの上限をほぼ一意に決めます。帯域と価格はその次の判断軸です。</p>
+
+		<h2>用途で選ぶなら</h2>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>優先すること</th><th>選ぶもの</th><th>価格（税込）</th><th>理由</th></tr></thead>
+			<tbody>
+				<tr class="hi">
+					<td class="nowrap">最も安く 128GB / 4TB</td>
+					<td class="nowrap">NVIDIA DGX Spark<br>128GB / 4TB</td>
+					<td class="num">1,084,511 円</td>
+					<td>4TB 込みで最安。<strong>ただし通販の掲載価格</strong>で、出品者と保証条件は個別に確認が要る</td>
+				</tr>
+				<tr class="hi">
+					<td class="nowrap">保証を確実にして 128GB / 4TB</td>
+					<td class="nowrap">HP ZGX Nano G1n<br>128GB / 4TB</td>
+					<td class="num">1,098,900 円</td>
+					<td>メーカー直販で 1年センドバック。最安との差は約1.4万円。<strong>キャンペーン価格で 9/30 まで</strong></td>
+				</tr>
+				<tr>
+					<td class="nowrap">128GB で速さが要る</td>
+					<td class="nowrap">Mac Studio M5 Max<br>128GB / 2TB</td>
+					<td class="num">1,031,800 円</td>
+					<td><strong>GB10 機のどれより安く、帯域は 2.25 倍</strong>。ストレージは 2TB に下がる。4TB が要らないならこちらが有利</td>
+				</tr>
+				<tr>
+					<td class="nowrap">最大規模を狙う</td>
+					<td class="nowrap">Mac Studio M5 Ultra<br>256GB / 2TB</td>
+					<td class="num">1,993,800 円</td>
+					<td>744B 級が 2bit で載る唯一の選択。帯域も 1.2TB/s で最速。容量単価でも最安</td>
+				</tr>
+				<tr>
+					<td class="nowrap">予算を最小に</td>
+					<td class="nowrap">Mac mini M5 Pro<br>64GB / 2TB</td>
+					<td class="num">659,800 円</td>
+					<td>35B 級までなら十分。ただし 100B 級には届かない</td>
+				</tr>
+				<tr>
+					<td class="nowrap">持ち運びたい</td>
+					<td class="nowrap">MacBook Pro 16インチ M5 Max<br>128GB / 2TB</td>
+					<td class="num">1,209,800 円</td>
+					<td>128GB をノート型で扱える唯一の選択肢。据置の M5 Max との差額 17.8 万円が可搬性の対価</td>
+				</tr>
+				<tr>
+					<td class="nowrap">CUDA 資産がある</td>
+					<td class="nowrap">GB10 搭載機<br>128GB / 4TB</td>
+					<td class="num">1,084,511 円〜</td>
+					<td>DGX OS で CUDA がそのまま動く。Mac へ移すなら MLX への移植コストが上乗せされる</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>128GB は帯域と価格で決まる</h2>
+
+		<p>GB10 搭載機（273 GB/s）と Mac Studio M5 Max（614 GB/s）は、統合メモリが同じ 128GB です。載せられるモデルは同じですが、生成速度は帯域比で 2.25 倍の差が出ます。<strong>2TB で足りるなら Mac Studio が安く速く、4TB が要るなら GB10 側が安い</strong>という関係です。</p>
+
+		<div class="callout callout-warning">
+			<p><strong>GB10 搭載機の価格は、数日単位で入れ替わります。</strong>9月16日から9月20日までの4日間だけでも、DGX Spark が18万円下がって最安に浮上し、Dell は23万円、Lenovo は3万円上がりました。ASUS に至っては、安く見えていた構成がストレージ 1TB だったと判明しています。<strong>この表の順位は数日で変わる前提で読んでください。</strong>一方 Apple の価格は、9月5日・16日・20日の3時点で一度も動いていません。<strong>変動しているのは GB10 側だけです。</strong></p>
+		</div>
+
+		<h2>256GB は容量と帯域が同時に上がる</h2>
+
+		<p>Mac Studio M5 Ultra は、容量が 2 倍になると同時に帯域も 1.2TB/s へ上がります。総額は最も高いものの、<strong>容量単価でも帯域単価でも最も効率がよい</strong>という結果になりました。動かしたいモデルが 355B 級に及ぶなら、これ以外の選択肢は現時点でありません。</p>
+	</section>
+
+	<section class="ch12" id="ch12">
+		<h1>参照元</h1>
+
+		<p>本レポートの数値はすべて以下から取得しました。<strong>取得日はいずれも 2026-09-20</strong> です（記載のあるものを除く）。</p>
+
+		<h2>メーカー公式・直販</h2>
+
+		<ul class="srclist">
+			<li><strong>HP ZGX Nano G1n キャンペーン</strong>（価格・期間）<br>
+				https://jp.ext.hp.com/campaign/business/workstations/zgx_campaigns/ </li>
+			<li><strong>HP ZGX Nano AI Station スペック表</strong>（ConnectX-7 の帯域、電源方式、同梱品の有無）<br>
+				https://jp.ext.hp.com/prod/workstations/zgx_nano_ai_station/bto/ </li>
+			<li><strong>HP ZGX Nano G1n AI Station 製品詳細</strong><br>
+				https://jp.ext.hp.com/workstations/zgx_nano_ai_station/ </li>
+			<li><strong>Dell Pro Max with GB10</strong>（構成・価格・納期・保証）<br>
+				https://www.dell.com/ja-jp/shop/dell-pro-max-with-gb10/spd/dell-pro-max-fcm1253-micro </li>
+			<li><strong>Acer Veriton GN100</strong>（価格・在庫・発送日数）<br>
+				https://store.acer.com/ja-jp/acer-gn100 </li>
+			<li><strong>AMD Ryzen AI Max+ PRO 495</strong>（メモリ帯域・コア構成・NPU）<br>
+				https://www.amd.com/ja/products/processors/laptop/ryzen-pro/ai-max-pro-400-series/amd-ryzen-ai-max-plus-pro-495.html </li>
+			<li><strong>GMKtec EVO-X5 Pro 日本公式</strong>（製品ページ。価格は未掲載）<br>
+				https://jp.gmktec.com/products/gmktec-evo-x5-pro-amd-ryzen%E2%84%A2ai-max-pro-495-%E3%83%9F%E3%83%8Bpc </li>
+		</ul>
+
+		<h2>Apple 公式ストア</h2>
+
+		<p>構成を購入画面で実際に選択し、選択後の合計金額を読み取っています。カタログ値ではありません。</p>
+
+		<ul class="srclist">
+			<li><strong>Mac mini</strong>（M5 Pro 64GB の 2TB / 4TB / 8TB）<br>
+				https://www.apple.com/jp/shop/buy-mac/mac-mini </li>
+			<li><strong>Mac Studio</strong>（M5 Max 128GB・M5 Ultra 256GB の 2TB / 4TB / 8TB、選べるメモリの一覧）<br>
+				https://www.apple.com/jp/shop/buy-mac/mac-studio </li>
+			<li><strong>MacBook Pro</strong>（16インチ M5 Max 128GB の 2TB / 4TB / 8TB）<br>
+				https://www.apple.com/jp/shop/buy-mac/macbook-pro </li>
+		</ul>
+
+		<h2>販売店・通販</h2>
+
+		<ul class="srclist">
+			<li><strong>価格.com「GB10 Grace Blackwell」検索結果</strong>（ASUS・MSI・DGX Spark・GIGABYTE・Lenovo の掲載価格）<br>
+				https://search.kakaku.com/GB10%20Grace%20Blackwell/ </li>
+			<li><strong>パソコンSHOPアーク</strong>（Lenovo ThinkStation PGX の在庫・詳細スペック・OS 表記）<br>
+				https://www.ark-pc.co.jp/i/31401277/ </li>
+			<li><strong>ツクモ</strong>（Lenovo ThinkStation PGX の在庫）<br>
+				https://shop.tsukumo.co.jp/goods/2030010090065/ </li>
+		</ul>
+
+		<h2>報道</h2>
+
+		<ul class="srclist">
+			<li><strong>PC Watch「300B級LLMが動くミニPC『EVO-X5 Pro』、9月28日発売」</strong>（2026年9月16日）<br>
+				https://pc.watch.impress.co.jp/docs/news/2141237.html </li>
+		</ul>
+
+		<h2>モデルのサイズ・実測値</h2>
+
+		<ul class="srclist">
+			<li>各モデルの GGUF 配布元が公開しているファイルサイズ（Qwen・Gemma・GLM・Kimi）</li>
+			<li>前世代 MacBook Pro M4 Max 128GB での 200B 級 MoE 実測（9〜10 tok/s・2026-08-28 公開）</li>
+		</ul>
+
+		<div class="callout">
+			<p><strong>価格と在庫は変動します。</strong>ここに挙げた URL は取得時点の状態を示すもので、内容は予告なく変わります。購入を検討するときは、必ず各ページで最新の情報を確認してください。</p>
+		</div>
+	</section>
+</div>
+
+<footer>
+	<p>&laquo; <a href="../../README.html">README に戻る</a></p>
+</footer>
+
+</body>
+</html>

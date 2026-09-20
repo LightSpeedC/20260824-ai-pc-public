@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ローカルルール — AI PC 調査プロジェクト</title>
+<style>
+:root {
+	--navy1: #12224d;
+	--navy2: #2f5fbf;
+	--ink: #1c2330;
+	--ink-soft: #4a5568;
+	--line: #d9dfe8;
+	--code-bg: #f4f6fa;
+	--accent: var(--navy1);
+	--accent2: var(--navy2);
+	--soft: #f2f5fb;
+}
+/* 項目見出しは2個: 色相は 280 / 0 */
+.ch01 { --accent: hsl(280,78%,25%); --accent2: hsl(280,58%,55%); --soft: hsl(280,28%,95%); }
+.ch02 { --accent: hsl(0,78%,25%);   --accent2: hsl(0,58%,55%);   --soft: hsl(0,28%,95%); }
+
+* { box-sizing: border-box; }
+body {
+	margin: 0;
+	background: #fff;
+	color: var(--ink);
+	font-size: 15.5px;
+	line-height: 1.85;
+	font-family: "Segoe UI", "Yu Gothic UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+.titlebar {
+	background: linear-gradient(135deg, var(--navy1), var(--navy2));
+	color: #fff;
+	padding: 34px 30px 30px;
+}
+.titlebar .inner { max-width: 1600px; margin: 0 auto; }
+.titlebar h1 { font-size: 2.05em; margin: 0 0 8px; color: #fff; line-height: 1.35; }
+.titlebar p { margin: 4px 0 0; color: #d6e2ff; font-size: 0.95em; }
+.titlebar code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+
+.wrap { max-width: 1600px; margin: 0 auto; padding: 0 30px 40px; }
+.backlink { margin: 20px 0 0; font-size: 0.95em; }
+.backlink a { color: var(--navy2); background: none; }
+
+.minibar {
+	background: linear-gradient(135deg, var(--navy1), var(--navy2));
+	color: #fff;
+	padding: 10px 20px;
+	border-radius: 8px;
+	margin: 34px 0 0;
+	font-size: 1.2em;
+	font-weight: 700;
+	box-shadow: 0 4px 13px rgba(0,0,0,0.16);
+}
+
+section {
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	padding: 4px 26px 26px;
+	margin: 14px 0 34px;
+}
+section h1 {
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	font-size: 1.5em;
+	padding: 14px 20px;
+	margin: 26px 0 20px;
+	border-radius: 8px;
+	box-shadow: 0 5px 16px rgba(0,0,0,0.18);
+}
+section h1 code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+h2 {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(90deg, var(--soft), #fff);
+	color: var(--accent);
+	font-size: 1.25em;
+	padding: 6px 12px;
+	margin: 30px 0 12px;
+}
+h3 {
+	display: inline-block;
+	border-bottom: 2px dotted var(--accent2);
+	padding-bottom: 3px;
+	margin: 20px 0 8px;
+	font-size: 1.08em;
+	color: var(--ink);
+	background: none;
+}
+p { margin: 10px 0; }
+ul { margin: 10px 0; padding-left: 1.6em; }
+li { margin: 4px 0; }
+
+code {
+	background: var(--code-bg);
+	border: 1px solid var(--line);
+	color: #17335f;
+	padding: 1px 5px;
+	border-radius: 4px;
+	font-size: 0.92em;
+}
+
+.tablewrap { overflow-x: auto; margin: 14px 0; }
+table {
+	border-collapse: collapse;
+	width: 100%;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 2px 9px rgba(0,0,0,0.09);
+	font-size: 0.96em;
+}
+th {
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	text-align: left;
+	padding: 9px 12px;
+	font-weight: 700;
+}
+th code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+td {
+	padding: 9px 12px;
+	vertical-align: top;
+	border-bottom: 1px solid var(--line);
+	background: #fff;
+}
+tr:nth-child(even) td { background: #fafbfe; }
+.nowrap { white-space: nowrap; }
+
+.badge {
+	display: inline-block;
+	color: #fff;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-size: 0.84em;
+	font-weight: 700;
+	white-space: nowrap;
+}
+.b-ok { background: linear-gradient(100deg,#1d7a3c,#45b56c); }
+.b-ng  { background: linear-gradient(100deg,#a51f22,#e05a5c); }
+.b-none { background: linear-gradient(100deg,#5a6472,#97a1ae); }
+.b-warn { background: linear-gradient(100deg,#b8620a,#f0a548); }
+
+.callout {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border-radius: 0 8px 8px 0;
+	padding: 12px 16px;
+	margin: 16px 0;
+}
+.callout strong { color: var(--accent); }
+
+footer {
+	max-width: 1600px;
+	margin: 0 auto;
+	padding: 18px 30px 40px;
+	font-size: 0.95em;
+}
+footer a { color: var(--navy2); }
+</style>
+</head>
+<body>
+
+<div class="titlebar">
+	<div class="inner">
+		<h1>ローカルルール</h1>
+		<p class="lead">このプロジェクトでだけ通る決めごと</p>
+		<p class="date">📅 作成: 2026-09-05 / 更新: 2026-09-05</p>
+	</div>
+</div>
+
+<div class="wrap">
+
+<p class="backlink">&laquo; <a href="../../README.html">README に戻る</a></p>
+
+<div class="minibar">金額の取り扱い</div>
+
+<section class="ch01">
+	<h1>伏せる金額</h1>
+
+	<p>このリポジトリは公開する前提です。次の金額は<strong>ドキュメントにも Claude Code の応答にも書きません</strong>。</p>
+
+	<div class="tablewrap">
+		<table>
+			<thead>
+				<tr><th>対象</th><th>扱い</th></tr>
+			</thead>
+			<tbody>
+				<tr><td class="nowrap">見積金額</td><td><span class="badge b-ng">伏せる</span> 個別に受領した見積の提示額</td></tr>
+				<tr><td class="nowrap">見積の値引き額</td><td><span class="badge b-ng">伏せる</span> 案件値引きの額、および値引き前後の差額。<strong>差額から見積金額が逆算できます</strong></td></tr>
+				<tr><td class="nowrap">学割金額</td><td><span class="badge b-ng">伏せる</span> 学生・教職員向けストアの価格、割引額、割引率</td></tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="callout">
+		<p><strong>会話は JSONL に残ります。</strong>ファイルから消しても、応答に書けばログに残ります。ファイルと応答の両方が対象です。</p>
+	</div>
+</section>
+
+<section class="ch02">
+	<h1>書いてよい金額</h1>
+
+	<p>公開情報として誰でも参照できる金額は、そのまま書きます。</p>
+
+	<div class="tablewrap">
+		<table>
+			<thead>
+				<tr><th>対象</th><th>扱い</th></tr>
+			</thead>
+			<tbody>
+				<tr><td class="nowrap">メーカーの掲載価格</td><td><span class="badge b-ok">書く</span> キャンペーンページ・直販ページの価格</td></tr>
+				<tr><td class="nowrap">定価</td><td><span class="badge b-ok">書く</span> 標準販売価格・希望小売価格</td></tr>
+				<tr><td class="nowrap">公式ストアの通常価格</td><td><span class="badge b-ok">書く</span> 構成を選択して取得した価格</td></tr>
+			</tbody>
+		</table>
+	</div>
+
+	<p>比較表の基準価格・差額は、伏せた金額ではなく<strong>公開情報の価格を基準に組み直します</strong>。</p>
+</section>
+
+</div>
+
+<footer>
+	<p>&laquo; <a href="../../README.html">README に戻る</a></p>
+</footer>
+
+</body>
+</html>

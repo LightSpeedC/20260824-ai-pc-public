@@ -1,0 +1,518 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HP BIGサマーセール第2弾 LLM用途評価</title>
+<style>
+:root {
+	--navy1: #12224d;
+	--navy2: #2f5fbf;
+	--ink: #1c2330;
+	--ink-soft: #4a5568;
+	--line: #d9dfe8;
+	--code-bg: #f4f6fa;
+	--accent: var(--navy1);
+	--accent2: var(--navy2);
+	--soft: #f2f5fb;
+}
+/* 6章構成: 色相は 280 から 0 まで 56 刻み */
+.ch01 { --accent: hsl(280,78%,25%); --accent2: hsl(280,58%,65%); --soft: hsl(280,28%,95%); }
+.ch02 { --accent: hsl(224,78%,25%); --accent2: hsl(224,58%,65%); --soft: hsl(224,28%,95%); }
+.ch03 { --accent: hsl(168,78%,25%); --accent2: hsl(168,58%,65%); --soft: hsl(168,28%,95%); }
+.ch04 { --accent: hsl(112,78%,25%); --accent2: hsl(112,58%,65%); --soft: hsl(112,28%,95%); }
+.ch05 { --accent: hsl(56,78%,25%);  --accent2: hsl(56,58%,65%);  --soft: hsl(56,28%,95%); }
+.ch06 { --accent: hsl(0,78%,25%);   --accent2: hsl(0,58%,65%);   --soft: hsl(0,28%,95%); }
+
+* { box-sizing: border-box; }
+body {
+	margin: 0;
+	background: #fff;
+	color: var(--ink);
+	font-size: 15.5px;
+	line-height: 1.85;
+	font-family: "Segoe UI", "Yu Gothic UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+.titlebar {
+	background: linear-gradient(135deg, var(--navy1), var(--navy2));
+	color: #fff;
+	padding: 34px 30px 30px;
+}
+.titlebar .inner { max-width: 1600px; margin: 0 auto; }
+.titlebar h1 { font-size: 2.05em; margin: 0 0 8px; color: #fff; line-height: 1.35; }
+.titlebar p { margin: 4px 0 0; color: #d6e2ff; font-size: 0.95em; }
+.titlebar code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+
+.wrap { max-width: 1600px; margin: 0 auto; padding: 0 30px; }
+.backlink { margin: 20px 0 0; font-size: 0.95em; }
+.backlink a { color: var(--navy2); }
+
+section {
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	padding: 4px 26px 26px;
+	margin: 34px 0;
+}
+section h1 {
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	font-size: 1.5em;
+	padding: 14px 20px;
+	margin: 26px 0 20px;
+	border-radius: 8px;
+	box-shadow: 0 5px 16px rgba(0,0,0,0.18);
+}
+section h1 code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+h2 {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(90deg, var(--soft), #fff);
+	color: var(--accent);
+	font-size: 1.25em;
+	padding: 6px 12px;
+	margin: 30px 0 12px;
+}
+h3 {
+	display: inline-block;
+	border-bottom: 2px dotted var(--accent2);
+	padding-bottom: 3px;
+	margin: 20px 0 8px;
+	font-size: 1.08em;
+	color: var(--ink);
+}
+p { margin: 10px 0; }
+ul, ol { margin: 10px 0; padding-left: 1.6em; }
+li { margin: 4px 0; }
+
+code {
+	background: var(--code-bg);
+	border: 1px solid var(--line);
+	color: #17335f;
+	padding: 1px 5px;
+	border-radius: 4px;
+	font-size: 0.92em;
+}
+pre {
+	border-left: 5px solid var(--accent2);
+	background: var(--code-bg);
+	color: var(--ink);
+	padding: 13px 16px;
+	border-radius: 0 6px 6px 0;
+	overflow-x: auto;
+	font-size: 0.9em;
+	line-height: 1.6;
+}
+pre code { background: none; border: none; padding: 0; color: inherit; }
+
+.tablewrap { overflow-x: auto; margin: 14px 0; }
+table {
+	border-collapse: collapse;
+	width: 100%;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 2px 9px rgba(0,0,0,0.09);
+	font-size: 0.96em;
+}
+th {
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	text-align: left;
+	padding: 9px 12px;
+	font-weight: 700;
+}
+th code { background: rgba(255,255,255,0.16); color: #fff; border: none; }
+td {
+	padding: 9px 12px;
+	vertical-align: top;
+	border-bottom: 1px solid var(--line);
+	background: #fff;
+}
+tr:nth-child(even) td { background: #fafbfe; }
+.nowrap { white-space: nowrap; }
+.num { text-align: right; white-space: nowrap; }
+.hi td { box-shadow: inset 4px 0 0 #1d7a3c; }
+
+.badge {
+	display: inline-block;
+	color: #fff;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-size: 0.84em;
+	font-weight: 700;
+	white-space: nowrap;
+}
+.b-ok { background: linear-gradient(100deg,#1d7a3c,#45b56c); }
+.b-ng  { background: linear-gradient(100deg,#a51f22,#e05a5c); }
+.b-none { background: linear-gradient(100deg,#5a6472,#97a1ae); }
+.b-warn { background: linear-gradient(100deg,#b8620a,#f0a548); }
+
+.callout {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border-radius: 0 8px 8px 0;
+	padding: 12px 16px;
+	margin: 16px 0;
+}
+.callout strong { color: var(--accent); }
+
+ol.toc {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	padding: 0;
+	margin: 16px 0 6px;
+	counter-reset: toc;
+}
+ol.toc li { counter-increment: toc; margin: 0; }
+ol.toc a {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+	width: 310px;
+	max-width: 100%;
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	text-decoration: none;
+	padding: 9px 13px;
+	border-radius: 6px;
+	font-size: 0.95em;
+	line-height: 1.45;
+}
+ol.toc a::before { content: counter(toc) ". "; font-weight: 700; }
+
+footer {
+	max-width: 1600px;
+	margin: 0 auto;
+	padding: 18px 30px 40px;
+	font-size: 0.95em;
+}
+footer a { color: var(--navy2); }
+</style>
+</head>
+<body>
+
+<div class="titlebar">
+	<div class="inner">
+		<h1>HP BIGサマーセール第2弾 LLM用途評価</h1>
+		<p class="lead">セール掲載55構成を対象に、ローカルLLMを動かせるかどうかをVRAM基準で評価</p>
+		<p class="date">📅 作成: 2026-08-26 / 更新: 2026-09-19</p>
+	</div>
+</div>
+
+<div class="wrap">
+	<p class="backlink">&laquo; <a href="../../README.html">README に戻る</a></p>
+
+	<div class="callout callout-important">
+		<p><strong>この資料は 2026-09-05 時点の情報です。</strong>価格・在庫・キャンペーンはその後変わっています。最新の比較は <a href="r260916-01-ローカルLLM機種比較.html">ローカルLLM 機種比較 2026</a> を参照してください。</p>
+	</div>
+
+	<h2>目次</h2>
+	<ol class="toc">
+		<li class="ch01"><a href="#ch01">調査の目的と対象</a></li>
+		<li class="ch02"><a href="#ch02">ノートPCページに該当機がない理由</a></li>
+		<li class="ch03"><a href="#ch03">ゲーミングPC: VRAM別の全構成</a></li>
+		<li class="ch04"><a href="#ch04">見落としやすい落とし穴</a></li>
+		<li class="ch05"><a href="#ch05">動かせるモデルの目安</a></li>
+		<li class="ch06"><a href="#ch06">推奨構成と既存調査との位置づけ</a></li>
+	</ol>
+
+	<section class="ch01" id="ch01">
+		<h1>調査の目的と対象</h1>
+
+		<p>「HP BIGサマーセール第2弾」に、ローカルLLMを動かせるPCがあるかを判定しました。判断軸は<strong>GPUのVRAM容量</strong>です。量子化したモデルがVRAMに収まるかどうかが、実用になるかを直接決めるためです。</p>
+
+		<h2>対象ページ</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>ページ</th><th>掲載構成数</th><th>LLM用途の判定</th></tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="nowrap">ノートパソコン</td>
+						<td class="num">28 構成</td>
+						<td><span class="badge b-ng">該当なし</span> 全構成が統合GPU。専用VRAMを持つ機種はゼロ</td>
+					</tr>
+					<tr>
+						<td class="nowrap">ゲーミングPC</td>
+						<td class="num">27 構成</td>
+						<td><span class="badge b-ok">候補あり</span> RTX / Radeon 搭載。VRAM 8〜24GB</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h2>セール期間</h2>
+		<p><strong>2026年8月31日（月）12:59 まで</strong>。掲載価格・在庫は期間中でも変動します。</p>
+
+		<div class="callout callout-important">
+			<p><strong>本レポートのVRAM値には出典の差があります。</strong> ページに明記されていたのは RTX 5060 Ti（16GB）・RX 9060 XT（16GB）・RTX 3050（8GB）の3つだけです。それ以外は GPU 名から判断した一般的な仕様値なので、購入前に各製品ページで確認してください。</p>
+		</div>
+	</section>
+
+	<section class="ch02" id="ch02">
+		<h1>ノートPCページに該当機がない理由</h1>
+
+		<p>OmniBook 3 / 5 / 7 / X / Ultra の5シリーズ・28構成が掲載されていますが、<strong>ディスクリートGPU搭載機が1台もありません</strong>。すべて内蔵グラフィックスで、LLMはCPUとシステムメモリで動かすことになります。</p>
+
+		<h2>NPUのTOPS値は判断材料にならない</h2>
+		<p>このページは「最大45 TOPS」「最大85 TOPS NPU」を前面に出していますが、これはLLMの生成速度を意味しません。</p>
+
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>項目</th><th>実情</th></tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="nowrap">主要ツールの対応</td>
+						<td>Ollama・LM Studio・llama.cpp はいずれもNPUをほぼ使えない。実行はCPUまたは統合GPUに落ちる</td>
+					</tr>
+					<tr>
+						<td class="nowrap">NPUが使える経路</td>
+						<td>ONNX Runtime + QNN / OpenVINO など限定的。対応モデルも絞られる</td>
+					</tr>
+					<tr>
+						<td class="nowrap">TOPS値の意味</td>
+						<td>主に画像処理・小規模モデル向けの指標。LLMのトークン生成には直結しない</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h2>それでも選ぶならメモリ容量だけが軸</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>モデル</th><th>CPU</th><th>メモリ</th><th>価格（税込）</th><th>状態</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">OmniBook Ultra 14-kd スプリーム</td><td class="nowrap">Core Ultra X9 388H</td><td class="num">64GB</td><td class="num">599,900 円</td><td><span class="badge b-ng">欠品中・再入荷未定</span></td></tr>
+					<tr><td class="nowrap">OmniBook 5 14-he アドバンス</td><td class="nowrap">Snapdragon X Plus</td><td class="num">32GB</td><td class="num">194,800 円</td><td><span class="badge b-warn">Arm版Windows</span> ツール対応が限定的</td></tr>
+					<tr><td class="nowrap">OmniBook 7 Aero 13-bg パフォーマンスプラス</td><td class="nowrap">Ryzen AI 7 350</td><td class="num">32GB</td><td class="num">199,800 円</td><td>納期未定。x86では最安</td></tr>
+					<tr><td class="nowrap">OmniBook X Flip 14-kc パフォーマンス</td><td class="nowrap">Ryzen AI 7 450</td><td class="num">32GB</td><td class="num">339,800 円</td><td>即納</td></tr>
+					<tr><td class="nowrap">OmniBook 7 14-hg パフォーマンス</td><td class="nowrap">Core Ultra 7 356H</td><td class="num">32GB</td><td class="num">344,801 円</td><td>即納</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p>掲載の大半は16GBメモリ機です。OSとアプリで8GB前後を消費するため、7B級4bit量子化でも余裕がなく実用は困難です。</p>
+	</section>
+
+	<section class="ch03" id="ch03">
+		<h1>ゲーミングPC: VRAM別の全構成</h1>
+
+		<p>27構成をVRAM容量で並べ直しました。同じVRAMなら価格の安い順です。</p>
+
+		<h2>VRAM 24GB（RTX 5090 Laptop）</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>モデル</th><th>CPU</th><th>メモリ</th><th>ストレージ</th><th>価格（税込）</th></tr>
+				</thead>
+				<tbody>
+					<tr class="hi"><td class="nowrap">OMEN MAX 16（Intel）スプリームプラス</td><td class="nowrap">Core Ultra 9 275HX</td><td class="num">64GB</td><td class="nowrap">1TB</td><td class="num"><strong>732,800 円</strong></td></tr>
+					<tr><td class="nowrap">HyperX OMEN MAX 16 スプリームプラス</td><td class="nowrap">Core Ultra 9 290HX Plus</td><td class="num">48GB</td><td class="nowrap">2TB Gen5</td><td class="num">868,800 円</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h2>VRAM 16GB</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>モデル</th><th>GPU</th><th>CPU</th><th>メモリ</th><th>ストレージ</th><th>価格（税込）</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">OMEN 16L ヴェロシティ エクストラ</td><td class="nowrap">RX 9060 XT</td><td class="nowrap">i7-14650HX</td><td class="num">16GB</td><td class="nowrap">1TB</td><td class="num">249,800 円</td></tr>
+					<tr class="hi"><td class="nowrap"><strong>OMEN 16L ヴェロシティプラス v2</strong></td><td class="nowrap"><strong>RTX 5060 Ti</strong></td><td class="nowrap">i7-14650HX</td><td class="num">16GB</td><td class="nowrap">1TB</td><td class="num"><strong>279,800 円</strong></td></tr>
+					<tr><td class="nowrap">OMEN 16L パフォーマンスエクストラ v2</td><td class="nowrap">RTX 5060 Ti</td><td class="nowrap">Core Ultra 7 265F</td><td class="num">16GB</td><td class="nowrap">1TB</td><td class="num">299,800 円</td></tr>
+					<tr><td class="nowrap">OMEN 35L オブスキュア / プリエミネント</td><td class="nowrap">RX 9070 XT</td><td class="nowrap">Ryzen 7 9800X3D</td><td class="num">32GB</td><td class="nowrap">1TB</td><td class="num">359,800 円<br><span style="font-size:0.88em;color:var(--ink-soft)">納期未定</span></td></tr>
+					<tr><td class="nowrap">OMEN 35L モノリスプラス</td><td class="nowrap">RTX 5070 Ti</td><td class="nowrap">i7-14700F</td><td class="num">32GB</td><td class="nowrap">2TB</td><td class="num">409,800 円</td></tr>
+					<tr><td class="nowrap">OMEN 35L オブシディアン / ピナクル</td><td class="nowrap">RTX 5070 Ti</td><td class="nowrap">Ryzen 7 9800X3D</td><td class="num">32GB</td><td class="nowrap">2TB</td><td class="num">449,800 円</td></tr>
+					<tr><td class="nowrap">OMEN MAX 16 プリエミネント</td><td class="nowrap">RTX 5080 Laptop</td><td class="nowrap">Ryzen AI 9 HX 375</td><td class="num">32GB</td><td class="nowrap">1TB</td><td class="num">488,800 円</td></tr>
+					<tr><td class="nowrap">HyperX OMEN MAX 16 スプリーム</td><td class="nowrap">RTX 5080 Laptop</td><td class="nowrap">Core Ultra 9 290HX Plus</td><td class="num">32GB</td><td class="nowrap">1TB Gen5</td><td class="num">678,800 円</td></tr>
+					<tr><td class="nowrap">OMEN MAX 45L プリエミネント</td><td class="nowrap">RTX 5080</td><td class="nowrap">Ryzen 7 9800X3D</td><td class="num">64GB</td><td class="nowrap">4TB Gen5</td><td class="num">799,800 円</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h2>VRAM 12GB</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>モデル</th><th>GPU</th><th>CPU</th><th>メモリ</th><th>価格（税込）</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">OMEN 35L モノリス</td><td class="nowrap">RTX 5070</td><td class="nowrap">i7-14700F</td><td class="num">32GB</td><td class="num">359,800 円</td></tr>
+					<tr><td class="nowrap">OMEN 35L オニキスプラス / プレスティージプラス</td><td class="nowrap">RTX 5070</td><td class="nowrap">Ryzen 7 7800X3D</td><td class="num">32GB</td><td class="num">369,800 円</td></tr>
+					<tr><td class="nowrap">HyperX OMEN MAX 16 パフォーマンス</td><td class="nowrap">RTX 5070 Ti Laptop</td><td class="nowrap">Core Ultra 7 270HX Plus</td><td class="num">32GB</td><td class="num">529,800 円</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h2>VRAM 8GB</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>モデル</th><th>GPU</th><th>メモリ</th><th>価格（税込）</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">OMEN 16L ヴェロシティ コア</td><td class="nowrap">RTX 3050</td><td class="num">16GB</td><td class="num">189,800 円</td></tr>
+					<tr><td class="nowrap">HyperX OMEN 15（AMD）アドバンス</td><td class="nowrap">RTX 5060 Laptop</td><td class="num">16GB</td><td class="num">246,800 円</td></tr>
+					<tr><td class="nowrap">HyperX OMEN 15（Intel）パフォーマンス v2</td><td class="nowrap">RTX 5060 Laptop</td><td class="num">16GB</td><td class="num">269,800 円</td></tr>
+					<tr><td class="nowrap">OMEN MAX 16（AMD）アドバンスプラス</td><td class="nowrap">RTX 5070 Laptop</td><td class="num">32GB</td><td class="num">309,800 円</td></tr>
+					<tr><td class="nowrap">HyperX OMEN 15（AMD）アドバンスプラス</td><td class="nowrap">RTX 5070 Laptop</td><td class="num">24GB</td><td class="num">326,800 円</td></tr>
+					<tr><td class="nowrap">HyperX OMEN 16（Intel）パフォーマンス</td><td class="nowrap">RTX 5060 Laptop</td><td class="num">24GB</td><td class="num">344,880 円</td></tr>
+					<tr><td class="nowrap">HyperX OMEN 16（Intel）パフォーマンスプラス</td><td class="nowrap">RTX 5070 Laptop</td><td class="num">24GB</td><td class="num">386,800 円</td></tr>
+					<tr><td class="nowrap">HyperX OMEN 16（AMD）プリエミネントプラス</td><td class="nowrap">RTX 5070 Laptop</td><td class="num">24GB</td><td class="num">428,800 円</td></tr>
+					<tr><td class="nowrap">OMEN Transcend 14 パフォーマンスプラス G2</td><td class="nowrap">RTX 5060 Laptop</td><td class="num">32GB</td><td class="num">449,800 円</td></tr>
+					<tr><td class="nowrap">OMEN Transcend 14 スプリーム G2</td><td class="nowrap">RTX 5070 Laptop</td><td class="num">64GB</td><td class="num">692,800 円</td></tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+	<section class="ch04" id="ch04">
+		<h1>見落としやすい落とし穴</h1>
+
+		<h2>デスクトップのVRAM上限は16GB</h2>
+		<p>価格の高さとVRAM容量が一致しません。最上位の OMEN MAX 45L（799,800円・RTX 5080）でもVRAMは16GBです。</p>
+
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>形態</th><th>VRAM最大</th><th>該当機と価格</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">デスクトップ</td><td class="num">16GB</td><td>OMEN MAX 45L（RTX 5080）799,800 円</td></tr>
+					<tr><td class="nowrap">ノート</td><td class="num"><strong>24GB</strong></td><td>OMEN MAX 16（RTX 5090 Laptop）732,800 円</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p>つまり <strong>VRAM 24GB を求めるならノート型しか選択肢がなく、しかもデスクトップ最上位より安い</strong>という逆転が起きています。価格順に選ぶと外します。</p>
+
+		<h2>最安の16GB機はメモリ増設ができない</h2>
+		<p>OMEN 16L ヴェロシティプラス v2（279,800円）のシステムメモリは <code>8GB×2</code> で、スロットを使い切っています。32GBにするには<strong>増設ではなく交換</strong>が必要です。</p>
+
+		<div class="callout callout-warning">
+			<p><strong>VRAMに収まらない分をシステムメモリへオフロードする使い方では、この16GBが次のボトルネックになります。</strong> 交換用メモリの費用を初期コストに含めて見積もってください。</p>
+		</div>
+
+		<h2>Radeon構成は安いが不利</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>構成</th><th>VRAM</th><th>価格</th><th>LLM用途での評価</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">OMEN 16L（RX 9060 XT）</td><td class="num">16GB</td><td class="num">249,800 円</td><td><span class="badge b-warn">注意</span> VRAM16GB最安だが、Windows での ROCm 対応が限定的。llama.cpp は Vulkan バックエンド頼りになる</td></tr>
+					<tr><td class="nowrap">OMEN 16L（RTX 5060 Ti）</td><td class="num">16GB</td><td class="num">279,800 円</td><td><span class="badge b-ok">推奨</span> CUDA が使え、ツールの対応状況も情報量も圧倒的に有利</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p>差額3万円で CUDA が使えるかどうかが変わります。LLM用途では RTX を選ぶ価値があります。</p>
+	</section>
+
+	<section class="ch05" id="ch05">
+		<h1>動かせるモデルの目安</h1>
+
+		<p>4bit量子化（Q4_K_M 相当）でのモデルサイズと、必要VRAMの対応です。実際にはKVキャッシュがコンテキスト長に比例して増えるため、表の値ちょうどでは足りません。<strong>余裕を2〜4GB見てください。</strong></p>
+
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>VRAM</th><th>収まるモデル規模</th><th>モデルの目安サイズ</th><th>該当機の最安</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="num">8GB</td><td class="nowrap">7〜8B</td><td class="num">約 5 GB</td><td class="num">189,800 円</td></tr>
+					<tr><td class="num">12GB</td><td class="nowrap">14B</td><td class="num">約 9 GB</td><td class="num">359,800 円</td></tr>
+					<tr class="hi"><td class="num"><strong>16GB</strong></td><td class="nowrap">14B は快適<br>32B は収まらない</td><td class="num">14B: 約 9 GB<br>32B: 約 19 GB</td><td class="num"><strong>279,800 円</strong></td></tr>
+					<tr><td class="num">24GB</td><td class="nowrap"><strong>32B が快適</strong><br>70B は一部オフロード</td><td class="num">32B: 約 19 GB<br>70B: 約 40 GB</td><td class="num">732,800 円</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="callout callout-important">
+			<p><strong>32B級を動かしたいかどうかが、28万円と73万円の分岐点です。</strong> 16GBでは 32B（約19GB）が収まらず、24GBが必要になります。そしてVRAM 24GBはノート型の1機種しかありません。</p>
+		</div>
+	</section>
+
+	<section class="ch06" id="ch06">
+		<h1>推奨構成と既存調査との位置づけ</h1>
+
+		<h2>用途別の推奨</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>狙い</th><th>モデル</th><th>GPU（VRAM）</th><th>構成</th><th>価格（税込）</th></tr>
+				</thead>
+				<tbody>
+					<tr class="hi">
+						<td class="nowrap"><strong>コスパ最良</strong></td>
+						<td class="nowrap">OMEN 16L ヴェロシティプラス v2</td>
+						<td class="nowrap">RTX 5060 Ti <strong>16GB</strong></td>
+						<td class="nowrap">i7-14650HX / 16GB / 1TB</td>
+						<td class="num"><strong>279,800 円</strong></td>
+					</tr>
+					<tr>
+						<td class="nowrap">32B級を動かす</td>
+						<td class="nowrap">OMEN MAX 16（Intel）スプリームプラス</td>
+						<td class="nowrap">RTX 5090 Laptop <strong>24GB</strong></td>
+						<td class="nowrap">Ultra 9 275HX / 64GB / 1TB</td>
+						<td class="num">732,800 円</td>
+					</tr>
+					<tr>
+						<td class="nowrap">まず試す</td>
+						<td class="nowrap">HyperX OMEN 15（AMD）アドバンス</td>
+						<td class="nowrap">RTX 5060 Laptop 8GB</td>
+						<td class="nowrap">Ryzen 7 8745HX / 16GB / 1TB</td>
+						<td class="num">246,800 円</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h2>これまでの調査との比較</h2>
+		<div class="tablewrap">
+			<table>
+				<thead>
+					<tr><th>機材</th><th>AIに使えるメモリ</th><th>扱えるモデル規模</th><th>価格</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="nowrap">現環境（HP Pavilion Gaming 15-dk2）</td><td class="num">4GB（VRAM）</td><td class="nowrap">7B級 4bit が上限</td><td class="nowrap">実売10万円台</td></tr>
+					<tr><td class="nowrap">OMEN 16L（RTX 5060 Ti）</td><td class="num">16GB（VRAM）</td><td class="nowrap">14B級が快適</td><td class="num">279,800 円</td></tr>
+					<tr><td class="nowrap">OMEN MAX 16（RTX 5090 Laptop）</td><td class="num">24GB（VRAM）</td><td class="nowrap">32B級が快適</td><td class="num">732,800 円</td></tr>
+					<tr><td class="nowrap">Mac Studio M3 Ultra</td><td class="num">96GB（統合）</td><td class="nowrap">70B級</td><td class="num">1,169,800 円</td></tr>
+					<tr><td class="nowrap">HP ZGX Nano G1n</td><td class="num">128GB（統合）</td><td class="nowrap">最大2,000億パラメータ</td><td class="num">998,800 円</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p>詳細は <a href="gb10-ai-workstation-comparison.html">GB10搭載AIワークステーション 価格比較調査</a> と <a href="env-pc-spec.html">実行環境PC スペック調査</a> を参照してください。</p>
+
+		<div class="callout callout-important">
+			<p><strong>ゲーミングPCとAIワークステーションは、同じ価格帯でも守備範囲が違います。</strong> RTXはVRAMに収まる範囲なら高速ですが容量の壁が低く、GB10やMac Studioは容量が大きい代わりに帯域あたりの単価が高くなります。動かしたいモデルのサイズが先に決まっていないと、どちらを選んでも過剰か不足になります。</p>
+		</div>
+
+		<h2>参照元</h2>
+		<ul>
+			<li>HP公式 BIGサマーセール第2弾 ノートパソコン（<code>jp.ext.hp.com</code>）— 28構成</li>
+			<li>HP公式 BIGサマーセール第2弾 ゲーミングパソコン（同上）— 27構成</li>
+			<li>取得日: 2026-08-26 / セール期限: 2026-08-31 12:59</li>
+		</ul>
+	</section>
+</div>
+
+<footer>
+	<p>&laquo; <a href="../../README.html">README に戻る</a></p>
+</footer>
+
+</body>
+</html>
