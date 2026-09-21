@@ -234,7 +234,7 @@ footer a { color: var(--navy2); background: none; }
 	<div class="inner">
 		<h1>ローカルLLM 機種比較 2026</h1>
 		<p class="lead">いま購入できる構成だけを対象に、統合メモリ 64GB・128GB・256GB × ストレージ 2TB・4TB・8TB で並べ、どのモデルがどこまで動くかを判定する</p>
-		<p class="date">📅 作成: 2026-09-16 / 更新: 2026-09-20</p>
+		<p class="date">📅 作成: 2026-09-16 / 更新: 2026-09-21</p>
 	</div>
 </div>
 
@@ -763,7 +763,7 @@ footer a { color: var(--navy2); background: none; }
 			<tbody>
 				<tr><td class="nowrap">AI に使えるメモリ</td><td class="num">4 GB（VRAM）</td><td class="num">128 GB（統合）</td><td><span class="badge b-ng">32倍差</span></td></tr>
 				<tr><td class="nowrap">メモリ帯域</td><td class="num">約 51.2 GB/s<br>（DDR4-3200 2ch）</td><td class="num">273 GB/s<br>（LPDDR5x 256bit）</td><td><strong>約 5.3倍</strong></td></tr>
-				<tr><td class="nowrap">システムメモリ</td><td class="num">16 GB（交換で最大32GB）</td><td class="num">128 GB（オンボード・増設不可）</td><td>—</td></tr>
+				<tr><td class="nowrap">システムメモリ</td><td class="num">32 GB<br><span style="font-size:0.88em;color:var(--ink-soft)">16GB×2・スロット2本とも使用済み</span></td><td class="num">128 GB（オンボード・増設不可）</td><td>—</td></tr>
 				<tr><td class="nowrap">CPU</td><td class="nowrap">4コア8スレッド</td><td class="nowrap">Arm 20コア</td><td>5倍</td></tr>
 				<tr><td class="nowrap">扱えるモデル規模</td><td>7B 級 4bit 量子化が上限</td><td>125B 級 4bit（総パラメータ 355B まで）</td><td>—</td></tr>
 				<tr><td class="nowrap">OS</td><td class="nowrap">Windows 11</td><td class="nowrap">NVIDIA DGX OS</td><td>—</td></tr>
@@ -772,7 +772,7 @@ footer a { color: var(--navy2); background: none; }
 		</div>
 
 		<div class="callout callout-important">
-			<p><strong>VRAM 4GB は、アップグレードでは越えられない壁です。</strong>CPU は BGA 実装で交換できず、メモリを 32GB に増やしても VRAM は増えません。システムメモリへオフロードすれば大きいモデルも一応動きますが、帯域が 51.2 GB/s しかないため実用的な速度になりません。<strong>開発機としては十分でも、中〜大規模モデルのローカル実行は別のマシンが要ります。</strong></p>
+			<p><strong>VRAM 4GB は、アップグレードでは越えられない壁です。</strong>システムメモリは 32GB へ増設済みですが、<strong>VRAM は 4GB のまま変わりません</strong>。CPU も BGA 実装で交換できません。システムメモリへオフロードすれば大きいモデルも一応動きますが、帯域が 51.2 GB/s しかないため実用的な速度になりません。<strong>増設で改善するのは同時に扱えるプロセスの数であって、載せられるモデルの大きさではありません。</strong></p>
 		</div>
 	</section>
 
