@@ -4,7 +4,7 @@ NVIDIA GB10 Grace Blackwell を積んだ8機種を同一構成（128GB / 4TB）�
 
 > 📅 作成: 2026-08-24 / 更新: 2026-09-19
 
-« [README に戻る](../../README.md)
+[^^](../../README.md)
 
 > [!IMPORTANT]
 > <strong>この資料は 2026-09-05 時点の情報です。</strong>価格・在庫・キャンペーンはその後変わっています。最新の比較は [ローカルLLM 機種比較 2026](r260916-01-ローカルLLM機種比較.md) を参照してください。
@@ -325,4 +325,4 @@ Apple Mac を含めると、選定軸が「価格」から「容量か帯域か�
 - MSI 公式（storage-asset.msi.com）— EdgeXpert MS-C931 製品画像
 - **Apple 公式ストア（apple.com/jp）**— Mac Studio・MacBook Pro・Mac mini の構成を実際に選択して取得した価格。仕様ページからメモリ帯域と構成上限
 
-« [README に戻る](../../README.md)
+[^^](../../README.md)

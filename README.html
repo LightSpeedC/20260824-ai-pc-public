@@ -205,6 +205,26 @@ ol.toc a::before { content: counter(toc) ". "; font-weight: 700; }
 }
 .photocell { width: 180px; }
 .photocell img { max-width: 165px; }
+
+.homelink {
+	display: inline-flex;
+	align-items: center;
+	background: linear-gradient(100deg, var(--navy1), var(--navy2));
+	color: #fff;
+	text-decoration: none;
+	padding: 7px 14px;
+	border-radius: 8px;
+	box-shadow: 0 2px 9px rgba(0,0,0,0.15);
+}
+.homebar { margin: 20px 0 0; }
+
+footer {
+	max-width: 1600px;
+	margin: 0 auto;
+	padding: 18px 30px 30px;
+	font-size: 0.95em;
+	background: none;
+}
 </style>
 </head>
 <body>
@@ -218,6 +238,8 @@ ol.toc a::before { content: counter(toc) ". "; font-weight: 700; }
 </div>
 
 <div class="wrap">
+
+	<p class="homebar"><a class="homelink" href="../" aria-label="戻る"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.4 0.8 7.3v0.9h2.1V14h4.0v-3.9h2.2V14h4.0V8.2h2.1V7.3z"/></svg></a></p>
 
 	<h2>目次</h2>
 	<ol class="toc">
@@ -373,6 +395,10 @@ ol.toc a::before { content: counter(toc) ". "; font-weight: 700; }
 	</section>
 
 </div>
+
+<footer>
+	<p><a class="homelink" href="../" aria-label="戻る"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.4 0.8 7.3v0.9h2.1V14h4.0v-3.9h2.2V14h4.0V8.2h2.1V7.3z"/></svg></a></p>
+</footer>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
 
 > 📅 作成: 2026-08-26 / 更新: 2026-09-19
 
-« [README に戻る](../../README.md)
+[^^](../../README.md)
 
 > [!IMPORTANT]
 > <strong>この資料は 2026-09-05 時点の情報です。</strong>価格・在庫・キャンペーンはその後変わっています。最新の比較は [ローカルLLM 機種比較 2026](r260916-01-ローカルLLM機種比較.md) を参照してください。
@@ -188,4 +188,4 @@ Apple は LM Studio での「最初のトークン生成までの時間」を比
 
 関連レポート: [GB10搭載AIワークステーション 価格比較調査](gb10-ai-workstation-comparison.md)、[実行環境PC スペック調査](env-pc-spec.md)、[HP BIGサマーセール第2弾 LLM用途評価](hp-summersale-llm-pc.md)
 
-« [README に戻る](../../README.md)
+[^^](../../README.md)
