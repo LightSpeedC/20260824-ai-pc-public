@@ -16,9 +16,10 @@
 	--accent2: var(--navy2);
 	--soft: #f2f5fb;
 }
-/* 項目見出しは2個: 色相は 280 / 0 */
+/* 章は3個: 色相は 280 / 140 / 0 */
 .ch01 { --accent: hsl(280,78%,25%); --accent2: hsl(280,58%,55%); --soft: hsl(280,28%,95%); }
-.ch02 { --accent: hsl(0,78%,25%);   --accent2: hsl(0,58%,55%);   --soft: hsl(0,28%,95%); }
+.ch02 { --accent: hsl(140,78%,25%); --accent2: hsl(140,58%,55%); --soft: hsl(140,28%,95%); }
+.ch03 { --accent: hsl(0,78%,25%);   --accent2: hsl(0,58%,55%);   --soft: hsl(0,28%,95%); }
 
 * { box-sizing: border-box; }
 body {
@@ -52,23 +53,12 @@ body {
 }
 .homebar { margin: 20px 0 0; }
 
-.minibar {
-	background: linear-gradient(135deg, var(--navy1), var(--navy2));
-	color: #fff;
-	padding: 10px 20px;
-	border-radius: 8px;
-	margin: 34px 0 0;
-	font-size: 1.2em;
-	font-weight: 700;
-	box-shadow: 0 4px 13px rgba(0,0,0,0.16);
-}
-
 section {
 	background: linear-gradient(180deg, var(--soft), #fff);
 	border: 1px solid var(--line);
 	border-radius: 10px;
 	padding: 4px 26px 26px;
-	margin: 14px 0 34px;
+	margin: 34px 0;
 }
 section h1 {
 	background: linear-gradient(100deg, var(--accent), var(--accent2));
@@ -174,15 +164,13 @@ footer a { color: var(--navy2); }
 	<div class="inner">
 		<h1>ローカルルール</h1>
 		<p class="lead">このプロジェクトでだけ通る決めごと</p>
-		<p class="date">📅 作成: 2026-09-05 / 更新: 2026-09-05</p>
+		<p class="date">📅 作成: 2026-09-05 / 更新: 2026-09-23</p>
 	</div>
 </div>
 
 <div class="wrap">
 
 <p class="homebar"><a class="homelink" href="../../README.html" aria-label="戻る"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.4 0.8 7.3v0.9h2.1V14h4.0v-3.9h2.2V14h4.0V8.2h2.1V7.3z"/></svg></a></p>
-
-<div class="minibar">金額の取り扱い</div>
 
 <section class="ch01">
 	<h1>伏せる金額</h1>
@@ -226,6 +214,25 @@ footer a { color: var(--navy2); }
 	</div>
 
 	<p>比較表の基準価格・差額は、伏せた金額ではなく<strong>公開情報の価格を基準に組み直します</strong>。</p>
+</section>
+
+<section class="ch03">
+	<h1>価格の再確認</h1>
+
+	<p>GB10 搭載機の通販価格は数日で往復します。実例として、DGX Spark が 4 日で 18 万円下落し、その 2 日後に 73 万円上昇しました。<strong>最安の機種そのものが入れ替わります。</strong></p>
+
+	<div class="tablewrap">
+		<table>
+			<thead>
+				<tr><th>項目</th><th>決めごと</th></tr>
+			</thead>
+			<tbody>
+				<tr><td class="nowrap">周期</td><td><strong>2 日</strong>ごとに再確認する</td></tr>
+				<tr><td class="nowrap">確認後の更新</td><td>資料の更新日と、1 章の「価格はすべて yyyy-mm-dd に確認しました」の日付を揃える</td></tr>
+				<tr><td class="nowrap">動いていないとき</td><td>更新日も変えない（体裁だけの変更に当たる）</td></tr>
+			</tbody>
+		</table>
+	</div>
 </section>
 
 </div>
