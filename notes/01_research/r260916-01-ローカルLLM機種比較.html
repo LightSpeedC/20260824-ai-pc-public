@@ -216,7 +216,6 @@ ol.toc a::before { content: counter(toc) ". "; font-weight: 700; }
 .shot {
 	max-width: 100%;
 	height: auto;
-	border: 1px solid var(--line);
 	border-radius: 6px;
 	background: #fff;
 }
@@ -243,7 +242,7 @@ footer a { color: var(--navy2); background: none; }
 	<div class="inner">
 		<h1>ローカルLLM 機種比較 2026</h1>
 		<p class="lead">いま購入できる構成だけを対象に、統合メモリ 64GB・128GB・256GB × ストレージ 2TB・4TB・8TB で並べ、どのモデルがどこまで動くかを判定する</p>
-		<p class="date">📅 作成: 2026-09-16 / 更新: 2026-09-22</p>
+		<p class="date">📅 作成: 2026-09-16 / 更新: 2026-09-23</p>
 	</div>
 </div>
 
@@ -335,12 +334,12 @@ footer a { color: var(--navy2); background: none; }
 
 		<div class="tablewrap">
 		<table>
-			<thead><tr><th>機種</th><th>形態</th><th>統合メモリ</th><th>帯域</th><th>ストレージ</th><th>OS</th></tr></thead>
+			<thead><tr><th>写真</th><th>機種</th><th>形態</th><th>統合メモリ</th><th>帯域</th><th>ストレージ</th><th>OS</th></tr></thead>
 			<tbody>
-				<tr><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-mini">Mac mini M5 Pro</a></td><td class="nowrap">据置</td><td class="nowrap">24 / 48 / <strong>64GB</strong></td><td class="num">307 GB/s</td><td class="nowrap">512GB〜8TB</td><td class="nowrap">macOS</td></tr>
-				<tr><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Max</a></td><td class="nowrap">据置</td><td class="nowrap">48 / 64 / <strong>128GB</strong></td><td class="num">614 GB/s</td><td class="nowrap">512GB〜8TB</td><td class="nowrap">macOS</td></tr>
-				<tr><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Ultra</a></td><td class="nowrap">据置</td><td class="nowrap">96 / <strong>256GB</strong></td><td class="num">1.2 TB/s</td><td class="nowrap">1TB〜16TB</td><td class="nowrap">macOS</td></tr>
-				<tr><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/macbook-pro">MacBook Pro 16インチ M5 Max</a></td><td class="nowrap"><strong>ノート</strong></td><td class="nowrap">48 / 64 / <strong>128GB</strong></td><td class="num">614 GB/s</td><td class="nowrap">2TB〜8TB</td><td class="nowrap">macOS</td></tr>
+				<tr><td class="photocell"><img class="shot" src="images/apple_mac_mini_m6.jpg" alt="Mac mini"></td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-mini">Mac mini M5 Pro</a></td><td class="nowrap">据置</td><td class="nowrap">24 / 48 / <strong>64GB</strong></td><td class="num">307 GB/s</td><td class="nowrap">512GB〜8TB</td><td class="nowrap">macOS</td></tr>
+				<tr><td class="photocell"><img class="shot" src="images/apple_mac_studio.jpg" alt="Mac Studio"></td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Max</a></td><td class="nowrap">据置</td><td class="nowrap">48 / 64 / <strong>128GB</strong></td><td class="num">614 GB/s</td><td class="nowrap">512GB〜8TB</td><td class="nowrap">macOS</td></tr>
+				<tr><td class="photocell"><img class="shot" src="images/apple_mac_studio_m5.jpg" alt="Mac Studio"></td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Ultra</a></td><td class="nowrap">据置</td><td class="nowrap">96 / <strong>256GB</strong></td><td class="num">1.2 TB/s</td><td class="nowrap">1TB〜16TB</td><td class="nowrap">macOS</td></tr>
+				<tr><td class="photocell"><img class="shot" src="images/apple_macbook_pro.jpg" alt="MacBook Pro"></td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/macbook-pro">MacBook Pro 16インチ M5 Max</a></td><td class="nowrap"><strong>ノート</strong></td><td class="nowrap">48 / 64 / <strong>128GB</strong></td><td class="num">614 GB/s</td><td class="nowrap">2TB〜8TB</td><td class="nowrap">macOS</td></tr>
 			</tbody>
 		</table>
 		</div>
@@ -407,9 +406,10 @@ footer a { color: var(--navy2); background: none; }
 
 		<div class="tablewrap">
 		<table>
-			<thead><tr><th>製品</th><th>価格（税込）</th><th>最安との差</th><th>入手先</th><th>保証・注記</th></tr></thead>
+			<thead><tr><th>写真</th><th>製品</th><th>価格（税込）</th><th>最安との差</th><th>入手先</th><th>保証・注記</th></tr></thead>
 			<tbody>
 				<tr class="hi">
+					<td class="photocell"><img class="shot" src="images/hp_zgx_nano_g1n.jpg" alt="HP ZGX Nano G1n"></td>
 					<td class="nowrap"><strong>HP ZGX Nano G1n</strong></td>
 					<td class="num"><strong>1,098,900 円</strong><br><span style="font-size:0.88em;color:var(--ink-soft)">定価 2,125,200 円</span></td>
 					<td class="num">基準</td>
@@ -417,6 +417,7 @@ footer a { color: var(--navy2); background: none; }
 					<td><span class="badge b-ok">メーカー直販</span> 1年センドバック。<span class="badge b-warn">期間限定 9/30 まで</span></td>
 				</tr>
 				<tr>
+					<td class="photocell"><img class="shot" src="images/msi_edgexpert.jpg" alt="MSI EdgeXpert"></td>
 					<td class="nowrap">MSI EdgeXpert</td>
 					<td class="num">1,110,659 円</td>
 					<td class="num">+11,759 円</td>
@@ -424,6 +425,7 @@ footer a { color: var(--navy2); background: none; }
 					<td><span class="badge b-warn">要確認</span> 出品者・保証条件は個別確認</td>
 				</tr>
 				<tr>
+					<td class="photocell"><img class="shot" src="images/gigabyte_ai_top_atom.png" alt="GIGABYTE AI TOP ATOM"></td>
 					<td class="nowrap">GIGABYTE AI TOP ATOM</td>
 					<td class="num">1,366,800 円</td>
 					<td class="num">+267,900 円</td>
@@ -431,6 +433,7 @@ footer a { color: var(--navy2); background: none; }
 					<td>型番 ATAGB10-9001</td>
 				</tr>
 				<tr>
+					<td class="photocell"><img class="shot" src="images/acer_veriton_gn100.jpg" alt="Acer Veriton GN100"></td>
 					<td class="nowrap">Acer Veriton GN100</td>
 					<td class="num">1,386,000 円<br><span style="font-size:0.88em;color:var(--ink-soft)">通常 1,999,800 円</span></td>
 					<td class="num">+287,100 円</td>
@@ -438,6 +441,7 @@ footer a { color: var(--navy2); background: none; }
 					<td><span class="badge b-ok">在庫あり</span> セール価格は 9/25 まで</td>
 				</tr>
 				<tr>
+					<td class="photocell"><img class="shot" src="images/nvidia_dgx_spark.jpg" alt="NVIDIA DGX Spark"></td>
 					<td class="nowrap">NVIDIA DGX Spark</td>
 					<td class="num">1,821,521 円</td>
 					<td class="num">+722,621 円</td>
@@ -445,6 +449,7 @@ footer a { color: var(--navy2); background: none; }
 					<td>リファレンスそのもの。ソフトウェア情報が最も見つけやすい。<span class="badge b-warn">要確認</span> <strong>2日前まで最安だったが、その出品が消えた</strong></td>
 				</tr>
 				<tr>
+					<td class="photocell"><img class="shot" src="images/dell_pro_max_gb10.jpg" alt="Dell Pro Max with GB10"></td>
 					<td class="nowrap">Dell Pro Max with GB10</td>
 					<td class="num">2,140,820 円<br><span style="font-size:0.88em;color:var(--ink-soft)">配送料込</span></td>
 					<td class="num">+1,041,920 円</td>
@@ -452,6 +457,7 @@ footer a { color: var(--navy2); background: none; }
 					<td><span class="badge b-ok">オンサイト保守</span> 12ヶ月。受注後 10日〜2週間で納品</td>
 				</tr>
 				<tr>
+					<td class="photocell"><img class="shot" src="images/lenovo_thinkstation_pgx.png" alt="Lenovo ThinkStation PGX"></td>
 					<td class="nowrap">Lenovo ThinkStation PGX</td>
 					<td class="num">2,176,790 円</td>
 					<td class="num">+1,077,890 円</td>
@@ -472,9 +478,9 @@ footer a { color: var(--navy2); background: none; }
 
 		<div class="tablewrap">
 		<table>
-			<thead><tr><th>製品</th><th>メモリ</th><th>ストレージ</th><th>価格（税込）</th><th>入手先</th></tr></thead>
+			<thead><tr><th>写真</th><th>製品</th><th>メモリ</th><th>ストレージ</th><th>価格（税込）</th><th>入手先</th></tr></thead>
 			<tbody>
-				<tr><td class="nowrap">ASUS Ascent GX10<br><span style="font-size:0.88em;color:var(--ink-soft)">GX10-GG0003BN</span></td><td class="nowrap">128GB</td><td class="nowrap"><strong>1TB</strong></td><td class="num">1,587,815 円</td><td class="nowrap">Amazon</td></tr>
+				<tr><td class="photocell"><img class="shot" src="images/asus_ascent_gx10.png" alt="ASUS Ascent GX10"></td><td class="nowrap">ASUS Ascent GX10<br><span style="font-size:0.88em;color:var(--ink-soft)">GX10-GG0003BN</span></td><td class="nowrap">128GB</td><td class="nowrap"><strong>1TB</strong></td><td class="num">1,587,815 円</td><td class="nowrap">Amazon</td></tr>
 			</tbody>
 		</table>
 		</div>
@@ -650,19 +656,25 @@ footer a { color: var(--navy2); background: none; }
 			<p><strong>Mac は既定でGPUに割り当てる上限が全量より低く設定されています。</strong>大きなモデルを載せるときは割り当て上限を引き上げる設定が要ります。上表はその調整を行った前提の数値です。調整しない場合、使える量はさらに小さくなります。</p>
 		</div>
 
+		<div class="callout callout-important">
+			<p><strong>以下の表の「推定速度」は、<a href="#ch04">4章</a>の実測（M4 Max・546 GB/s・90GB のモデルで 9〜10 tok/s）を基準に、帯域比とモデルサイズ比だけで機械的に外挿した値です。</strong>MoE モデルは総パラメータの一部（活性パラメータ）しか読まないため、活性比率が低いモデル（例: Qwen3.8-Flash-Next は 125B 中 6B）ほど、この推定より<strong>実際は速くなる</strong>可能性があります。実測ではなく目安として扱ってください。</p>
+		</div>
+
 		<h2>64GB（Mac mini M5 Pro）で動くもの</h2>
+
+		<p>機種が Mac mini M5 Pro（307 GB/s）に限定されるため、推定速度もこの帯域で計算しています。</p>
 
 		<div class="tablewrap">
 		<table>
-			<thead><tr><th>判定</th><th>モデル</th><th>量子化</th><th>サイズ</th></tr></thead>
+			<thead><tr><th>判定</th><th>モデル</th><th>量子化</th><th>サイズ</th><th>推定速度</th></tr></thead>
 			<tbody>
-				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Gemma 4 31B</td><td class="nowrap">QAT 4bit</td><td class="num">17.5 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Gemma 4 26B-A4B</td><td class="nowrap">QAT 4bit</td><td class="num">14.4 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Qwen3.6-35B-A3B</td><td class="nowrap">4bit</td><td class="num">22.7 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Qwen3.8-27B</td><td class="nowrap">4bit</td><td class="num">約 17 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-warn">条件付き</span></td><td class="nowrap">Gemma 4 31B</td><td class="nowrap">BF16（無量子化）</td><td class="num">69.9 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">Qwen3.8-Flash-Next</td><td class="nowrap">1bit でも</td><td class="num">72.5 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">GLM-4.6 以上</td><td class="nowrap">1bit でも</td><td class="num">84 GB 以上</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Gemma 4 31B</td><td class="nowrap">QAT 4bit</td><td class="num">17.5 GB</td><td class="num">約 27 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Gemma 4 26B-A4B</td><td class="nowrap">QAT 4bit</td><td class="num">14.4 GB</td><td class="num">約 33 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Qwen3.6-35B-A3B</td><td class="nowrap">4bit</td><td class="num">22.7 GB</td><td class="num">約 21 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Qwen3.8-27B</td><td class="nowrap">4bit</td><td class="num">約 17 GB</td><td class="num">約 28 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-warn">条件付き</span></td><td class="nowrap">Gemma 4 31B</td><td class="nowrap">BF16（無量子化）</td><td class="num">69.9 GB</td><td class="num">約 7 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">Qwen3.8-Flash-Next</td><td class="nowrap">1bit でも</td><td class="num">72.5 GB</td><td>—</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">GLM-4.6 以上</td><td class="nowrap">1bit でも</td><td class="num">84 GB 以上</td><td>—</td></tr>
 			</tbody>
 		</table>
 		</div>
@@ -671,17 +683,19 @@ footer a { color: var(--navy2); background: none; }
 
 		<h2>128GB（GB10 搭載機 / Mac Studio M5 Max / MacBook Pro M5 Max）で動くもの</h2>
 
+		<p>この容量は3機種にまたがり、帯域も 273〜614 GB/s とばらつくため機種を1つに絞れません。推定速度は <strong>Mac Studio M5 Ultra 256GB（1.2 TB/s）</strong>の値を代わりに載せています。GB10 搭載機・Mac Studio M5 Max・MacBook Pro M5 Max では、この値より遅くなります。</p>
+
 		<div class="tablewrap">
 		<table>
-			<thead><tr><th>判定</th><th>モデル</th><th>量子化</th><th>サイズ</th></tr></thead>
+			<thead><tr><th>判定</th><th>モデル</th><th>量子化</th><th>サイズ</th><th>推定速度<br><span style="font-size:0.85em;font-weight:400">（M5 Ultra 256GB）</span></th></tr></thead>
 			<tbody>
-				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Qwen3.8-Flash-Next</td><td class="nowrap">4bit (IQ4_XS)</td><td class="num">93.7 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">GLM-4.6</td><td class="nowrap">2bit (IQ2_XXS)</td><td class="num">115 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Qwen3-235B-A22B</td><td class="nowrap">3bit</td><td class="num">約 112 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-warn">条件付き</span></td><td class="nowrap">GLM-4.6</td><td class="nowrap">2bit (Q2_K_XL)</td><td class="num">135 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">Qwen3-235B-A22B</td><td class="nowrap">4bit</td><td class="num">142 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">GLM-5 / GLM-5.2</td><td class="nowrap">1bit でも</td><td class="num">176 GB 以上</td></tr>
-				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">Kimi K2 系</td><td class="nowrap">最小でも</td><td class="num">230 GB 以上</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Qwen3.8-Flash-Next</td><td class="nowrap">4bit (IQ4_XS)</td><td class="num">93.7 GB</td><td class="num">約 20 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">GLM-4.6</td><td class="nowrap">2bit (IQ2_XXS)</td><td class="num">115 GB</td><td class="num">約 16 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Qwen3-235B-A22B</td><td class="nowrap">3bit</td><td class="num">約 112 GB</td><td class="num">約 17 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-warn">条件付き</span></td><td class="nowrap">GLM-4.6</td><td class="nowrap">2bit (Q2_K_XL)</td><td class="num">135 GB</td><td class="num">約 14 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">Qwen3-235B-A22B</td><td class="nowrap">4bit</td><td class="num">142 GB</td><td>—</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">GLM-5 / GLM-5.2</td><td class="nowrap">1bit でも</td><td class="num">176 GB 以上</td><td>—</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">Kimi K2 系</td><td class="nowrap">最小でも</td><td class="num">230 GB 以上</td><td>—</td></tr>
 			</tbody>
 		</table>
 		</div>
@@ -694,17 +708,19 @@ footer a { color: var(--navy2); background: none; }
 
 		<h2>256GB（Mac Studio M5 Ultra）で動くもの</h2>
 
+		<p>機種が Mac Studio M5 Ultra（1.2 TB/s）に限定されるため、推定速度もこの帯域で計算しています。</p>
+
 		<div class="tablewrap">
 		<table>
-			<thead><tr><th>判定</th><th>モデル</th><th>量子化</th><th>サイズ</th></tr></thead>
+			<thead><tr><th>判定</th><th>モデル</th><th>量子化</th><th>サイズ</th><th>推定速度</th></tr></thead>
 			<tbody>
-				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Qwen3-235B-A22B</td><td class="nowrap">4bit (Q4_K_M)</td><td class="num">142 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">GLM-4.6</td><td class="nowrap">4bit (Q4_K_XL)</td><td class="num">204 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">GLM-5</td><td class="nowrap">2bit (IQ2_XXS)</td><td class="num">241 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">GLM-5.2</td><td class="nowrap">2bit (IQ2_M)</td><td class="num">239 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-warn">条件付き</span></td><td class="nowrap">Kimi K2（初代）</td><td class="nowrap">1.8bit</td><td class="num">230〜244 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">Kimi K2.6 / K2.7</td><td class="nowrap">2bit が最小</td><td class="num">339〜340 GB</td></tr>
-				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">Qwen3.8-Max</td><td class="nowrap">—</td><td class="num">約 2.5 TB</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Qwen3-235B-A22B</td><td class="nowrap">4bit (Q4_K_M)</td><td class="num">142 GB</td><td class="num">約 13 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">GLM-4.6</td><td class="nowrap">4bit (Q4_K_XL)</td><td class="num">204 GB</td><td class="num">約 9.2 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">GLM-5</td><td class="nowrap">2bit (IQ2_XXS)</td><td class="num">241 GB</td><td class="num">約 7.8 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">GLM-5.2</td><td class="nowrap">2bit (IQ2_M)</td><td class="num">239 GB</td><td class="num">約 7.9 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-warn">条件付き</span></td><td class="nowrap">Kimi K2（初代）</td><td class="nowrap">1.8bit</td><td class="num">230〜244 GB</td><td class="num">約 7.7〜8.2 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">Kimi K2.6 / K2.7</td><td class="nowrap">2bit が最小</td><td class="num">339〜340 GB</td><td>—</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">Qwen3.8-Max</td><td class="nowrap">—</td><td class="num">約 2.5 TB</td><td>—</td></tr>
 			</tbody>
 		</table>
 		</div>
@@ -774,7 +790,8 @@ footer a { color: var(--navy2); background: none; }
 				<tr><td class="nowrap">メモリ帯域</td><td class="num">約 51.2 GB/s<br>（DDR4-3200 2ch）</td><td class="num">273 GB/s<br>（LPDDR5x 256bit）</td><td><strong>約 5.3倍</strong></td></tr>
 				<tr><td class="nowrap">システムメモリ</td><td class="num">32 GB<br><span style="font-size:0.88em;color:var(--ink-soft)">16GB×2・スロット2本とも使用済み</span></td><td class="num">128 GB（オンボード・増設不可）</td><td>—</td></tr>
 				<tr><td class="nowrap">CPU</td><td class="nowrap">4コア8スレッド</td><td class="nowrap">Arm 20コア</td><td>5倍</td></tr>
-				<tr><td class="nowrap">扱えるモデル規模</td><td>7B 級 4bit 量子化が上限</td><td>125B 級 4bit（総パラメータ 355B まで）</td><td>—</td></tr>
+				<tr><td class="nowrap">ストレージ</td><td class="nowrap">1 TB</td><td class="nowrap">4 TB</td><td>4倍</td></tr>
+				<tr><td class="nowrap">扱えるモデル規模</td><td>2B 級以下（量子化なし）<br>7B 級（4bit）</td><td>55B 級（量子化なし）<br>125B 級（4bit、総パラメータ 355B まで）</td><td>—</td></tr>
 				<tr><td class="nowrap">OS</td><td class="nowrap">Windows 11</td><td class="nowrap">NVIDIA DGX OS</td><td>—</td></tr>
 			</tbody>
 		</table>
@@ -783,6 +800,8 @@ footer a { color: var(--navy2); background: none; }
 		<div class="callout callout-important">
 			<p><strong>VRAM 4GB は、アップグレードでは越えられない壁です。</strong>システムメモリは 32GB へ増設済みですが、<strong>VRAM は 4GB のまま変わりません</strong>。CPU も BGA 実装で交換できません。システムメモリへオフロードすれば大きいモデルも一応動きますが、帯域が 51.2 GB/s しかないため実用的な速度になりません。<strong>増設で改善するのは同時に扱えるプロセスの数であって、載せられるモデルの大きさではありません。</strong></p>
 		</div>
+
+		<p>CPU・GPU の型番、ストレージ・ネットワーク・電源の構成、仮想化の状態など、さらに詳しい実測は<a href="env-pc-spec.html">実行環境PC スペック調査</a>を参照してください。</p>
 	</section>
 
 	<section class="ch09" id="ch09">

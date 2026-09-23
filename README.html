@@ -125,6 +125,8 @@ td {
 tr:nth-child(even) td { background: #fafbfe; }
 .nowrap { white-space: nowrap; }
 .num { text-align: right; white-space: nowrap; }
+#env-compare-table th,
+#env-compare-table td { text-align: left; }
 
 .badge {
 	display: inline-block;
@@ -199,7 +201,6 @@ ol.toc a::before { content: counter(toc) ". "; font-weight: 700; }
 .shot {
 	max-width: 100%;
 	height: auto;
-	border: 1px solid var(--line);
 	border-radius: 6px;
 	background: #fff;
 }
@@ -233,7 +234,7 @@ footer {
 	<div class="inner">
 		<h1>AI PC 調査プロジェクト</h1>
 		<p class="lead">実行環境PCの実力測定と、少し規模の大きいローカルLLMが動作するPCの国内価格比較</p>
-		<p class="date">📅 作成: 2026-08-24 / 更新: 2026-09-22</p>
+		<p class="date">📅 作成: 2026-08-24 / 更新: 2026-09-23</p>
 	</div>
 </div>
 
@@ -274,14 +275,9 @@ footer {
 			</table>
 		</div>
 
-		<div class="callout callout-important">
-			<p><strong>価格調査は途中で手段を変えています。</strong> 当初は個人ブログの比較表に依拠していましたが、一次情報で検証したところ8件中3件が誤りでした。誤りはいずれも<strong>構成の違う機種を同じ製品名で並べていた</strong>ことに起因します。</p>
-		</div>
-
 		<h2>このリポジトリの決めごと</h2>
 		<a class="doclink" href="notes/90_rules/local-rule.html">📄 ローカルルール</a>
 		<p class="docdate">📅 作成: 2026-09-05 / 更新: 2026-09-05</p>
-		<p>このリポジトリは公開しているため、<strong>金額の扱いに決めごとがあります</strong>。個別に受領した見積の金額と学割価格は載せず、メーカーが掲載している価格・定価・公式ストアの構成価格だけを使っています。比較表の基準価格と差額も、すべて公開情報から組み立てています。</p>
 	</section>
 
 	<section class="ch02" id="ch02">
@@ -289,32 +285,12 @@ footer {
 
 		<h2>ローカルLLM 機種比較 2026</h2>
 		<a class="doclink" href="notes/01_research/r260916-01-ローカルLLM機種比較.html">📄 ローカルLLM 機種比較 2026</a>
-		<p class="docdate">📅 作成: 2026-09-16 / 更新: 2026-09-22</p>
+		<p class="docdate">📅 作成: 2026-09-16 / 更新: 2026-09-23</p>
 		<p><strong>いま購入できる構成だけ</strong>を対象に、統合メモリ <strong>64GB / 128GB / 256GB</strong> × ストレージ <strong>2TB / 4TB / 8TB</strong> で全機種を並べた統合版。GB10 搭載機 7 機種と Apple 4 機種を OS・在庫つきで比較し、Qwen・Gemma・GLM・Kimi がどこまで動くかを判定しています。手元の環境PCとの距離、統合メモリを持たない選択肢、これから出る機種も収録しました。</p>
-
-		<h2>統合メモリ別 ローカルLLM 実機比較 2026</h2>
-		<a class="doclink" href="notes/01_research/r260902-01-統合メモリ別LLM実機比較.html">📄 統合メモリ別 ローカルLLM 実機比較 2026</a>
-		<p class="docdate">📅 作成: 2026-09-02 / 更新: 2026-09-19</p>
-		<p>HP ZGX Nano G1n・Mac mini・Mac Studio を統合メモリ <strong>64GB / 128GB / 256GB</strong> × ストレージ <strong>2TB / 4TB / 最大</strong>で並べて比較。Qwen・Gemma・GLM・Kimi の量子化サイズを実測値で並べ、<strong>各容量で動く総パラメータとモデルサイズの上限</strong>を判定しています。ストレージ段を変えると 128GB の最安機種が入れ替わることも示しました。</p>
-
-		<h2>新Mac mini / Mac Studio 2026 調査</h2>
-		<a class="doclink" href="notes/01_research/apple-new-mac-2026.html">📄 新Mac mini / Mac Studio 2026 調査</a>
-		<p class="docdate">📅 作成: 2026-08-26 / 更新: 2026-09-19</p>
-		<p>予約受付が始まった M6・M5 Pro・M5 Max・M5 Ultra 搭載機の構成別価格を、<strong>Apple 公式ストアの構成別価格</strong>で収録。メモリ最大256GB・帯域1.2TB/s への更新により、前回の「Mac Studio は96GB上限」という結論が覆っています。</p>
-
-		<h2>HP BIGサマーセール第2弾 LLM用途評価</h2>
-		<a class="doclink" href="notes/01_research/hp-summersale-llm-pc.html">📄 HP BIGサマーセール第2弾 LLM用途評価</a>
-		<p class="docdate">📅 作成: 2026-08-26 / 更新: 2026-09-19</p>
-		<p>セール掲載55構成（ノートPC 28・ゲーミングPC 27）を <strong>VRAM容量基準</strong>で評価。ノートPCページに該当機がない理由、VRAM別の全構成一覧、デスクトップのVRAM上限が16GBという逆転構造、動かせるモデル規模の目安を収録しています。</p>
-
-		<h2>GB10搭載AIワークステーション 価格比較調査</h2>
-		<a class="doclink" href="notes/01_research/gb10-ai-workstation-comparison.html">📄 GB10搭載AIワークステーション 価格比較調査</a>
-		<p class="docdate">📅 作成: 2026-08-24 / 更新: 2026-09-19</p>
-		<p>NVIDIA GB10 Grace Blackwell を搭載した8機種を、ストレージ4TBの同一構成に揃えて価格比較。製品画像付きの比較表、二次情報の誤りを一次情報で訂正した記録、および <strong>公式スペック表でしか分からない確定仕様</strong>（ConnectX-7 が 200GbE、電源が 240W TypeC など）を収録しています。</p>
 
 		<h2>実行環境PC スペック調査</h2>
 		<a class="doclink" href="notes/01_research/env-pc-spec.html">📄 実行環境PC スペック調査</a>
-		<p class="docdate">📅 作成: 2026-08-24 / 更新: 2026-09-19</p>
+		<p class="docdate">📅 作成: 2026-08-24 / 更新: 2026-09-23</p>
 		<p>Claude Code が動作しているホストマシン（HP Pavilion Gaming Laptop 15-dk2xxx）の実測スペックと、AI用途での評価。CPU・GPU・メモリ・ストレージ・ネットワークの構成情報と、AI専用機との定量比較を収録しています。</p>
 	</section>
 
@@ -323,9 +299,9 @@ footer {
 
 		<h2>環境PC の限界は VRAM 4 GB</h2>
 		<div class="tablewrap">
-			<table>
+			<table id="env-compare-table">
 				<thead>
-					<tr><th>比較軸</th><th>環境PC</th><th>HP ZGX Nano G1n</th><th>差</th></tr>
+					<tr><th>比較軸</th><th>環境PC</th><th>HP ZGX Nano G1n</th><th>差（環境PC比）</th><th>Mac Studio M5 Ultra 256GB</th><th>差（環境PC比）</th></tr>
 				</thead>
 				<tbody>
 					<tr>
@@ -333,12 +309,15 @@ footer {
 						<td class="photocell"><img class="shot" src="notes/01_research/images/env_hp_pavilion_gaming_15dk2.png" alt="HP Pavilion Gaming Laptop 15-dk2"></td>
 						<td class="photocell"><img class="shot" src="notes/01_research/images/hp_zgx_nano_g1n.jpg" alt="HP ZGX Nano G1n"></td>
 						<td>—</td>
+						<td class="photocell"><img class="shot" src="notes/01_research/images/apple_mac_studio_m5.jpg" alt="Mac Studio M5 Ultra"></td>
+						<td>—</td>
 					</tr>
-					<tr><td class="nowrap">AIに使えるメモリ</td><td class="num">4 GB（VRAM）</td><td class="num">128 GB（統合）</td><td><span class="badge b-ng">32倍差</span></td></tr>
-					<tr><td class="nowrap">メモリ帯域</td><td class="num">約 51.2 GB/s</td><td class="num">273 GB/s</td><td>約 5.3倍</td></tr>
-					<tr><td class="nowrap">CPUコア数</td><td class="num">4コア8スレッド</td><td class="num">Arm 20コア</td><td>5倍</td></tr>
-					<tr><td class="nowrap">扱えるモデル規模</td><td>7B級 4bit量子化が上限</td><td>最大 2,000億パラメータ</td><td>—</td></tr>
-					<tr><td class="nowrap">価格</td><td>ゲーミングノート（実売10万円台）</td><td class="num">998,800 円（税込・キャンペーン価格）</td><td>—</td></tr>
+					<tr><td class="nowrap">AIに使えるメモリ</td><td>4 GB（VRAM）</td><td>128 GB（統合）</td><td>32倍</td><td>256 GB（統合）</td><td>64倍</td></tr>
+					<tr><td class="nowrap">メモリ帯域</td><td>約 51.2 GB/s</td><td>273 GB/s</td><td>約 5.3倍</td><td>1.2 TB/s</td><td>約 23.4倍</td></tr>
+					<tr><td class="nowrap">CPUコア数</td><td>4コア8スレッド</td><td>Arm 20コア</td><td>5倍</td><td>36コア</td><td>9倍</td></tr>
+					<tr><td class="nowrap">扱えるモデル規模</td><td>2B級以下（量子化なし）<br>7B級（4bit）</td><td>55B級（量子化なし）<br>125B級（4bit）<br>355B級（2bit）</td><td>約 18倍（4bit比）</td><td>117B級（量子化なし）<br>355B級（4bit）<br>744B級（2bit）</td><td>約 51倍（4bit比）</td></tr>
+					<tr><td class="nowrap">ストレージ</td><td>1 TB</td><td>4 TB</td><td>4倍</td><td>4 TB</td><td>4倍</td></tr>
+					<tr><td class="nowrap">価格</td><td>約20万円</td><td>1,098,900 円（税込）</td><td>約 5.5倍</td><td>2,173,800 円（税込）</td><td>約 10.9倍</td></tr>
 				</tbody>
 			</table>
 		</div>
@@ -352,19 +331,18 @@ footer {
 					<tr><th>順位</th><th>製品</th><th>価格（税込・4TB構成）</th><th>保証</th></tr>
 				</thead>
 				<tbody>
-					<tr><td class="num">1</td><td class="nowrap"><strong>HP ZGX Nano G1n</strong></td><td class="num"><strong>998,800 円</strong><br><span style="font-size:0.88em;color:var(--ink-soft)">キャンペーン価格<br>定価 2,125,200 円</span></td><td>1年センドバック</td></tr>
-					<tr><td class="num">2</td><td class="nowrap">NVIDIA DGX Spark</td><td class="num">1,078,000 円〜</td><td>販売店依存</td></tr>
-					<tr><td class="num">3</td><td class="nowrap">Lenovo ThinkStation PGX</td><td class="num">1,092,300 円</td><td>1年</td></tr>
-					<tr><td class="num">4</td><td class="nowrap">MSI EdgeXpert</td><td class="num">1,110,659 円</td><td><span class="badge b-warn">第三者出品</span></td></tr>
-					<tr><td class="num">5</td><td class="nowrap">GIGABYTE AI TOP ATOM</td><td class="num">1,230,000 円〜</td><td>販売店依存</td></tr>
-					<tr><td class="num">6</td><td class="nowrap">Dell Pro Max with GB10</td><td class="num">1,278,847 円</td><td><span class="badge b-ok">オンサイト可</span></td></tr>
-					<tr><td class="num">7</td><td class="nowrap">Lenovo ThinkStation PGX</td><td class="num">1,399,970 円</td><td><span class="badge b-ok">3年プレミア</span></td></tr>
-					<tr><td class="num">8</td><td class="nowrap">Acer Veriton GN100</td><td class="num">1,799,820 円</td><td>公式直販</td></tr>
+					<tr><td class="num">1</td><td class="nowrap"><strong>HP ZGX Nano G1n</strong></td><td class="num"><strong>1,098,900 円</strong><br><span style="font-size:0.88em;color:var(--ink-soft)">定価 2,125,200 円</span></td><td><span class="badge b-ok">メーカー直販</span> 1年センドバック</td></tr>
+					<tr><td class="num">2</td><td class="nowrap">MSI EdgeXpert</td><td class="num">1,110,659 円</td><td><span class="badge b-warn">要確認</span> 出品者・保証条件は個別確認</td></tr>
+					<tr><td class="num">3</td><td class="nowrap">GIGABYTE AI TOP ATOM</td><td class="num">1,366,800 円</td><td>販売店依存</td></tr>
+					<tr><td class="num">4</td><td class="nowrap">Acer Veriton GN100</td><td class="num">1,386,000 円<br><span style="font-size:0.88em;color:var(--ink-soft)">通常 1,999,800 円</span></td><td>公式直販</td></tr>
+					<tr><td class="num">5</td><td class="nowrap">NVIDIA DGX Spark</td><td class="num">1,821,521 円</td><td><span class="badge b-warn">要確認</span> 直前まで最安だった出品が消えた</td></tr>
+					<tr><td class="num">6</td><td class="nowrap">Dell Pro Max with GB10</td><td class="num">2,140,820 円<br><span style="font-size:0.88em;color:var(--ink-soft)">配送料込</span></td><td><span class="badge b-ok">オンサイト可</span></td></tr>
+					<tr><td class="num">7</td><td class="nowrap">Lenovo ThinkStation PGX</td><td class="num">2,176,790 円</td><td><span class="badge b-ng">正規流通は在庫なし</span></td></tr>
 				</tbody>
 			</table>
 		</div>
 
-		<p>8機種すべてが NVIDIA のリファレンス設計で、SoC・メモリ128GB・帯域273GB/s・本体サイズまで一致します。最安と最高値の差 80万円は、すべて保証内容と流通経路の差です。</p>
+		<p>7機種すべてが NVIDIA のリファレンス設計で、SoC・メモリ128GB・帯域273GB/s・本体サイズまで一致します。最安と最高値の差 約108万円は、すべて保証内容と流通経路の差です。</p>
 
 		<h2>Apple Mac は「容量か帯域か」の選択になる</h2>
 		<div class="tablewrap">
@@ -373,24 +351,25 @@ footer {
 					<tr><th>機種</th><th>メモリ</th><th>メモリ帯域</th><th>ストレージ</th><th>価格（税込）</th></tr>
 				</thead>
 				<tbody>
-					<tr><td class="nowrap"><strong>HP ZGX Nano G1n</strong></td><td class="num">128GB</td><td class="num">273 GB/s</td><td class="nowrap">4TB</td><td class="num">998,800 円</td></tr>
-					<tr><td class="nowrap">Mac Studio M4 Max</td><td class="num">64GB</td><td class="num">546 GB/s</td><td class="nowrap">4TB</td><td class="num">923,800 円</td></tr>
-					<tr><td class="nowrap">Mac Studio M3 Ultra</td><td class="num">96GB</td><td class="num">819 GB/s</td><td class="nowrap">4TB</td><td class="num">1,169,800 円</td></tr>
+					<tr><td class="nowrap"><strong>HP ZGX Nano G1n</strong></td><td class="num">128GB</td><td class="num">273 GB/s</td><td class="nowrap">4TB</td><td class="num">1,098,900 円</td></tr>
+					<tr><td class="nowrap">Mac mini M5 Pro</td><td class="num">64GB</td><td class="num">307 GB/s</td><td class="nowrap">4TB</td><td class="num">839,800 円</td></tr>
+					<tr><td class="nowrap">Mac Studio M5 Max</td><td class="num">128GB</td><td class="num">614 GB/s</td><td class="nowrap">4TB</td><td class="num">1,211,800 円</td></tr>
 					<tr><td class="nowrap">MacBook Pro 16" M5 Max</td><td class="num">128GB</td><td class="num">614 GB/s</td><td class="nowrap">4TB</td><td class="num">1,389,800 円</td></tr>
+					<tr><td class="nowrap">Mac Studio M5 Ultra</td><td class="num">256GB</td><td class="num">1.2 TB/s</td><td class="nowrap">4TB</td><td class="num">2,173,800 円</td></tr>
 				</tbody>
 			</table>
 		</div>
 
-		<p>Mac はメモリをCPU/GPU構成ごとに固定で選ぶ方式で、<strong>据置型の Mac Studio は 96GB が上限</strong>です。128GB を積めるのはノート型の MacBook Pro M5 Max だけでした。一方でメモリ帯域は Mac が 2.0〜3.0倍あり、LLM の推論速度に効きます。</p>
+		<p>Mac はメモリを CPU/GPU 構成ごとに固定で選ぶ方式です。<strong>据置型の Mac Studio も、現行の M5 Ultra を選べば 256GB まで対応します</strong>（前世代までの「96GB が上限」という制約はなくなりました）。128GB であれば GB10 搭載機と Mac Studio M5 Max・MacBook Pro M5 Max が同容量で並びますが、メモリ帯域は Mac 側が 2.25倍速く、LLM の推論速度に効きます。</p>
 
 		<div class="callout callout-important">
-			<p><strong>モデルが 96GB に収まるかどうかが分岐点です。</strong> 収まるなら帯域3倍の Mac Studio M3 Ultra が推論では有利になり、超えるなら据置型では GB10 搭載機しか選べません。加えて CUDA 資産がある場合は macOS への移植コストが上乗せされます。</p>
+			<p><strong>分かれ道は「128GB で足りるか、256GB が要るか」です。</strong>128GB で足りるなら、GB10 搭載機（CUDA 資産をそのまま使える）と Mac Studio M5 Max・MacBook Pro M5 Max（同容量で 2.25倍速い）のどちらを取るかの選択になります。256GB が要るなら、据置型でその容量に届く機種は Mac Studio M5 Ultra だけです。CUDA 資産がある場合は、いずれの Mac を選んでも macOS への移植コストが上乗せされます。</p>
 		</div>
 
 		<p>いずれも Web 掲載価格での比較です。法人向けの構成では個別見積で下がる余地があるため、実際の調達額はこの表より低くなり得ます。</p>
 
 		<div class="callout callout-warning">
-			<p><strong>HP の順位はキャンペーンが続いていることが前提です。</strong> 500台限定で、予定数に達すると終了します。終了後は定価 2,125,200 円に戻り、最安は純正 DGX Spark（1,078,000円〜）か Lenovo 4TB（1,092,300円）へ移ります。</p>
+			<p><strong>HP の価格は市況で変動します。</strong>GB10 搭載機の通販価格は数日単位で入れ替わるため、最安が定価 2,125,200 円に戻れば、2位以下の MSI（1,110,659円）や GIGABYTE（1,366,800円）が最安になり得ます。</p>
 		</div>
 	</section>
 
