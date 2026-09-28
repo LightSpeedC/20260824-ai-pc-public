@@ -31,7 +31,7 @@
 
 ### このリポジトリの決めごと
 
-[📄 ローカルルール](notes/90_rules/local-rule.md)
+[📄 ローカルルール](notes/90_rules/local-rules.md)
 
 📅 作成: 2026-09-05 / 更新: 2026-09-05
 

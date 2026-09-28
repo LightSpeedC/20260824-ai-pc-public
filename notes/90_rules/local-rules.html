@@ -16,10 +16,11 @@
 	--accent2: var(--navy2);
 	--soft: #f2f5fb;
 }
-/* 章は3個: 色相は 280 / 140 / 0 */
-.ch01 { --accent: hsl(280,78%,25%); --accent2: hsl(280,58%,55%); --soft: hsl(280,28%,95%); }
-.ch02 { --accent: hsl(140,78%,25%); --accent2: hsl(140,58%,55%); --soft: hsl(140,28%,95%); }
-.ch03 { --accent: hsl(0,78%,25%);   --accent2: hsl(0,58%,55%);   --soft: hsl(0,28%,95%); }
+/* 章は4個: 色相は 280 / 186.7 / 93.3 / 0 */
+.ch01 { --accent: hsl(280,78%,25%);   --accent2: hsl(280,58%,55%);   --soft: hsl(280,28%,95%); }
+.ch02 { --accent: hsl(186.7,78%,25%); --accent2: hsl(186.7,58%,55%); --soft: hsl(186.7,28%,95%); }
+.ch03 { --accent: hsl(93.3,78%,25%);  --accent2: hsl(93.3,58%,55%);  --soft: hsl(93.3,28%,95%); }
+.ch04 { --accent: hsl(0,78%,25%);     --accent2: hsl(0,58%,55%);     --soft: hsl(0,28%,95%); }
 
 * { box-sizing: border-box; }
 body {
@@ -164,7 +165,7 @@ footer a { color: var(--navy2); }
 	<div class="inner">
 		<h1>ローカルルール</h1>
 		<p class="lead">このプロジェクトでだけ通る決めごと</p>
-		<p class="date">📅 作成: 2026-09-05 / 更新: 2026-09-23</p>
+		<p class="date">📅 作成: 2026-09-05 / 更新: 2026-09-28</p>
 	</div>
 </div>
 
@@ -233,6 +234,26 @@ footer a { color: var(--navy2); }
 			</tbody>
 		</table>
 	</div>
+</section>
+
+<section class="ch04">
+	<h1>URL へのアクセス手段</h1>
+
+	<p>このプロジェクトでベンチマーク・製品情報など外部 URL の参照が必要なときの手段の優先順位です。共通ルール「共有環境の使い方」の「URLへのアクセス手段の選択」を上書きします。</p>
+
+	<div class="tablewrap">
+		<table>
+			<thead>
+				<tr><th>優先順位</th><th>手段</th></tr>
+			</thead>
+			<tbody>
+				<tr><td class="nowrap">1</td><td>WebSearch ・ WebFetch</td></tr>
+				<tr><td class="nowrap">2</td><td>だめなら Computer Use による Chrome 操作</td></tr>
+			</tbody>
+		</table>
+	</div>
+
+	<p>セッション内で毎回確認は取らず、この順で試す。WebSearch・WebFetch で目的の内容が取得できなかったときだけ Computer Use に切り替える。</p>
 </section>
 
 </div>
