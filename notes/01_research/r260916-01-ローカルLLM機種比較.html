@@ -334,17 +334,21 @@ footer a { color: var(--navy2); background: none; }
 
 		<div class="tablewrap">
 		<table>
-			<thead><tr><th>写真</th><th>機種</th><th>形態</th><th>統合メモリ</th><th>帯域</th><th>ストレージ</th><th>OS</th></tr></thead>
+			<thead><tr><th>写真</th><th>機種</th><th>形態</th><th>統合メモリ</th><th>帯域</th><th>CPUコア</th><th>GPUコア</th><th>ストレージ</th><th>OS</th></tr></thead>
 			<tbody>
-				<tr><td class="photocell"><img class="shot" src="images/apple_mac_mini_m6.jpg" alt="Mac mini"></td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-mini">Mac mini M5 Pro</a></td><td class="nowrap">据置</td><td class="nowrap">24 / 48 / <strong>64GB</strong></td><td class="num">307 GB/s</td><td class="nowrap">512GB〜8TB</td><td class="nowrap">macOS</td></tr>
-				<tr><td class="photocell"><img class="shot" src="images/apple_mac_studio.jpg" alt="Mac Studio"></td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Max</a></td><td class="nowrap">据置</td><td class="nowrap">48 / 64 / <strong>128GB</strong></td><td class="num">614 GB/s</td><td class="nowrap">512GB〜8TB</td><td class="nowrap">macOS</td></tr>
-				<tr><td class="photocell"><img class="shot" src="images/apple_mac_studio_m5.jpg" alt="Mac Studio"></td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Ultra</a></td><td class="nowrap">据置</td><td class="nowrap">96 / <strong>256GB</strong></td><td class="num">1.2 TB/s</td><td class="nowrap">1TB〜16TB</td><td class="nowrap">macOS</td></tr>
-				<tr><td class="photocell"><img class="shot" src="images/apple_macbook_pro.jpg" alt="MacBook Pro"></td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/macbook-pro">MacBook Pro 16インチ M5 Max</a></td><td class="nowrap"><strong>ノート</strong></td><td class="nowrap">48 / 64 / <strong>128GB</strong></td><td class="num">614 GB/s</td><td class="nowrap">2TB〜8TB</td><td class="nowrap">macOS</td></tr>
+				<tr><td class="photocell"><img class="shot" src="images/apple_mac_mini_m6.jpg" alt="Mac mini"></td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-mini">Mac mini M5 Pro</a></td><td class="nowrap">据置</td><td class="nowrap">24 / 48 / <strong>64GB</strong></td><td class="num">307 GB/s</td><td class="num">18コア</td><td class="num">20コア</td><td class="nowrap">512GB〜8TB</td><td class="nowrap">macOS</td></tr>
+				<tr><td class="photocell"><img class="shot" src="images/apple_mac_studio.jpg" alt="Mac Studio"></td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Max</a></td><td class="nowrap">据置</td><td class="nowrap">48 / 64 / <strong>128GB</strong></td><td class="num">614 GB/s</td><td class="num">18コア</td><td class="num">40コア</td><td class="nowrap">512GB〜8TB</td><td class="nowrap">macOS</td></tr>
+				<tr><td class="photocell"><img class="shot" src="images/apple_mac_studio_m5.jpg" alt="Mac Studio"></td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Ultra</a></td><td class="nowrap">据置</td><td class="nowrap">96 / <strong>256GB</strong></td><td class="num">1.2 TB/s</td><td class="num">30 / 36コア</td><td class="num">64 / 80コア</td><td class="nowrap">1TB〜16TB</td><td class="nowrap">macOS</td></tr>
+				<tr><td class="photocell"><img class="shot" src="images/apple_macbook_pro.jpg" alt="MacBook Pro"></td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/macbook-pro">MacBook Pro 16インチ M5 Max</a></td><td class="nowrap"><strong>ノート</strong></td><td class="nowrap">48 / 64 / <strong>128GB</strong></td><td class="num">614 GB/s</td><td class="num">18コア</td><td class="num">40コア</td><td class="nowrap">2TB〜8TB</td><td class="nowrap">macOS</td></tr>
 			</tbody>
 		</table>
 		</div>
 
-		<p>メモリ容量は <strong>CPU/GPU のコア構成に固定</strong>されています。128GB を選ぶには 40コアGPU の M5 Max、256GB を選ぶには 80コアGPU の M5 Ultra が必要です。</p>
+		<p>メモリ容量は <strong>CPU/GPU のコア構成に固定</strong>されています。表の CPU/GPU コア数は、それぞれの機種で<strong>太字にした最大メモリ構成</strong>のものです。64GB を選ぶには 18コアCPU/20コアGPU の M5 Pro、128GB を選ぶには 18コアCPU/40コアGPU の M5 Max が必要です。M5 Ultra は 30コアCPU/64コアGPU と 36コアCPU/80コアGPU の2構成があり、<strong>256GB はどちらでも選べます</strong>（512GB は 36コアCPU/80コアGPU のみ）。以降の価格比較は、太字にした構成（M5 Pro・M5 Max は表の最大構成、M5 Ultra は 36コアCPU/80コアGPU）での金額です。</p>
+
+		<div class="callout">
+			<p><strong>M5 Ultra は同じ256GBでも、コア構成で23.4万円の価格差があります。</strong>実機で確認したところ、256GB・2TB構成は 36コアCPU/80コアGPU が 1,993,800円（本資料の価格）、30コアCPU/64コアGPU は 1,759,800円でした。CPU/GPU 性能を求めないなら、後者のほうが安く同じメモリ容量に届きます。</p>
+		</div>
 
 		<div class="callout">
 			<p><strong>OS の違いは、そのまま移植コストになります。</strong>GB10 側は DGX OS で CUDA がそのまま動くため、既存の CUDA 資産を持ち込めます。Mac 側は Metal と MLX で、CUDA 前提のコードは書き換えが要ります。逆に Mac は汎用機として日常利用も兼ねられます。<strong>どちらが有利かは、いま何を持っているかで決まります。</strong></p>

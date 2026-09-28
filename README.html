@@ -234,7 +234,7 @@ footer {
 	<div class="inner">
 		<h1>AI PC 調査プロジェクト</h1>
 		<p class="lead">実行環境PCの実力測定と、少し規模の大きいローカルLLMが動作するPCの国内価格比較</p>
-		<p class="date">📅 作成: 2026-08-24 / 更新: 2026-09-23</p>
+		<p class="date">📅 作成: 2026-08-24 / 更新: 2026-09-24</p>
 	</div>
 </div>
 
@@ -314,7 +314,7 @@ footer {
 					</tr>
 					<tr><td class="nowrap">AIに使えるメモリ</td><td>4 GB（VRAM）</td><td>128 GB（統合）</td><td>32倍</td><td>256 GB（統合）</td><td>64倍</td></tr>
 					<tr><td class="nowrap">メモリ帯域</td><td>約 51.2 GB/s</td><td>273 GB/s</td><td>約 5.3倍</td><td>1.2 TB/s</td><td>約 23.4倍</td></tr>
-					<tr><td class="nowrap">CPUコア数</td><td>4コア8スレッド</td><td>Arm 20コア</td><td>5倍</td><td>36コア</td><td>9倍</td></tr>
+					<tr><td class="nowrap">CPUコア数</td><td>4コア8スレッド</td><td>Arm 20コア</td><td>5倍</td><td>30 / 36コア</td><td>9倍</td></tr>
 					<tr><td class="nowrap">扱えるモデル規模</td><td>2B級以下（量子化なし）<br>7B級（4bit）</td><td>55B級（量子化なし）<br>125B級（4bit）<br>355B級（2bit）</td><td>約 18倍（4bit比）</td><td>117B級（量子化なし）<br>355B級（4bit）<br>744B級（2bit）</td><td>約 51倍（4bit比）</td></tr>
 					<tr><td class="nowrap">ストレージ</td><td>1 TB</td><td>4 TB</td><td>4倍</td><td>4 TB</td><td>4倍</td></tr>
 					<tr><td class="nowrap">価格</td><td>約20万円</td><td>1,098,900 円（税込）</td><td>約 5.5倍</td><td>2,173,800 円（税込）</td><td>約 10.9倍</td></tr>
@@ -361,6 +361,10 @@ footer {
 		</div>
 
 		<p>Mac はメモリを CPU/GPU 構成ごとに固定で選ぶ方式です。<strong>据置型の Mac Studio も、現行の M5 Ultra を選べば 256GB まで対応します</strong>（前世代までの「96GB が上限」という制約はなくなりました）。128GB であれば GB10 搭載機と Mac Studio M5 Max・MacBook Pro M5 Max が同容量で並びますが、メモリ帯域は Mac 側が 2.25倍速く、LLM の推論速度に効きます。</p>
+
+		<div class="callout callout-important">
+			<p><strong>M5 Ultra は同じ256GBでも、コア構成で23.4万円の価格差があります。</strong>実機で確認したところ、256GB・2TB構成は 36コアCPU/80コアGPU が 1,993,800円（表の価格の基準構成）、30コアCPU/64コアGPU は 1,759,800円でした。CPU/GPU 性能を求めないなら、後者のほうが安く同じメモリ容量に届きます。</p>
+		</div>
 
 		<div class="callout callout-important">
 			<p><strong>分かれ道は「128GB で足りるか、256GB が要るか」です。</strong>128GB で足りるなら、GB10 搭載機（CUDA 資産をそのまま使える）と Mac Studio M5 Max・MacBook Pro M5 Max（同容量で 2.25倍速い）のどちらを取るかの選択になります。256GB が要るなら、据置型でその容量に届く機種は Mac Studio M5 Ultra だけです。CUDA 資産がある場合は、いずれの Mac を選んでも macOS への移植コストが上乗せされます。</p>

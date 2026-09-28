@@ -2,7 +2,7 @@
 
 実行環境PCの実力測定と、少し規模の大きいローカルLLMが動作するPCの国内価格比較
 
-> 📅 作成: 2026-08-24 / 更新: 2026-09-23
+> 📅 作成: 2026-08-24 / 更新: 2026-09-24
 
 [^^](../)
 
@@ -62,7 +62,7 @@ Claude Code が動作しているホストマシン（HP Pavilion Gaming Laptop 
 | 外観 | ![HP Pavilion Gaming Laptop 15-dk2](notes/01_research/images/env_hp_pavilion_gaming_15dk2.png) | ![HP ZGX Nano G1n](notes/01_research/images/hp_zgx_nano_g1n.jpg) | — | ![Mac Studio M5 Ultra](notes/01_research/images/apple_mac_studio_m5.jpg) | — |
 | AIに使えるメモリ | 4 GB（VRAM） | 128 GB（統合） | 32倍 | 256 GB（統合） | 64倍 |
 | メモリ帯域 | 約 51.2 GB/s | 273 GB/s | 約 5.3倍 | 1.2 TB/s | 約 23.4倍 |
-| CPUコア数 | 4コア8スレッド | Arm 20コア | 5倍 | 36コア | 9倍 |
+| CPUコア数 | 4コア8スレッド | Arm 20コア | 5倍 | 30 / 36コア | 9倍 |
 | 扱えるモデル規模 | 2B級以下（量子化なし）<br>7B級（4bit） | 55B級（量子化なし）<br>125B級（4bit）<br>355B級（2bit） | 約 18倍（4bit比） | 117B級（量子化なし）<br>355B級（4bit）<br>744B級（2bit） | 約 51倍（4bit比） |
 | ストレージ | 1 TB | 4 TB | 4倍 | 4 TB | 4倍 |
 | 価格 | 約20万円 | 1,098,900 円（税込） | 約 5.5倍 | 2,173,800 円（税込） | 約 10.9倍 |
@@ -94,6 +94,9 @@ Claude Code が動作しているホストマシン（HP Pavilion Gaming Laptop 
 | Mac Studio M5 Ultra | 256GB | 1.2 TB/s | 4TB | 2,173,800 円 |
 
 Mac はメモリを CPU/GPU 構成ごとに固定で選ぶ方式です。**据置型の Mac Studio も、現行の M5 Ultra を選べば 256GB まで対応します**（前世代までの「96GB が上限」という制約はなくなりました）。128GB であれば GB10 搭載機と Mac Studio M5 Max・MacBook Pro M5 Max が同容量で並びますが、メモリ帯域は Mac 側が 2.25倍速く、LLM の推論速度に効きます。
+
+> [!IMPORTANT]
+> <strong>M5 Ultra は同じ256GBでも、コア構成で23.4万円の価格差があります。</strong>実機で確認したところ、256GB・2TB構成は 36コアCPU/80コアGPU が 1,993,800円（表の価格の基準構成）、30コアCPU/64コアGPU は 1,759,800円でした。CPU/GPU 性能を求めないなら、後者のほうが安く同じメモリ容量に届きます。
 
 > [!IMPORTANT]
 > <strong>分かれ道は「128GB で足りるか、256GB が要るか」です。</strong>128GB で足りるなら、GB10 搭載機（CUDA 資産をそのまま使える）と Mac Studio M5 Max・MacBook Pro M5 Max（同容量で 2.25倍速い）のどちらを取るかの選択になります。256GB が要るなら、据置型でその容量に届く機種は Mac Studio M5 Ultra だけです。CUDA 資産がある場合は、いずれの Mac を選んでも macOS への移植コストが上乗せされます。
