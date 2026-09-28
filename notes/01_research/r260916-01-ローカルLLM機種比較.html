@@ -242,7 +242,7 @@ footer a { color: var(--navy2); background: none; }
 	<div class="inner">
 		<h1>ローカルLLM 機種比較 2026</h1>
 		<p class="lead">いま購入できる構成だけを対象に、統合メモリ 64GB・128GB・256GB × ストレージ 2TB・4TB・8TB で並べ、どのモデルがどこまで動くかを判定する</p>
-		<p class="date">📅 作成: 2026-09-16 / 更新: 2026-09-23</p>
+		<p class="date">📅 作成: 2026-09-16 / 更新: 2026-09-28</p>
 	</div>
 </div>
 
@@ -560,6 +560,64 @@ footer a { color: var(--navy2); background: none; }
 		<div class="callout callout-important">
 			<p><strong>同じ 128GB でも、生成速度は 2.25 倍違います。</strong>GB10 搭載機と Mac Studio M5 Max は載せられるモデルが同じですが、帯域比がそのまま速度差になります。<strong>128GB を選ぶ判断は、容量ではなく帯域と価格の比較です。</strong></p>
 		</div>
+
+		<h2>世の中の実測ベンチマーク</h2>
+
+		<p>上の見当は帯域比からの推定です。ここでは公開されている実測ベンチマークを、機種・モデル・量子化・コンテキスト長ごとに並べます。<strong>同じ機種でも、量子化形式・使用ツール（MLX / llama.cpp / vLLM）・コンテキスト長で数値が大きく変わる</strong>ため、単一の数値で機種を比べないでください。</p>
+
+		<h3>GB10 搭載機（llama.cpp、単発リクエスト）</h3>
+
+		<p>llama.cpp の公式リポジトリで報告された DGX Spark 実測です（<code>llama-bench -fa 1 -d 0,4096,...,32768 -p 2048 -n 32</code>）。</p>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>モデル</th><th>量子化</th><th>プロンプト処理(pp2048)</th><th>生成 ctx0</th><th>生成 ctx32768</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">gpt-oss-120B</td><td class="nowrap">MXFP4</td><td class="num">約 1,956 tok/s</td><td class="num">約 60.6 tok/s</td><td class="num">約 40.6 tok/s</td></tr>
+				<tr><td class="nowrap">gpt-oss-20B</td><td class="nowrap">MXFP4</td><td class="num">約 2,009 tok/s</td><td class="num">約 60.9 tok/s</td><td class="num">—</td></tr>
+				<tr><td class="nowrap">Qwen3 Coder 30B A3B</td><td class="nowrap">Q8_0</td><td class="num">約 1,654 tok/s</td><td class="num">約 44.3 tok/s</td><td class="num">—</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h3>GB10 搭載機（Ollama / vLLM、単発とバッチ）</h3>
+
+		<p>NVIDIA Developer Forums に投稿された実測です。同一ハーネスで Ollama（単発）と vLLM（単発・8並列バッチ）を比較しています。</p>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>モデル</th><th>Ollama Q4（単発）</th><th>vLLM 4bit（単発）</th><th>vLLM 4bit（8並列合計）</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">Qwen3-30B-A3B</td><td class="num">85.2 tok/s</td><td class="num">77.1 tok/s</td><td class="num">313.4 tok/s</td></tr>
+				<tr><td class="nowrap">GPT-OSS-120B</td><td class="num">42.1 tok/s</td><td class="num">60.7 tok/s</td><td class="num">116〜153 tok/s</td></tr>
+				<tr><td class="nowrap">Gemma-4-26B-A4B（MTP）</td><td class="num">49.6 tok/s</td><td class="num">54.9 tok/s</td><td class="num">303.6 tok/s</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout">
+			<p><strong>並列で投げると合計スループットは 2〜5 倍に伸びます。</strong>GB10 はプロンプト処理（compute-bound）が強く、単発の生成速度（memory-bound）だけを見ると強みが分かりません。複数リクエストをさばく用途では vLLM のバッチ処理が効きます。</p>
+		</div>
+
+		<h3>Mac Studio / MacBook Pro M5 Max（MLX）</h3>
+
+		<p>hardware-corner.net が MLX で実測した MacBook Pro M5 Max 128GB（Mac Studio M5 Max と同じチップ・同じ帯域）の値です。</p>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>モデル</th><th>量子化</th><th>4K コンテキスト</th><th>16K/32K コンテキスト</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">gpt-oss-120B</td><td class="nowrap">MXFP4（8bit実行）</td><td class="num">87.9 tok/s</td><td class="num">76.0 tok/s（16K）</td></tr>
+				<tr><td class="nowrap">Qwen3.5-122B-A10B</td><td class="nowrap">4bit</td><td class="num">65.9 tok/s</td><td class="num">54.9 tok/s（32K）</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout callout-warning">
+			<p><strong>Apple の「4倍速い」という表現と、コミュニティ実測には開きがあります。</strong>Apple 公式は M5 チップ単体の Neural Accelerators による生成速度の向上を M4 比 1.19〜1.27倍と公表しています。一方、コミュニティが実測した Qwen3.5-27B（dense・6bit）は約 23 tok/s で、MoE ではない dense モデルではメモリ帯域が効きにくく、期待したほど伸びないという報告があります。<strong>MoE か dense か、量子化形式、コンテキスト長のどれもが結果を左右します。</strong></p>
+		</div>
+
+		<p>Mac Studio M5 Ultra・Mac mini M5 Pro については、本稿執筆時点で出典を明示できる実測ベンチマークが見つかりませんでした。上の見当（帯域比からの推定）に留めます。</p>
 
 		<h2>KV キャッシュがメモリを追加で食う</h2>
 
@@ -1003,6 +1061,19 @@ footer a { color: var(--navy2); background: none; }
 		<ul class="srclist">
 			<li>各モデルの GGUF 配布元が公開しているファイルサイズ（Qwen・Gemma・GLM・Kimi）</li>
 			<li>前世代 MacBook Pro M4 Max 128GB での 200B 級 MoE 実測（9〜10 tok/s・2026-08-28 公開）</li>
+		</ul>
+
+		<h2>ベンチマーク（取得日 2026-09-28）</h2>
+
+		<ul class="srclist">
+			<li><strong>llama.cpp「Performance of llama.cpp on NVIDIA DGX Spark」</strong>（gpt-oss-120B/20B・Qwen3 Coder 30B の pp/tg 実測）<br>
+				<a href="https://github.com/ggml-org/llama.cpp/discussions/16578">https://github.com/ggml-org/llama.cpp/discussions/16578</a></li>
+			<li><strong>NVIDIA Developer Forums「Measured inference benchmarks on a single DGX Spark」</strong>（Ollama・vLLM・単発とバッチ）<br>
+				<a href="https://forums.developer.nvidia.com/t/measured-inference-benchmarks-on-a-single-dgx-spark-same-harness-across-ollama-llama-cpp-and-vllm-notes-data-published/379766">https://forums.developer.nvidia.com/t/measured-inference-benchmarks-on-a-single-dgx-spark-same-harness-across-ollama-llama-cpp-and-vllm-notes-data-published/379766</a></li>
+			<li><strong>hardware-corner.net「Apple M5 Max for Local LLMs」</strong>（MLX 実測・RTX Pro 6000/RTX 5090 との比較）<br>
+				<a href="https://www.hardware-corner.net/m5-max-local-llm-benchmarks-20261233/">https://www.hardware-corner.net/m5-max-local-llm-benchmarks-20261233/</a></li>
+			<li><strong>Apple Machine Learning Research「Exploring LLMs with MLX and the Neural Accelerators in the M5 GPU」</strong>（M5 の M4 比 生成速度向上率）<br>
+				<a href="https://machinelearning.apple.com/research/exploring-llms-mlx-m5">https://machinelearning.apple.com/research/exploring-llms-mlx-m5</a></li>
 		</ul>
 
 		<div class="callout">
