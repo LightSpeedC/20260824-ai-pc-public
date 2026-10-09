@@ -16,11 +16,12 @@
 	--accent2: var(--navy2);
 	--soft: #f2f5fb;
 }
-/* 章は4個: 色相は 280 / 186.7 / 93.3 / 0 */
-.ch01 { --accent: hsl(280,78%,25%);   --accent2: hsl(280,58%,55%);   --soft: hsl(280,28%,95%); }
-.ch02 { --accent: hsl(186.7,78%,25%); --accent2: hsl(186.7,58%,55%); --soft: hsl(186.7,28%,95%); }
-.ch03 { --accent: hsl(93.3,78%,25%);  --accent2: hsl(93.3,58%,55%);  --soft: hsl(93.3,28%,95%); }
-.ch04 { --accent: hsl(0,78%,25%);     --accent2: hsl(0,58%,55%);     --soft: hsl(0,28%,95%); }
+/* 章は5個: 色相は 280 / 210 / 140 / 70 / 0 */
+.ch01 { --accent: hsl(280,78%,25%); --accent2: hsl(280,58%,55%); --soft: hsl(280,28%,95%); }
+.ch02 { --accent: hsl(210,78%,25%); --accent2: hsl(210,58%,55%); --soft: hsl(210,28%,95%); }
+.ch03 { --accent: hsl(140,78%,25%); --accent2: hsl(140,58%,55%); --soft: hsl(140,28%,95%); }
+.ch04 { --accent: hsl(70,78%,25%);  --accent2: hsl(70,58%,55%);  --soft: hsl(70,28%,95%); }
+.ch05 { --accent: hsl(0,78%,25%);   --accent2: hsl(0,58%,55%);   --soft: hsl(0,28%,95%); }
 
 * { box-sizing: border-box; }
 body {
@@ -228,7 +229,7 @@ footer a { color: var(--navy2); }
 				<tr><th>項目</th><th>決めごと</th></tr>
 			</thead>
 			<tbody>
-				<tr><td class="nowrap">周期</td><td><strong>2 日</strong>ごとに再確認する</td></tr>
+				<tr><td class="nowrap">周期</td><td><strong>毎日 6:00 と 22:00</strong>。cron の式は <code>0 6,22 * * *</code>、prompt は「ローカルルール3章に従って価格を再確認する」</td></tr>
 				<tr><td class="nowrap">確認後の更新</td><td>資料の更新日と、1 章の「価格はすべて yyyy-mm-dd に確認しました」の日付を揃える</td></tr>
 				<tr><td class="nowrap">動いていないとき</td><td>更新日も変えない（体裁だけの変更に当たる）</td></tr>
 			</tbody>
@@ -256,6 +257,24 @@ footer a { color: var(--navy2); }
 	</div>
 
 	<p>この順で試す。WebSearch・WebFetch で目的の内容が取得できなかったときだけ Computer Use に切り替える。</p>
+</section>
+
+<section class="ch05">
+	<h1>commit・push</h1>
+
+	<p>共通ルールの「修正は1点ずつ、確認を重視」と「重大な操作の確認方法」を上書きし、commit・push は指示を待たずに行う。理由は、価格を1日2回確認するので、更新のたびに指示を待つと公開ページが遅れるため。</p>
+
+	<div class="tablewrap">
+		<table>
+			<thead>
+				<tr><th>項目</th><th>決めごと</th></tr>
+			</thead>
+			<tbody>
+				<tr><td class="nowrap">単位</td><td>1つの目的が片付いたところ（価格の再確認1回分、資料の修正1件など）</td></tr>
+				<tr><td class="nowrap">指示を待つもの</td><td>履歴の書き換え（amend・reset・force push）</td></tr>
+			</tbody>
+		</table>
+	</div>
 </section>
 
 </div>
