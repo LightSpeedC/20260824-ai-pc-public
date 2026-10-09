@@ -49,7 +49,7 @@ body {
 	color: #fff;
 	text-decoration: none;
 	padding: 7px 14px;
-	border-radius: 8px;
+	border-radius: 6px;
 	box-shadow: 0 2px 9px rgba(0,0,0,0.15);
 }
 .homebar { margin: 20px 0 0; }
@@ -165,7 +165,7 @@ footer a { color: var(--navy2); }
 	<div class="inner">
 		<h1>ローカルルール</h1>
 		<p class="lead">このプロジェクトでだけ通る決めごと</p>
-		<p class="date">📅 作成: 2026-09-05 / 更新: 2026-09-28</p>
+		<p class="date">📅 作成: 2026-09-05 / 更新: 2026-10-10</p>
 	</div>
 </div>
 
@@ -241,6 +241,8 @@ footer a { color: var(--navy2); }
 
 	<p>このプロジェクトでベンチマーク・製品情報など外部 URL の参照が必要なときの手段の優先順位です。共通ルール「共有環境の使い方」の「URLへのアクセス手段の選択」を上書きします。</p>
 
+	<p><strong>共通ルールとの違いは 1 点です。</strong>WebSearch・WebFetch で取得できなかったとき、共通ルールは切り替える前に利用者へ確認を取りますが、このプロジェクトでは確認を取らずに Computer Use へ切り替えます。理由は、価格・ベンチマークの取得では JS 描画で本文が取れないページが多く、利用者がこの切り替えを事前に承認しているためです。</p>
+
 	<div class="tablewrap">
 		<table>
 			<thead>
@@ -253,7 +255,7 @@ footer a { color: var(--navy2); }
 		</table>
 	</div>
 
-	<p>セッション内で毎回確認は取らず、この順で試す。WebSearch・WebFetch で目的の内容が取得できなかったときだけ Computer Use に切り替える。</p>
+	<p>この順で試す。WebSearch・WebFetch で目的の内容が取得できなかったときだけ Computer Use に切り替える。</p>
 </section>
 
 </div>
