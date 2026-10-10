@@ -80,9 +80,9 @@ Claude Code が動作しているホストマシン（HP Pavilion Gaming Laptop 
 | 4 | Acer Veriton GN100 | 1,386,000 円<br>通常 1,999,800 円 | 公式直販 |
 | 5 | MSI EdgeXpert | 1,415,750 円 | ⚠️ **要確認** 出品者・保証条件は個別確認 |
 | 6 | Dell Pro Precision with GB10 | 2,140,820 円<br>配送料込 | ✅ **オンサイト可** |
-| 7 | Lenovo ThinkStation PGX | 2,146,590 円 | 通販 |
+| 7 | Lenovo ThinkStation PGX | 2,171,700 円 | 通販 |
 
-7機種すべてが NVIDIA のリファレンス設計で、SoC・メモリ128GB・帯域273GB/s・本体サイズまで一致します。最安と最高値の差 約101万円は、すべて保証内容と流通経路の差です。
+7機種すべてが NVIDIA のリファレンス設計で、SoC・メモリ128GB・帯域273GB/s・本体サイズまで一致します。最安と最高値の差 約104万円は、すべて保証内容と流通経路の差です。
 
 ### Apple Mac は「容量か帯域か」の選択になる
 
