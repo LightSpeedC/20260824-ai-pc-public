@@ -166,7 +166,7 @@ footer a { color: var(--navy2); }
 	<div class="inner">
 		<h1>ローカルルール</h1>
 		<p class="lead">このプロジェクトでだけ通る決めごと</p>
-		<p class="date">📅 作成: 2026-09-05 / 更新: 2026-10-17</p>
+		<p class="date">📅 作成: 2026-09-05 / 更新: 2026-10-20</p>
 	</div>
 </div>
 
@@ -229,10 +229,10 @@ footer a { color: var(--navy2); }
 				<tr><th>項目</th><th>決めごと</th></tr>
 			</thead>
 			<tbody>
-				<tr><td class="nowrap">周期</td><td><strong>毎日 6:00 と 22:00</strong>。cron の式は <code>0 6,22 * * *</code>、prompt は「ローカルルール3章に従って価格を再確認する」</td></tr>
+				<tr><td class="nowrap">周期</td><td><strong>奇数日の 6:00</strong>。cron の式は <code>0 6 1-31/2 * *</code>、prompt は「ローカルルール3章に従って価格を再確認する」</td></tr>
 				<tr><td class="nowrap">確認後の更新</td><td>資料の更新日と、1 章の「価格はすべて yyyy-mm-dd に確認しました」の日付を揃える</td></tr>
 				<tr><td class="nowrap">動いていないとき</td><td>更新日も変えない（体裁だけの変更に当たる）</td></tr>
-				<tr><td class="nowrap">止まっていたとき</td><td>セッションを開き直したときなどに、前回の実行から 6:00・22:00 の予定を1回以上過ぎていたら、cron を作り直したうえで、待たずにその場で1回実行する</td></tr>
+				<tr><td class="nowrap">止まっていたとき</td><td>セッションを開き直したときなどに、前回の実行から 奇数日 6:00 の予定を1回以上過ぎていたら、cron を作り直したうえで、待たずにその場で1回実行する</td></tr>
 			</tbody>
 		</table>
 	</div>
