@@ -166,7 +166,7 @@ footer a { color: var(--navy2); }
 	<div class="inner">
 		<h1>ローカルルール</h1>
 		<p class="lead">このプロジェクトでだけ通る決めごと</p>
-		<p class="date">📅 作成: 2026-09-05 / 更新: 2026-10-20</p>
+		<p class="date">📅 作成: 2026-09-05 / 更新: 2026-10-24</p>
 	</div>
 </div>
 
@@ -230,6 +230,7 @@ footer a { color: var(--navy2); }
 			</thead>
 			<tbody>
 				<tr><td class="nowrap">周期</td><td><strong>奇数日の 6:00</strong>。cron の式は <code>0 6 1-31/2 * *</code>、prompt は「ローカルルール3章に従って価格を再確認する」</td></tr>
+				<tr><td class="nowrap">確認する機種</td><td>GB10 搭載機（価格.com・HP・Dell・Acer）と Apple 4 機種（Mac mini M5 Pro・Mac Studio M5 Max・Mac Studio M5 Ultra・MacBook Pro 16 M5 Max）。Apple は公式ストアで資料の構成を選び、2TB・4TB・8TB の価格を読む</td></tr>
 				<tr><td class="nowrap">確認後の更新</td><td>資料の更新日と、1 章の「価格はすべて yyyy-mm-dd に確認しました」の日付を揃える</td></tr>
 				<tr><td class="nowrap">動いていないとき</td><td>更新日も変えない（体裁だけの変更に当たる）</td></tr>
 				<tr><td class="nowrap">止まっていたとき</td><td>セッションを開き直したときなどに、前回の実行から 奇数日 6:00 の予定を1回以上過ぎていたら、cron を作り直したうえで、待たずにその場で1回実行する</td></tr>
