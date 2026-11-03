@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<title>RTX Spark 搭載 PC の比較 — AI PC 調査プロジェクト</title>
+<style>
+:root {
+	--navy1: #12224d;
+	--navy2: #2f5fbf;
+	--ink: #1c2330;
+	--ink-soft: #4a5568;
+	--line: #d9dfe8;
+	--code-bg: #f4f6fa;
+	--link: #1a4fa0;
+	--accent: var(--navy1);
+	--accent2: var(--navy2);
+	--soft: #f2f5fb;
+}
+/* 章は4個: 色相は 280 / 186.7 / 93.3 / 0 */
+.ch01 { --accent: hsl(280,78%,25%);   --accent2: hsl(280,58%,55%);   --soft: hsl(280,28%,95%); }
+.ch02 { --accent: hsl(186.7,78%,25%); --accent2: hsl(186.7,58%,55%); --soft: hsl(186.7,28%,95%); }
+.ch03 { --accent: hsl(93.3,78%,25%);  --accent2: hsl(93.3,58%,55%);  --soft: hsl(93.3,28%,95%); }
+.ch04 { --accent: hsl(0,78%,25%);     --accent2: hsl(0,58%,55%);     --soft: hsl(0,28%,95%); }
+
+* { box-sizing: border-box; }
+body {
+	margin: 0;
+	background: #fff;
+	color: var(--ink);
+	font-size: 15.5px;
+	line-height: 1.85;
+	font-family: "Segoe UI", "Yu Gothic UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+a { color: var(--link, #1a4fa0); }
+.titlebar {
+	background: #12224d;
+	background: linear-gradient(135deg, var(--navy1), var(--navy2));
+	color: #fff;
+	padding: 34px 30px 30px;
+}
+.titlebar .inner { max-width: 1600px; margin: 0 auto; }
+.titlebar h1 { font-size: 2.05em; margin: 0 0 8px; color: #fff; line-height: 1.35; }
+.titlebar p { margin: 4px 0 0; color: #d6e2ff; background: transparent; font-size: 0.95em; }
+
+.wrap { max-width: 1600px; margin: 0 auto; padding: 0 30px 40px; }
+.homelink {
+	display: inline-flex;
+	align-items: center;
+	background: #12224d;
+	background: linear-gradient(100deg, var(--navy1), var(--navy2));
+	color: #fff;
+	text-decoration: none;
+	padding: 7px 14px;
+	border-radius: 6px;
+	box-shadow: 0 2px 9px rgba(0,0,0,0.15);
+}
+.homebar { margin: 18px 0 0; }
+
+section {
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	padding: 4px 26px 26px;
+	margin: 34px 0;
+}
+section h1 {
+	background: #12224d;
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	font-size: 1.5em;
+	padding: 14px 20px;
+	margin: 26px 0 20px;
+	border-radius: 8px;
+	box-shadow: 0 5px 16px rgba(0,0,0,0.18);
+}
+h2 {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(90deg, var(--soft), #fff);
+	color: var(--accent);
+	font-size: 1.25em;
+	padding: 6px 12px;
+	margin: 30px 0 12px;
+}
+p { margin: 10px 0; }
+ul { margin: 10px 0; padding-left: 1.6em; }
+li { margin: 4px 0; }
+
+.tablewrap { overflow-x: auto; margin: 14px 0; }
+table {
+	border-collapse: collapse;
+	width: 100%;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 2px 9px rgba(0,0,0,0.09);
+	font-size: 0.96em;
+}
+th {
+	background: #12224d;
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	text-align: left;
+	padding: 9px 12px;
+	font-weight: 700;
+}
+td {
+	padding: 9px 12px;
+	vertical-align: top;
+	border-bottom: 1px solid var(--line);
+	background: #fff;
+	color: var(--ink);
+}
+tr:nth-child(even) td { background: #fafbfe; }
+tr.hi td { background: #fff8e6; color: var(--ink); }
+.nowrap { white-space: nowrap; }
+.num { text-align: right; white-space: nowrap; }
+.sub { font-size: 0.88em; color: var(--ink-soft); background: transparent; }
+
+.badge {
+	display: inline-block;
+	color: #fff;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-size: 0.84em;
+	font-weight: 700;
+	white-space: nowrap;
+}
+.b-ok { background: #1d7a3c; background: linear-gradient(100deg,#1d7a3c,#45b56c); }
+.b-ng { background: #a51f22; background: linear-gradient(100deg,#a51f22,#e05a5c); }
+.b-none { background: #5a6472; background: linear-gradient(100deg,#5a6472,#97a1ae); }
+.b-warn { background: #b8620a; background: linear-gradient(100deg,#b8620a,#f0a548); }
+
+.callout {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border-radius: 0 8px 8px 0;
+	padding: 12px 16px;
+	margin: 16px 0;
+	color: var(--ink);
+}
+.callout strong { color: var(--accent); background: transparent; }
+
+footer {
+	max-width: 1600px;
+	margin: 0 auto;
+	padding: 18px 30px 40px;
+	font-size: 0.95em;
+}
+</style>
+</head>
+<body>
+
+<div class="titlebar">
+	<div class="inner">
+		<h1>RTX Spark 搭載 PC の比較</h1>
+		<p class="lead">NVIDIA RTX Spark (N1X) を積んだ Windows PC を、統合メモリ・帯域・国内価格で並べ、GB10 搭載機と Apple に照らす</p>
+		<p class="date">📅 作成: 2026-11-03 / 更新: 2026-11-03</p>
+	</div>
+</div>
+
+<div class="wrap">
+
+<p class="homebar"><a class="homelink" href="../../README.html" aria-label="戻る"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.4 0.8 7.3v0.9h2.1V14h4.0v-3.9h2.2V14h4.0V8.2h2.1V7.3z"/></svg></a></p>
+
+<section class="ch01" id="ch01">
+	<h1>RTX Spark とは</h1>
+
+	<p>NVIDIA と Microsoft が 2026-05-31 に発表した、Windows のノート PC と小型デスクトップ向けの SoC です。Grace CPU (Arm) と Blackwell 世代の RTX GPU を 1 つにまとめ、CPU と GPU が統合メモリを共有します。OS は Windows 11 の Arm 版です。国内では 2026 年 10 月中旬から搭載機が出ています。</p>
+
+	<div class="tablewrap">
+	<table>
+		<thead><tr><th>構成</th><th>CPU</th><th>GPU</th><th>統合メモリ</th><th>帯域</th><th>電力</th><th>AI 性能 (FP4)</th></tr></thead>
+		<tbody>
+			<tr><td class="nowrap">N1X 上位 (ノート・デスクトップ)</td><td class="nowrap">Grace 20コア</td><td class="nowrap">6,144コア</td><td class="nowrap">最大 128GB</td><td class="num">300.8 GB/s</td><td class="nowrap">45〜80W (デスクトップ 140W)</td><td class="nowrap">1 PFLOPS</td></tr>
+			<tr><td class="nowrap">N1X 下位 (ノート)</td><td class="nowrap">Grace 18コア</td><td class="nowrap">5,120コア</td><td class="nowrap">最大 32GB</td><td class="num">300.8 GB/s</td><td class="nowrap">45〜80W</td><td class="nowrap">827 TFLOPS</td></tr>
+		</tbody>
+	</table>
+	</div>
+
+	<p>帯域は NVIDIA の仕様ページに書かれていません。表の値は、仕様ページの 256bit と、各社の資料にある LPDDR5X-9400 から計算したものです (9,400 MT/s × 256bit ÷ 8)。</p>
+
+	<div class="callout">
+		<p><strong>メモリ構成は CPU/GPU の構成に縛られます。</strong>64GB 以上を選べるのは、どの機種も 20コアCPU / 6,144コアGPU の構成だけです。また Microsoft の注記によれば、<strong>GPU が使える容量は統合メモリの合計より少なくなります</strong>。128GB 機でも、128GB をそのまま GPU で使えるわけではありません。</p>
+	</div>
+</section>
+
+<section class="ch02" id="ch02">
+	<h1>128GB 構成の国内価格</h1>
+
+	<p>2026-11-03 に確認した、統合メモリ 128GB の構成です。価格はすべて税込で、安い順に並べています。</p>
+
+	<div class="tablewrap">
+	<table>
+		<thead><tr><th>機種</th><th>画面</th><th>ストレージ</th><th>価格</th><th>入手先</th><th>状態</th></tr></thead>
+		<tbody>
+			<tr class="hi"><td class="nowrap"><a href="https://www.microsoft.com/ja-jp/surface/devices/surface-laptop-ultra">Microsoft Surface Laptop Ultra</a></td><td class="nowrap">15型</td><td class="nowrap">1TB</td><td class="num"><strong>1,094,280 円</strong></td><td class="nowrap">Microsoft Store</td><td><span class="badge b-warn">在庫なし</span> 構成ページで選べるが、在庫が無い</td></tr>
+			<tr><td class="nowrap"><a href="https://www.asus.com/jp/laptops/for-creators/proart/proart-p14-h7407/">ASUS ProArt P14 (H7407)</a></td><td class="nowrap">14型</td><td class="nowrap">1TB</td><td class="num">1,198,000 円</td><td class="nowrap">通販 (価格.com 最安)</td><td><span class="badge b-ok">販売中</span> 2026-10-23 発売</td></tr>
+			<tr><td class="nowrap"><a href="https://www.asus.com/jp/laptops/for-creators/proart/proart-p16-h7607/">ASUS ProArt P16 (H7607)</a></td><td class="nowrap">16型</td><td class="nowrap">1TB</td><td class="num">1,246,720 円</td><td class="nowrap">通販 (価格.com 最安)</td><td><span class="badge b-ok">販売中</span> 2026-10-23 発売</td></tr>
+			<tr><td class="nowrap">HP OmniBook Ultra 16 AI PC (エクストリームプロ)</td><td class="nowrap">16型</td><td class="nowrap">2TB</td><td class="num">1,294,700 円〜</td><td class="nowrap">日本HP (希望販売価格)</td><td><span class="badge b-none">未発売</span> 2026 年 11 月以降に発売</td></tr>
+			<tr><td class="nowrap"><a href="https://jp.msi.com/news/detail/Prestige-N16-Flip-AI--C1XM-150007">MSI Prestige N16 Flip AI+</a> (C1XMT-3100JP)</td><td class="nowrap">16型 2-in-1</td><td class="nowrap">2TB</td><td class="num">1,313,820 円</td><td class="nowrap">通販 (価格.com 最安)</td><td><span class="badge b-ok">販売中</span> 2026-10-23 発売</td></tr>
+		</tbody>
+	</table>
+	</div>
+
+	<p><strong>最安は 128GB でも約 109 万円で、すべてノート PC です。</strong>国内で 128GB を選べる RTX Spark 機は、この 5 機種だけでした。最安の Surface は在庫が無いため、いま買える最安は ASUS ProArt P14 の 1,198,000 円になります。</p>
+
+	<h2>国内で 128GB を買えないもの</h2>
+
+	<div class="tablewrap">
+	<table>
+		<thead><tr><th>機種</th><th>理由</th></tr></thead>
+		<tbody>
+			<tr><td class="nowrap">Dell XPS 16 Creator Edition</td><td><span class="badge b-ng">構成なし</span> 国内で出ているのは 32GB・512GB の構成だけ (価格.com 最安 799,598 円)</td></tr>
+			<tr><td class="nowrap">HP OmniBook X 14</td><td><span class="badge b-ng">日本未発表</span> 米国のみ</td></tr>
+			<tr><td class="nowrap">Lenovo Yoga Pro 9n ・ Yoga 9n 2-in-1</td><td><span class="badge b-ng">日本未発表</span> 米国のみ。Yoga 9n 2-in-1 は最大 64GB</td></tr>
+			<tr><td class="nowrap">Microsoft Surface RTX Spark Dev Box</td><td><span class="badge b-ng">日本未発表</span> 128GB・2TB の小型デスクトップ。米国での価格は 6,000 ドルと報じられている</td></tr>
+		</tbody>
+	</table>
+	</div>
+
+	<h2>メモリが少ない構成</h2>
+
+	<p>64GB 以下でよければ、価格は大きく下がります。</p>
+
+	<div class="tablewrap">
+	<table>
+		<thead><tr><th>機種</th><th>メモリ / ストレージ</th><th>価格</th><th>入手先</th></tr></thead>
+		<tbody>
+			<tr><td class="nowrap">HP OmniBook Ultra 16 (エクストリームプラス)</td><td class="nowrap">64GB / 1TB</td><td class="num">796,400 円〜</td><td class="nowrap">日本HP (希望販売価格)・2026-10-29 発売</td></tr>
+			<tr><td class="nowrap">Microsoft Surface Laptop Ultra</td><td class="nowrap">64GB / 1TB</td><td class="num">812,680 円</td><td class="nowrap">Microsoft Store</td></tr>
+			<tr><td class="nowrap">ASUS ProArt P14 (H7407)</td><td class="nowrap">48GB / 1TB</td><td class="num">949,800 円</td><td class="nowrap">ASUS (発表価格)・11 月中旬発売</td></tr>
+			<tr><td class="nowrap">MSI Prestige N16 Flip AI+ (C1XMT-3200JP)</td><td class="nowrap">64GB / 2TB</td><td class="num">989,820 円</td><td class="nowrap">通販 (価格.com 最安)</td></tr>
+			<tr><td class="nowrap">ASUS ProArt P16 (H7607)</td><td class="nowrap">48GB / 1TB</td><td class="num">999,800 円</td><td class="nowrap">ASUS (発表価格)・11 月中旬発売</td></tr>
+		</tbody>
+	</table>
+	</div>
+</section>
+
+<section class="ch03" id="ch03">
+	<h1>GB10 搭載機・Apple との比較</h1>
+
+	<p>128GB 構成どうしで比べます。GB10 搭載機と Apple の価格は、<a href="r260916-01-ローカルLLM機種比較.html">ローカルLLM 機種比較 2026</a> の 2026-11-03 の値です。</p>
+
+	<div class="tablewrap">
+	<table>
+		<thead><tr><th>機種</th><th>形態 / OS</th><th>帯域</th><th>ストレージ</th><th>価格</th><th>1GB あたり</th><th>帯域 1GB/s あたり</th></tr></thead>
+		<tbody>
+			<tr><td class="nowrap">Mac Studio M5 Max</td><td class="nowrap">据置 / macOS</td><td class="num">614 GB/s</td><td class="nowrap">2TB</td><td class="num">1,031,800 円</td><td class="num"><strong>8,061 円</strong></td><td class="num"><strong>1,681 円</strong></td></tr>
+			<tr><td class="nowrap">Surface Laptop Ultra (RTX Spark)</td><td class="nowrap">ノート / Windows</td><td class="num">300.8 GB/s</td><td class="nowrap">1TB</td><td class="num">1,094,280 円</td><td class="num">8,549 円</td><td class="num">3,638 円</td></tr>
+			<tr><td class="nowrap">ASUS ProArt P14 (RTX Spark)</td><td class="nowrap">ノート / Windows</td><td class="num">300.8 GB/s</td><td class="nowrap">1TB</td><td class="num">1,198,000 円</td><td class="num">9,359 円</td><td class="num">3,983 円</td></tr>
+			<tr><td class="nowrap">MacBook Pro 16インチ M5 Max</td><td class="nowrap">ノート / macOS</td><td class="num">614 GB/s</td><td class="nowrap">2TB</td><td class="num">1,209,800 円</td><td class="num">9,452 円</td><td class="num">1,971 円</td></tr>
+			<tr><td class="nowrap">ASUS ProArt P16 (RTX Spark)</td><td class="nowrap">ノート / Windows</td><td class="num">300.8 GB/s</td><td class="nowrap">1TB</td><td class="num">1,246,720 円</td><td class="num">9,740 円</td><td class="num">4,145 円</td></tr>
+			<tr><td class="nowrap">HP OmniBook Ultra 16 (RTX Spark)</td><td class="nowrap">ノート / Windows</td><td class="num">300.8 GB/s</td><td class="nowrap">2TB</td><td class="num">1,294,700 円</td><td class="num">10,115 円</td><td class="num">4,304 円</td></tr>
+			<tr><td class="nowrap">HP ZGX Nano G1n (GB10)</td><td class="nowrap">据置 / Linux (DGX OS)</td><td class="num">273 GB/s</td><td class="nowrap">4TB</td><td class="num">1,299,100 円</td><td class="num">10,149 円</td><td class="num">4,759 円</td></tr>
+			<tr><td class="nowrap">MSI Prestige N16 Flip AI+ (RTX Spark)</td><td class="nowrap">ノート / Windows</td><td class="num">300.8 GB/s</td><td class="nowrap">2TB</td><td class="num">1,313,820 円</td><td class="num">10,264 円</td><td class="num">4,368 円</td></tr>
+		</tbody>
+	</table>
+	</div>
+
+	<p><strong>RTX Spark 機は、GB10 搭載機とほぼ同じ価格・同じ帯域のノート PC です。</strong>帯域は GB10 搭載機の 273 GB/s より約 1 割広いだけで、Apple の M5 Max (614 GB/s) の半分以下です。LLM の生成速度は帯域でほぼ決まるため、同じモデルなら M5 Max の約半分の速度になる見込みです (実測はしていません)。</p>
+
+	<p><strong>128GB を持ち運ぶなら、MacBook Pro 16インチと比べることになります。</strong>2TB どうしでは MacBook Pro が 1,209,800 円で、HP・MSI の RTX Spark 機より 8.5〜10.4 万円安く、帯域は 2 倍です。RTX Spark 機を選ぶ理由は、Windows で NVIDIA の GPU を使うことにあります。</p>
+
+	<div class="callout">
+		<p><strong>GB10 搭載機とは OS が違います。</strong>GB10 搭載機は Linux (DGX OS) で CUDA の開発環境がそろった状態で届きますが、RTX Spark 機は Windows 11 の Arm 版です。同じ道具がそのまま動くとは限りません。買う前に、使うソフトが Windows の Arm 版で動くかを確かめてください。</p>
+	</div>
+</section>
+
+<section class="ch04" id="ch04">
+	<h1>出典</h1>
+
+	<ul>
+		<li><a href="https://www.nvidia.com/en-us/products/rtx-spark/specifications/">NVIDIA RTX Spark 仕様</a> (構成・メモリ・電力・AI 性能)</li>
+		<li><a href="https://en.wikipedia.org/wiki/Nvidia_RTX_Spark">Wikipedia: Nvidia RTX Spark</a> (発表日・OEM 各社)</li>
+		<li><a href="https://pc.watch.impress.co.jp/docs/news/2147835.html">PC Watch: ASUS ProArt P14 / P16 の予約開始 (2026-10-14)</a> (構成別の価格・LPDDR5X-9400)</li>
+		<li><a href="https://www.gdm.or.jp/pressrelease/2026/1015/656269">日本HP: OmniBook Ultra 16 AI PC 発表 (2026-10-15)</a> (構成別の希望販売価格)</li>
+		<li><a href="https://www.microsoft.com/ja-jp/store/configure/surface-laptop-ultra/8wg5vqp0x4b8">Microsoft Store: Surface Laptop Ultra の構成</a> (構成別の価格・在庫)</li>
+		<li><a href="https://search.kakaku.com/RTX%20Spark/">価格.com: RTX Spark の検索結果</a> (ASUS・MSI・Dell の通販価格)</li>
+		<li><a href="https://thehikaku.net/pc/newpc/newpc-20261011-rtx-spark.html">RTX Spark 搭載ノート PC 9 製品のまとめ</a> (国外モデル・発売予定)</li>
+		<li><a href="https://korben.info/ja/microsoft-surface-rtx-spark-dev-box-mini-pc-local-ai.html">Surface RTX Spark Dev Box の報道</a> (米国での価格)</li>
+	</ul>
+</section>
+
+</div>
+
+<footer>
+	<p><a class="homelink" href="../../README.html" aria-label="戻る"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.4 0.8 7.3v0.9h2.1V14h4.0v-3.9h2.2V14h4.0V8.2h2.1V7.3z"/></svg></a></p>
+</footer>
+
+</body>
+</html>
