@@ -242,7 +242,7 @@ footer a { color: var(--navy2); background: none; }
 	<div class="inner">
 		<h1>ローカルLLM 機種比較 2026</h1>
 		<p class="lead">いま購入できる構成だけを対象に、統合メモリ 64GB・128GB・256GB × ストレージ 2TB・4TB・8TB で並べ、どのモデルがどこまで動くかを判定する</p>
-		<p class="date">📅 作成: 2026-09-16 / 更新: 2026-11-03</p>
+		<p class="date">📅 作成: 2026-09-16 / 更新: 2026-11-07</p>
 	</div>
 </div>
 
@@ -267,7 +267,7 @@ footer a { color: var(--navy2); background: none; }
 	<section class="ch01" id="ch01">
 		<h1>調査の条件と対象</h1>
 
-		<p>ローカルで大規模言語モデルを動かすためのマシンを選ぶ、という目的で機種を並べます。<strong>載せるのは、その時点で実際に注文できたものだけ</strong>です。カタログに存在しても購入画面で選べない構成は、比較の対象になりません。</p>
+		<p>ローカルで大規模言語モデルを動かすためのマシンを選ぶ、という目的で機種を並べます。<strong>載せるのは、購入画面で構成を選べるもの</strong>です。在庫が無いもの・発売前のものも、<span class="badge b-ng">在庫なし</span> <span class="badge b-none">未発売</span> のバッジを付けて載せます。カタログに存在しても購入画面で選べない構成は、比較の対象になりません。</p>
 
 		<h2>対象を絞った条件</h2>
 
@@ -275,11 +275,11 @@ footer a { color: var(--navy2); background: none; }
 		<table>
 			<thead><tr><th>条件</th><th>内容</th><th>絞った理由</th></tr></thead>
 			<tbody>
-				<tr><td class="nowrap">統合メモリ</td><td>64GB / 128GB / 256GB</td><td>この3段で動かせるモデルの階層が変わる</td></tr>
+				<tr><td class="nowrap">統合メモリ</td><td>32GB / 64GB / 128GB / 256GB</td><td>この4段で動かせるモデルの階層が変わる</td></tr>
 				<tr><td class="nowrap">ストレージ</td><td>2TB / 4TB / 8TB</td><td>量子化モデルは1本で数十〜数百GBあり、必要量で価格が変わる</td></tr>
 				<tr><td class="nowrap">形態</td><td>据置型とノート型の両方</td><td>128GB はノート型でも積めるため、可搬性も選択肢に入る</td></tr>
 				<tr><td class="nowrap">LLM</td><td>Qwen / Gemma / GLM / Kimi</td><td>いずれも重みが公開され、GGUF が配布されている</td></tr>
-				<tr><td class="nowrap">価格</td><td>メーカー直販・正規販売店・通販の掲載価格</td><td>在庫があって注文できるものに限る</td></tr>
+				<tr><td class="nowrap">価格</td><td>メーカー直販・正規販売店・通販の掲載価格</td><td>在庫が無いもの・発売前のものはバッジで示す</td></tr>
 			</tbody>
 		</table>
 		</div>
@@ -335,6 +335,7 @@ footer a { color: var(--navy2); background: none; }
 		<table>
 			<thead><tr><th>写真</th><th>機種</th><th>形態</th><th>統合メモリ</th><th>帯域</th><th>CPUコア</th><th>GPUコア</th><th>ストレージ</th><th>OS</th></tr></thead>
 			<tbody>
+				<tr><td class="photocell"><img class="shot" src="images/apple_mac_mini_m6.jpg" alt="Mac mini"></td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-mini">Mac mini M6</a></td><td class="nowrap">据置</td><td class="nowrap">16 / 24 / <strong>32GB</strong></td><td class="num">170 GB/s</td><td class="num">12コア</td><td class="num">12コア</td><td class="nowrap">256GB〜2TB</td><td class="nowrap">macOS</td></tr>
 				<tr><td class="photocell"><img class="shot" src="images/apple_mac_mini_m6.jpg" alt="Mac mini"></td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-mini">Mac mini M5 Pro</a></td><td class="nowrap">据置</td><td class="nowrap">24 / 48 / <strong>64GB</strong></td><td class="num">307 GB/s</td><td class="num">18コア</td><td class="num">20コア</td><td class="nowrap">512GB〜8TB</td><td class="nowrap">macOS</td></tr>
 				<tr><td class="photocell"><img class="shot" src="images/apple_mac_studio.jpg" alt="Mac Studio"></td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Max</a></td><td class="nowrap">据置</td><td class="nowrap">48 / 64 / <strong>128GB</strong></td><td class="num">614 GB/s</td><td class="num">18コア</td><td class="num">40コア</td><td class="nowrap">512GB〜8TB</td><td class="nowrap">macOS</td></tr>
 				<tr><td class="photocell"><img class="shot" src="images/apple_mac_studio_m5.jpg" alt="Mac Studio"></td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Ultra</a></td><td class="nowrap">据置</td><td class="nowrap">96 / <strong>256</strong> / <strong>512GB</strong></td><td class="num">1.2 TB/s</td><td class="num">30 / 36コア</td><td class="num">64 / 80コア</td><td class="nowrap">1TB〜16TB</td><td class="nowrap">macOS</td></tr>
@@ -342,6 +343,8 @@ footer a { color: var(--navy2); background: none; }
 			</tbody>
 		</table>
 		</div>
+
+		<p><strong>Mac mini M6 はストレージが 2TB までです。</strong>4TB・8TB は M5 Pro に変えないと選べません。</p>
 
 		<p>メモリ容量は <strong>CPU/GPU のコア構成に固定</strong>されています。表の CPU/GPU コア数は、それぞれの機種で<strong>太字にした最大メモリ構成</strong>のものです。64GB を選ぶには 18コアCPU/20コアGPU の M5 Pro、128GB を選ぶには 18コアCPU/40コアGPU の M5 Max が必要です。M5 Ultra は 30コアCPU/64コアGPU と 36コアCPU/80コアGPU の2構成があり、<strong>256GB はどちらでも選べます</strong>。512GB は 36コアCPU/80コアGPU で選べ、お届けは 13〜15 週間です。以降の価格比較は、太字にした構成（M5 Pro・M5 Max は表の最大構成、M5 Ultra は 36コアCPU/80コアGPU）での金額です。</p>
 
@@ -351,6 +354,27 @@ footer a { color: var(--navy2); background: none; }
 
 		<div class="callout">
 			<p><strong>OS の違いは、そのまま移植コストになります。</strong>GB10 側は DGX OS で CUDA がそのまま動くため、既存の CUDA 資産を持ち込めます。Mac 側は Metal と MLX で、CUDA 前提のコードは書き換えが要ります。逆に Mac は汎用機として日常利用も兼ねられます。<strong>どちらが有利かは、いま何を持っているかで決まります。</strong></p>
+		</div>
+
+		<h2>NVIDIA RTX Spark 搭載機</h2>
+
+		<p>Grace CPU と Blackwell の RTX GPU を 1 つにまとめた、Windows 11 (Arm 版) のノート PC です。<strong>128GB を選べるのは 20コアCPU / 6,144コアGPU の構成だけ</strong>で、帯域は 300.8 GB/s (LPDDR5X-9400・256bit からの計算値) です。詳しくは r261103-01 (RTX Spark 搭載 PC の比較) にまとめています。</p>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>機種</th><th>形態</th><th>統合メモリ</th><th>帯域</th><th>ストレージ</th><th>OS</th><th>状態</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap"><a href="https://www.microsoft.com/ja-jp/surface/devices/surface-laptop-ultra">Microsoft Surface Laptop Ultra</a></td><td class="nowrap">ノート 15型</td><td class="nowrap"><strong>128GB</strong></td><td class="num">300.8 GB/s</td><td class="nowrap">1TB</td><td class="nowrap">Windows 11</td><td><span class="badge b-ng">在庫なし</span></td></tr>
+				<tr><td class="nowrap"><a href="https://www.asus.com/jp/laptops/for-creators/proart/proart-p14-h7407/">ASUS ProArt P14 (H7407)</a></td><td class="nowrap">ノート 14型</td><td class="nowrap"><strong>128GB</strong></td><td class="num">300.8 GB/s</td><td class="nowrap">1TB</td><td class="nowrap">Windows 11</td><td><span class="badge b-ok">販売中</span></td></tr>
+				<tr><td class="nowrap"><a href="https://www.asus.com/jp/laptops/for-creators/proart/proart-p16-h7607/">ASUS ProArt P16 (H7607)</a></td><td class="nowrap">ノート 16型</td><td class="nowrap"><strong>128GB</strong></td><td class="num">300.8 GB/s</td><td class="nowrap">1TB</td><td class="nowrap">Windows 11</td><td><span class="badge b-ok">販売中</span></td></tr>
+				<tr><td class="nowrap">HP OmniBook Ultra 16 AI PC (エクストリームプロ)</td><td class="nowrap">ノート 16型</td><td class="nowrap"><strong>128GB</strong></td><td class="num">300.8 GB/s</td><td class="nowrap">2TB</td><td class="nowrap">Windows 11</td><td><span class="badge b-none">未発売</span> 2026 年 11 月以降</td></tr>
+				<tr><td class="nowrap"><a href="https://jp.msi.com/news/detail/Prestige-N16-Flip-AI--C1XM-150007">MSI Prestige N16 Flip AI+</a> (C1XMT-3100JP)</td><td class="nowrap">ノート 16型 2-in-1</td><td class="nowrap"><strong>128GB</strong></td><td class="num">300.8 GB/s</td><td class="nowrap">2TB</td><td class="nowrap">Windows 11</td><td><span class="badge b-ok">販売中</span></td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout">
+			<p><strong>GPU が使える容量は 128GB より少なくなります</strong> (Microsoft の注記)。CUDA が動く点は GB10 搭載機と同じですが、OS は DGX OS ではなく Windows です。</p>
 		</div>
 
 		<h2>在庫と入手先</h2>
@@ -369,7 +393,8 @@ footer a { color: var(--navy2); background: none; }
 				<tr><td class="nowrap">Dell Pro Precision with GB10</td><td class="nowrap">Dell 直販</td><td><span class="badge b-ok">受注可</span> 受注後 10日〜2週間で納品。製品名が「Dell Pro Max with GB10」から変わり、2TB 構成が加わった</td></tr>
 				<tr><td class="nowrap">ASUS Ascent GX10</td><td class="nowrap">なし</td><td><span class="badge b-ng">販売店なし</span> 価格.com に出品が無い（10/19 朝までは ECJOY! が 1TB 構成を出品）</td></tr>
 				<tr><td class="nowrap">Lenovo ThinkStation PGX</td><td class="nowrap">通販</td><td><span class="badge b-ok">販売中</span> 4TB の最安は OCNオンライン。TT-Mall に 2TB・4TB の型番が並ぶ</td></tr>
-				<tr><td class="nowrap">Apple 各機種</td><td class="nowrap">Apple 公式ストア</td><td><span class="badge b-ok">在庫あり</span> 全構成で「最短で翌日に無料でお届け」</td></tr>
+				<tr><td class="nowrap">RTX Spark 搭載機</td><td class="nowrap">通販・各社直販</td><td>ASUS 2 機種・MSI は <span class="badge b-ok">販売中</span>。Surface は <span class="badge b-ng">在庫なし</span>、HP は <span class="badge b-none">未発売</span> (2026-11-03 確認)</td></tr>
+				<tr><td class="nowrap">Apple 各機種</td><td class="nowrap">Apple 公式ストア</td><td><span class="badge b-ok">在庫あり</span> 全構成で「最短で翌日に無料でお届け」。Mac mini M6 32GB・2TB は 11/19〜11/27 のお届け (2026-11-07 確認)</td></tr>
 			</tbody>
 		</table>
 		</div>
@@ -390,8 +415,10 @@ footer a { color: var(--navy2); background: none; }
 		<table>
 			<thead><tr><th>統合メモリ</th><th>機種</th><th>2TB</th><th>4TB</th><th>8TB</th></tr></thead>
 			<tbody>
+				<tr><td class="nowrap">32GB</td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-mini">Mac mini M6</a></td><td class="num"><strong>401,800 円</strong></td><td class="num">—</td><td class="num">—</td></tr>
 				<tr><td class="nowrap">64GB</td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-mini">Mac mini M5 Pro</a></td><td class="num"><strong>659,800 円</strong></td><td class="num">839,800 円</td><td class="num">1,199,800 円</td></tr>
 				<tr class="hi"><td class="nowrap">128GB</td><td class="nowrap">GB10 搭載機の最安</td><td class="num">1,498,843 円<br><span style="font-size:0.88em;color:var(--ink-soft)">Dell</span></td><td class="num">1,299,100 円<br><span style="font-size:0.88em;color:var(--ink-soft)">HP</span></td><td class="num">—</td></tr>
+				<tr><td class="nowrap">128GB</td><td class="nowrap">RTX Spark 搭載機の 2TB 最安<br><span style="font-size:0.88em;color:var(--ink-soft)">MSI Prestige N16 Flip AI+</span></td><td class="num">1,313,820 円</td><td class="num">—</td><td class="num">—</td></tr>
 				<tr><td class="nowrap">128GB</td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Max</a></td><td class="num"><strong>1,031,800 円</strong></td><td class="num">1,211,800 円</td><td class="num">1,571,800 円</td></tr>
 				<tr><td class="nowrap">128GB</td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/macbook-pro">MacBook Pro 16インチ M5 Max</a></td><td class="num">1,209,800 円</td><td class="num">1,389,800 円</td><td class="num">1,749,800 円</td></tr>
 				<tr><td class="nowrap">256GB</td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Ultra</a></td><td class="num">1,993,800 円</td><td class="num">2,173,800 円</td><td class="num">2,533,800 円</td></tr>
@@ -493,14 +520,37 @@ footer a { color: var(--navy2); background: none; }
 			<p><strong>容量が4分の1なのに、出品があったときの価格（1,100,000 円）は 4TB の最安と約19.9万円しか違いませんでした。</strong>統合メモリだけを見て「128GB 機の最安」と判断すると外します。<strong>GB10 搭載機を比べるときは、ストレージ容量を必ず型番で確かめてください。</strong></p>
 		</div>
 
+		<h2>RTX Spark 搭載機 (128GB)</h2>
+
+		<p>すべてノート PC です。ストレージが 1TB と 2TB に分かれるため、上の一覧の 2TB の段には 2TB の最安だけを載せました。安い順です。</p>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>製品</th><th>ストレージ</th><th>価格（税込）</th><th>入手先</th><th>状態</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap">Microsoft Surface Laptop Ultra</td><td class="nowrap">1TB</td><td class="num">1,094,280 円</td><td class="nowrap">Microsoft Store</td><td><span class="badge b-ng">在庫なし</span></td></tr>
+				<tr class="hi"><td class="nowrap">ASUS ProArt P14 (H7407)</td><td class="nowrap">1TB</td><td class="num"><strong>1,198,000 円</strong></td><td class="nowrap">通販 (価格.com 最安)</td><td><span class="badge b-ok">販売中</span> いま買える最安</td></tr>
+				<tr><td class="nowrap">ASUS ProArt P16 (H7607)</td><td class="nowrap">1TB</td><td class="num">1,246,720 円</td><td class="nowrap">通販 (価格.com 最安)</td><td><span class="badge b-ok">販売中</span></td></tr>
+				<tr><td class="nowrap">HP OmniBook Ultra 16 AI PC (エクストリームプロ)</td><td class="nowrap">2TB</td><td class="num">1,294,700 円〜</td><td class="nowrap">日本HP (希望販売価格)</td><td><span class="badge b-none">未発売</span> 2026 年 11 月以降</td></tr>
+				<tr><td class="nowrap">MSI Prestige N16 Flip AI+ (C1XMT-3100JP)</td><td class="nowrap">2TB</td><td class="num">1,313,820 円</td><td class="nowrap">通販 (価格.com 最安)</td><td><span class="badge b-ok">販売中</span></td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<div class="callout">
+			<p><strong>同じ 128GB のノートなら、MacBook Pro 16インチ M5 Max (2TB・1,209,800 円) のほうが安く、帯域も 2 倍 (614 GB/s) あります。</strong>RTX Spark 機を選ぶ理由は、Windows と CUDA がそのまま使えることです。</p>
+		</div>
+
 		<h2>統合メモリ 1GB あたりの単価</h2>
 
 		<div class="tablewrap">
 		<table>
 			<thead><tr><th>機種</th><th>メモリ</th><th>2TB 時</th><th>4TB 時</th><th>8TB 時</th></tr></thead>
 			<tbody>
+				<tr><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-mini">Mac mini M6</a></td><td class="nowrap">32GB</td><td class="num">12,556 円/GB</td><td class="num">—</td><td class="num">—</td></tr>
 				<tr><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-mini">Mac mini M5 Pro</a></td><td class="nowrap">64GB</td><td class="num">10,309 円/GB</td><td class="num">13,122 円/GB</td><td class="num">18,747 円/GB</td></tr>
 				<tr><td class="nowrap">GB10 搭載機の最安</td><td class="nowrap">128GB</td><td class="num">11,710 円/GB</td><td class="num">10,149 円/GB</td><td class="num">—</td></tr>
+				<tr><td class="nowrap">RTX Spark 搭載機の 2TB 最安</td><td class="nowrap">128GB</td><td class="num">10,264 円/GB</td><td class="num">—</td><td class="num">—</td></tr>
 				<tr><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Max</a></td><td class="nowrap">128GB</td><td class="num">8,061 円/GB</td><td class="num">9,467 円/GB</td><td class="num">12,280 円/GB</td></tr>
 				<tr><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/macbook-pro">MacBook Pro 16インチ M5 Max</a></td><td class="nowrap">128GB</td><td class="num">9,452 円/GB</td><td class="num">10,858 円/GB</td><td class="num">13,670 円/GB</td></tr>
 				<tr><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Ultra</a></td><td class="nowrap">256GB</td><td class="num"><strong>7,788 円/GB</strong></td><td class="num">8,491 円/GB</td><td class="num">9,898 円/GB</td></tr>
@@ -519,8 +569,10 @@ footer a { color: var(--navy2); background: none; }
 		<table>
 			<thead><tr><th>機種</th><th>帯域</th><th>2TB 時</th><th>4TB 時</th><th>8TB 時</th></tr></thead>
 			<tbody>
+				<tr><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-mini">Mac mini M6</a></td><td class="num">170 GB/s</td><td class="num">2,364 円</td><td class="num">—</td><td class="num">—</td></tr>
 				<tr><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-mini">Mac mini M5 Pro</a></td><td class="num">307 GB/s</td><td class="num">2,149 円</td><td class="num">2,735 円</td><td class="num">3,908 円</td></tr>
 				<tr><td class="nowrap">GB10 搭載機の最安</td><td class="num">273 GB/s</td><td class="num">5,490 円</td><td class="num">4,759 円</td><td class="num">—</td></tr>
+				<tr><td class="nowrap">RTX Spark 搭載機の 2TB 最安</td><td class="num">300.8 GB/s</td><td class="num">4,368 円</td><td class="num">—</td><td class="num">—</td></tr>
 				<tr><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Max</a></td><td class="num">614 GB/s</td><td class="num"><strong>1,681 円</strong></td><td class="num">1,974 円</td><td class="num">2,560 円</td></tr>
 				<tr><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/macbook-pro">MacBook Pro 16インチ M5 Max</a></td><td class="num">614 GB/s</td><td class="num">1,971 円</td><td class="num">2,263 円</td><td class="num">2,850 円</td></tr>
 				<tr><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Ultra</a></td><td class="num">1.2 TB/s</td><td class="num">1,662 円</td><td class="num"><strong>1,812 円</strong></td><td class="num"><strong>2,112 円</strong></td></tr>
@@ -709,6 +761,7 @@ footer a { color: var(--navy2); background: none; }
 		<table>
 			<thead><tr><th>統合メモリ</th><th>OS等の控え</th><th>KV等の控え</th><th>モデルに使える目安</th></tr></thead>
 			<tbody>
+				<tr><td class="nowrap">32GB</td><td class="num">6 GB</td><td class="num">4 GB</td><td class="num">約 22 GB</td></tr>
 				<tr><td class="nowrap">64GB</td><td class="num">8 GB</td><td class="num">6 GB</td><td class="num">約 50 GB</td></tr>
 				<tr><td class="nowrap">128GB</td><td class="num">10 GB</td><td class="num">8 GB</td><td class="num">約 110 GB</td></tr>
 				<tr><td class="nowrap">256GB</td><td class="num">12 GB</td><td class="num">10 GB</td><td class="num">約 234 GB</td></tr>
@@ -723,6 +776,25 @@ footer a { color: var(--navy2); background: none; }
 		<div class="callout callout-important">
 			<p><strong>以下の表の「推定速度」は、<a href="#ch04">4章</a>の実測（M4 Max・546 GB/s・90GB のモデルで 9〜10 tok/s）を基準に、帯域比とモデルサイズ比だけで機械的に外挿した値です。</strong>MoE モデルは総パラメータの一部（活性パラメータ）しか読まないため、活性比率が低いモデル（例: Qwen3.8-Flash-Next は 125B 中 6B）ほど、この推定より<strong>実際は速くなる</strong>可能性があります。実測ではなく目安として扱ってください。</p>
 		</div>
+
+		<h2>32GB（Mac mini M6）で動くもの</h2>
+
+		<p>機種が Mac mini M6（170 GB/s）に限定されるため、推定速度もこの帯域で計算しています。</p>
+
+		<div class="tablewrap">
+		<table>
+			<thead><tr><th>判定</th><th>モデル</th><th>量子化</th><th>サイズ</th><th>推定速度</th></tr></thead>
+			<tbody>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Gemma 4 26B-A4B</td><td class="nowrap">QAT 4bit</td><td class="num">14.4 GB</td><td class="num">約 18 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Qwen3.8-27B</td><td class="nowrap">4bit</td><td class="num">約 17 GB</td><td class="num">約 16 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ok">動く</span></td><td class="nowrap">Gemma 4 31B</td><td class="nowrap">QAT 4bit</td><td class="num">17.5 GB</td><td class="num">約 15 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-warn">条件付き</span></td><td class="nowrap">Qwen3.6-35B-A3B</td><td class="nowrap">4bit</td><td class="num">22.7 GB</td><td class="num">約 12 tok/s</td></tr>
+				<tr><td class="nowrap"><span class="badge b-ng">載らない</span></td><td class="nowrap">Gemma 4 31B</td><td class="nowrap">BF16（無量子化）</td><td class="num">69.9 GB</td><td>—</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<p><strong>32GB の上限</strong>は、総パラメータで <strong>30B 前後</strong>、モデルサイズで <strong>22GB 程度</strong>です。Qwen3.6-35B-A3B の 4bit は目安をわずかに超えるため、コンテキストを短くする必要があります。</p>
 
 		<h2>64GB（Mac mini M5 Pro）で動くもの</h2>
 
@@ -745,9 +817,9 @@ footer a { color: var(--navy2); background: none; }
 
 		<p><strong>64GB の上限</strong>は、総パラメータで <strong>35B 前後</strong>、モデルサイズで <strong>50GB 程度</strong>です。4bit なら 100B 級の MoE に手が届きそうに見えますが、実際には Qwen3.8-Flash-Next（125B）の最小量子化 72.5GB でも入りません。</p>
 
-		<h2>128GB（GB10 搭載機 / Mac Studio M5 Max / MacBook Pro M5 Max）で動くもの</h2>
+		<h2>128GB（GB10 搭載機 / RTX Spark 搭載機 / Mac Studio M5 Max / MacBook Pro M5 Max）で動くもの</h2>
 
-		<p>この容量は3機種にまたがり、帯域も 273〜614 GB/s とばらつくため機種を1つに絞れません。推定速度は <strong>Mac Studio M5 Ultra 256GB（1.2 TB/s）</strong>の値を代わりに載せています。GB10 搭載機・Mac Studio M5 Max・MacBook Pro M5 Max では、この値より遅くなります。</p>
+		<p>この容量は4系統にまたがり、帯域も 273〜614 GB/s とばらつくため機種を1つに絞れません。推定速度は <strong>Mac Studio M5 Ultra 256GB（1.2 TB/s）</strong>の値を代わりに載せています。GB10 搭載機・RTX Spark 搭載機・Mac Studio M5 Max・MacBook Pro M5 Max では、この値より遅くなります。</p>
 
 		<div class="tablewrap">
 		<table>
@@ -791,14 +863,15 @@ footer a { color: var(--navy2); background: none; }
 
 		<p><strong>256GB の上限</strong>は、総パラメータで <strong>744B</strong>、モデルサイズで <strong>234GB 程度</strong>です。1兆パラメータ級（Kimi K2 系）は、初代の 1.8bit がぎりぎり入るかどうかで、現行世代は入りません。</p>
 
-		<h2>3段のまとめ</h2>
+		<h2>4段のまとめ</h2>
 
 		<div class="tablewrap">
 		<table>
 			<thead><tr><th>統合メモリ</th><th>該当機種</th><th>モデルに使える目安</th><th>4bit で動く総パラメータ</th><th>低ビットまで落として動く総パラメータ</th></tr></thead>
 			<tbody>
+				<tr><td class="nowrap">32GB</td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-mini">Mac mini M6</a></td><td class="num">約 22 GB</td><td class="nowrap">30B 級</td><td class="nowrap">35B 級（短いコンテキスト）</td></tr>
 				<tr><td class="nowrap">64GB</td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-mini">Mac mini M5 Pro</a></td><td class="num">約 50 GB</td><td class="nowrap">35B 級</td><td class="nowrap">35B 級（変わらず）</td></tr>
-				<tr><td class="nowrap">128GB</td><td class="nowrap">GB10 搭載機<br>Mac Studio M5 Max<br>MacBook Pro M5 Max</td><td class="num">約 110 GB</td><td class="nowrap">125B 級</td><td class="nowrap">355B 級（2bit）</td></tr>
+				<tr><td class="nowrap">128GB</td><td class="nowrap">GB10 搭載機<br>RTX Spark 搭載機<br>Mac Studio M5 Max<br>MacBook Pro M5 Max</td><td class="num">約 110 GB</td><td class="nowrap">125B 級</td><td class="nowrap">355B 級（2bit）</td></tr>
 				<tr><td class="nowrap">256GB</td><td class="nowrap"><a href="https://www.apple.com/jp/shop/buy-mac/mac-studio">Mac Studio M5 Ultra</a></td><td class="num">約 234 GB</td><td class="nowrap">355B 級</td><td class="nowrap">744B 級（2bit）</td></tr>
 			</tbody>
 		</table>
@@ -871,7 +944,7 @@ footer a { color: var(--navy2); background: none; }
 	<section class="ch09" id="ch09">
 		<h1>統合メモリを持たない選択肢</h1>
 
-		<p>統合メモリ機ではなく、ディスクリート GPU を積んだ一般的な PC を選ぶ道もあります。ただし <strong>VRAM の上限が低く、本レポートの3段のいずれにも届きません</strong>。構造的な理由を残しておきます。</p>
+		<p>統合メモリ機ではなく、ディスクリート GPU を積んだ一般的な PC を選ぶ道もあります。ただし <strong>VRAM の上限が低く、本レポートの 64GB 以上の段に届きません</strong>。構造的な理由を残しておきます。</p>
 
 		<h2>NPU の TOPS 値は判断材料にならない</h2>
 
@@ -940,7 +1013,7 @@ footer a { color: var(--navy2); background: none; }
 	<section class="ch11" id="ch11">
 		<h1>結論</h1>
 
-		<h2>容量の3段が、そのまま使えるモデルの階層になる</h2>
+		<h2>容量の段が、そのまま使えるモデルの階層になる</h2>
 
 		<p>統合メモリの容量は、動かせるモデルの上限をほぼ一意に決めます。帯域と価格はその次の判断軸です。</p>
 
