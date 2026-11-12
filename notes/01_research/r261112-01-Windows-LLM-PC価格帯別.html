@@ -1,0 +1,383 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<title>Windows で 70B〜120B 級が動く PC の価格帯別比較 — AI PC 調査プロジェクト</title>
+<style>
+:root {
+	--navy1: #12224d;
+	--navy2: #2f5fbf;
+	--ink: #1c2330;
+	--ink-soft: #4a5568;
+	--line: #d9dfe8;
+	--code-bg: #f4f6fa;
+	--link: #1a4fa0;
+	--accent: var(--navy1);
+	--accent2: var(--navy2);
+	--soft: #f2f5fb;
+}
+/* 章は6個: 色相は 280 / 224 / 168 / 112 / 56 / 0 */
+.ch01 { --accent: hsl(280,78%,25%); --accent2: hsl(280,58%,55%); --soft: hsl(280,28%,95%); }
+.ch02 { --accent: hsl(224,78%,25%); --accent2: hsl(224,58%,55%); --soft: hsl(224,28%,95%); }
+.ch03 { --accent: hsl(168,78%,25%); --accent2: hsl(168,58%,55%); --soft: hsl(168,28%,95%); }
+.ch04 { --accent: hsl(112,78%,25%); --accent2: hsl(112,58%,55%); --soft: hsl(112,28%,95%); }
+.ch05 { --accent: hsl(56,78%,25%);  --accent2: hsl(56,58%,55%);  --soft: hsl(56,28%,95%); }
+.ch06 { --accent: hsl(0,78%,25%);   --accent2: hsl(0,58%,55%);   --soft: hsl(0,28%,95%); }
+
+* { box-sizing: border-box; }
+body {
+	margin: 0;
+	background: #fff;
+	color: var(--ink);
+	font-size: 15.5px;
+	line-height: 1.85;
+	font-family: "Segoe UI", "Yu Gothic UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+a { color: var(--link, #1a4fa0); }
+.titlebar {
+	background: #12224d;
+	background: linear-gradient(135deg, var(--navy1), var(--navy2));
+	color: #fff;
+	padding: 34px 30px 30px;
+}
+.titlebar .inner { max-width: 1600px; margin: 0 auto; }
+.titlebar h1 { font-size: 2.05em; margin: 0 0 8px; color: #fff; line-height: 1.35; }
+.titlebar p { margin: 4px 0 0; color: #d6e2ff; background: transparent; font-size: 0.95em; }
+
+.wrap { max-width: 1600px; margin: 0 auto; padding: 0 30px 40px; }
+.homelink {
+	display: inline-flex;
+	align-items: center;
+	background: #12224d;
+	background: linear-gradient(100deg, var(--navy1), var(--navy2));
+	color: #fff;
+	text-decoration: none;
+	padding: 7px 14px;
+	border-radius: 6px;
+	box-shadow: 0 2px 9px rgba(0,0,0,0.15);
+}
+.homebar { margin: 18px 0 0; }
+
+.toc ol {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	list-style: none;
+	padding: 0;
+	margin: 22px 0 0;
+	counter-reset: toc;
+}
+.toc ol li { counter-increment: toc; margin: 0; }
+.toc ol a {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+	width: 310px;
+	max-width: 100%;
+	background: #12224d;
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	font-weight: 700;
+	text-decoration: none;
+	padding: 6px 12px;
+	border-radius: 6px;
+}
+.toc ol a::before { content: counter(toc) ". "; }
+
+section {
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	padding: 4px 26px 26px;
+	margin: 34px 0;
+}
+section h1 {
+	background: #12224d;
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	font-size: 1.5em;
+	padding: 14px 20px;
+	margin: 26px 0 20px;
+	border-radius: 8px;
+	box-shadow: 0 5px 16px rgba(0,0,0,0.18);
+}
+h2 {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(90deg, var(--soft), #fff);
+	color: var(--accent);
+	font-size: 1.25em;
+	padding: 6px 12px;
+	margin: 30px 0 12px;
+}
+p { margin: 10px 0; }
+ul { margin: 10px 0; padding-left: 1.6em; }
+li { margin: 4px 0; }
+
+.tablewrap { overflow-x: auto; margin: 14px 0; }
+table {
+	border-collapse: collapse;
+	width: 100%;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 2px 9px rgba(0,0,0,0.09);
+	font-size: 0.94em;
+}
+th {
+	background: #12224d;
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	text-align: left;
+	padding: 9px 12px;
+	font-weight: 700;
+	white-space: nowrap;
+}
+td {
+	padding: 9px 12px;
+	vertical-align: top;
+	border-bottom: 1px solid var(--line);
+	background: #fff;
+	color: var(--ink);
+}
+tr:nth-child(even) td { background: #fafbfe; }
+tr.hi td { background: #fff8e6; color: var(--ink); }
+.nowrap { white-space: nowrap; }
+.num { text-align: right; white-space: nowrap; }
+.sub { font-size: 0.88em; color: var(--ink-soft); background: transparent; }
+
+.badge {
+	display: inline-block;
+	color: #fff;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-size: 0.84em;
+	font-weight: 700;
+	white-space: nowrap;
+}
+.b-ok { background: #1d7a3c; background: linear-gradient(100deg,#1d7a3c,#45b56c); }
+.b-ng { background: #a51f22; background: linear-gradient(100deg,#a51f22,#e05a5c); }
+.b-none { background: #5a6472; background: linear-gradient(100deg,#5a6472,#97a1ae); }
+.b-warn { background: #b8620a; background: linear-gradient(100deg,#b8620a,#f0a548); }
+
+.callout {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border-radius: 0 8px 8px 0;
+	padding: 12px 16px;
+	margin: 16px 0;
+	color: var(--ink);
+}
+.callout strong { color: var(--accent); background: transparent; }
+
+footer {
+	max-width: 1600px;
+	margin: 0 auto;
+	padding: 18px 30px 40px;
+	font-size: 0.95em;
+}
+</style>
+</head>
+<body>
+
+<div class="titlebar">
+	<div class="inner">
+		<h1>Windows で 70B〜120B 級が動く PC の価格帯別比較</h1>
+		<p class="lead">量子化したローカル LLM を Windows で動かす PC を、160 万円・100 万円・60 万円・40 万円の 4 つの枠に分け、CPU・GPU・VRAM・RAM・ストレージで並べる</p>
+		<p class="date">📅 作成: 2026-11-12 / 更新: 2026-11-12</p>
+	</div>
+</div>
+
+<div class="wrap">
+
+<p class="homebar"><a class="homelink" href="../../README.html" aria-label="戻る"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.4 0.8 7.3v0.9h2.1V14h4.0v-3.9h2.2V14h4.0V8.2h2.1V7.3z"/></svg></a></p>
+
+<nav class="toc">
+	<ol>
+		<li class="ch01"><a href="#ch01">調査の条件と見方</a></li>
+		<li class="ch02"><a href="#ch02">160 万円程度以下</a></li>
+		<li class="ch03"><a href="#ch03">100 万円以下</a></li>
+		<li class="ch04"><a href="#ch04">60 万円以下</a></li>
+		<li class="ch05"><a href="#ch05">40 万円以下</a></li>
+		<li class="ch06"><a href="#ch06">枠の外と出典</a></li>
+	</ol>
+</nav>
+
+<section class="ch01" id="ch01">
+	<h1>調査の条件と見方</h1>
+
+	<p>OS が Windows の PC で、<strong>70B 級と 120B 級のモデルを量子化して動かせるもの</strong>を、価格の枠ごとに 5 機種ずつ並べます。価格はすべて税込で、2026-11-12 に価格.com・各社の直販ページで確認した掲載値です。枠は上限で区切り、下の枠に入る機種は上の枠に重ねて載せません。</p>
+
+	<h2>必要なメモリの目安</h2>
+
+	<div class="tablewrap">
+	<table>
+		<thead><tr><th>モデル</th><th>量子化</th><th>重みの大きさ (目安)</th><th>載せるのに要る GPU のメモリ</th></tr></thead>
+		<tbody>
+			<tr><td class="nowrap">70B 級 (Llama 3.3 70B など)</td><td class="nowrap">4bit</td><td class="num">約 40 GB</td><td>約 48 GB 以上</td></tr>
+			<tr><td class="nowrap">120B 級 (gpt-oss-120b など)</td><td class="nowrap">4bit (MXFP4)</td><td class="num">約 63 GB</td><td>約 72 GB 以上</td></tr>
+		</tbody>
+	</table>
+	</div>
+
+	<p>重みの大きさは量子化の方式で数 GB 前後します。KV キャッシュと OS の分を足すと、<strong>GPU から使えるメモリが 70B 級で 48GB、120B 級で 72GB 程度</strong>あれば、モデル全体を GPU に載せられます。</p>
+
+	<h2>表の見方</h2>
+
+	<div class="tablewrap">
+	<table>
+		<thead><tr><th>列</th><th>意味</th></tr></thead>
+		<tbody>
+			<tr><td class="nowrap">VRAM</td><td>GPU から使えるメモリ。統合メモリの機種は、GPU に回せる上限を書く (Ryzen AI Max は全体の 4 分の 3 まで)</td></tr>
+			<tr><td class="nowrap">帯域</td><td>GPU がメモリを読む速さ。生成の速さはほぼこれで決まる</td></tr>
+			<tr><td class="nowrap">70B / 120B</td><td><span class="badge b-ok">載る</span> GPU に全部載る ／ <span class="badge b-warn">分けて載る</span> 入りきらない分をメインメモリに置く (動くが遅い) ／ <span class="badge b-ng">載らない</span></td></tr>
+		</tbody>
+	</table>
+	</div>
+
+	<div class="callout callout-important">
+		<p><strong>判定と速さは仕様からの見込みで、実機では測っていません。</strong>統合メモリの機種は帯域が 256〜300 GB/s で、70B 級 (40GB) なら数 tok/s、120B 級の MoE (活性が数 B) なら十数 tok/s 程度と見込んでいます。「分けて載る」機種は、メインメモリに置いた分の読み出しが遅く、70B 級では数 tok/s を下回ることがあります。</p>
+	</div>
+</section>
+
+<section class="ch02" id="ch02">
+	<h1>160 万円程度以下</h1>
+
+	<p>100 万円を超える枠です。<strong>CUDA が動く 128GB のノート (RTX Spark)</strong> と、RTX 5090 を積んだデスクトップが入ります。</p>
+
+	<div class="tablewrap">
+	<table>
+		<thead><tr><th>機種</th><th>形態</th><th>CPU</th><th>GPU</th><th>VRAM</th><th>RAM</th><th>ストレージ</th><th>帯域</th><th>70B</th><th>120B</th><th>価格</th><th>入手先・状態</th></tr></thead>
+		<tbody>
+			<tr class="hi"><td class="nowrap">ASUS ProArt P14 (H7407)</td><td class="nowrap">ノート 14型</td><td class="nowrap">RTX Spark N1X (Grace 20コア)</td><td class="nowrap">Blackwell 6,144コア (統合)</td><td class="nowrap">128GB 共有</td><td class="nowrap">128GB (統合)</td><td class="nowrap">1TB</td><td class="num">300.8 GB/s</td><td><span class="badge b-ok">載る</span></td><td><span class="badge b-ok">載る</span></td><td class="num"><strong>1,198,000 円</strong></td><td>通販 (価格.com 最安) <span class="badge b-ok">販売中</span></td></tr>
+			<tr><td class="nowrap">ASUS ProArt P16 (H7607)</td><td class="nowrap">ノート 16型</td><td class="nowrap">RTX Spark N1X (Grace 20コア)</td><td class="nowrap">Blackwell 6,144コア (統合)</td><td class="nowrap">128GB 共有</td><td class="nowrap">128GB (統合)</td><td class="nowrap">1TB</td><td class="num">300.8 GB/s</td><td><span class="badge b-ok">載る</span></td><td><span class="badge b-ok">載る</span></td><td class="num">1,248,000 円</td><td>Amazon (価格.com 最安) <span class="badge b-ok">在庫あり</span></td></tr>
+			<tr><td class="nowrap">MSI Prestige N16 Flip AI+ (C1XMT-3100JP)</td><td class="nowrap">ノート 16型 2-in-1</td><td class="nowrap">RTX Spark N1X (Grace 20コア)</td><td class="nowrap">Blackwell 6,144コア (統合)</td><td class="nowrap">128GB 共有</td><td class="nowrap">128GB (統合)</td><td class="nowrap">2TB</td><td class="num">300.8 GB/s</td><td><span class="badge b-ok">載る</span></td><td><span class="badge b-ok">載る</span></td><td class="num">1,301,877 円</td><td>ソフマップ (価格.com 最安) <span class="badge b-ok">販売中</span></td></tr>
+			<tr><td class="nowrap">HP ZBook Ultra G1a</td><td class="nowrap">ノート 14型</td><td class="nowrap">Ryzen AI Max+ PRO 395 (16コア)</td><td class="nowrap">Radeon 8060S (統合)</td><td class="nowrap">最大 96GB</td><td class="nowrap">128GB (統合)</td><td class="nowrap">—</td><td class="num">256 GB/s</td><td><span class="badge b-ok">載る</span></td><td><span class="badge b-ok">載る</span></td><td class="num">1,340,847 円</td><td>Amazon <span class="badge b-warn">要確認</span> 出品者・保証は個別確認</td></tr>
+			<tr><td class="nowrap">デスクトップ (Ryzen 7 9850X3D・RTX 5090)</td><td class="nowrap">デスクトップ</td><td class="nowrap">Ryzen 7 9850X3D (8コア)</td><td class="nowrap">GeForce RTX 5090</td><td class="nowrap">32GB</td><td class="nowrap">64GB</td><td class="nowrap">2TB</td><td class="num">1,792 GB/s</td><td><span class="badge b-warn">分けて載る</span></td><td><span class="badge b-warn">分けて載る</span></td><td class="num">1,649,800 円〜</td><td>BTO (価格.com) <span class="badge b-warn">160 万円をわずかに超える</span></td></tr>
+		</tbody>
+	</table>
+	</div>
+
+	<p><strong>CUDA を使うなら RTX Spark のノートが最安で、ASUS ProArt P14 の 1,198,000 円からです。</strong>RTX 5090 のデスクトップは、VRAM が 32GB しかなく、70B 級の 4bit (約 40GB) でも入りきりません。入りきった分は非常に速いものの、残りをメインメモリから読むため、全体ではモデルの大きさに見合う速さになりません。</p>
+
+	<div class="callout">
+		<p><strong>Microsoft Surface Laptop Ultra (128GB・1TB) は 1,094,280 円で、この枠の最安ですが在庫がありません。</strong>HP OmniBook Ultra 16 の 128GB 構成 (希望販売価格 1,294,700 円〜) は、価格.com に掲載がなく、販売の状況を確かめられませんでした。</p>
+	</div>
+</section>
+
+<section class="ch03" id="ch03">
+	<h1>100 万円以下</h1>
+
+	<p>60 万円を超えて 100 万円以下の枠です。<strong>Ryzen AI Max+ 395 の 128GB 機</strong>が中心で、70B 級も 120B 級も GPU に載ります。</p>
+
+	<div class="tablewrap">
+	<table>
+		<thead><tr><th>機種</th><th>形態</th><th>CPU</th><th>GPU</th><th>VRAM</th><th>RAM</th><th>ストレージ</th><th>帯域</th><th>70B</th><th>120B</th><th>価格</th><th>入手先・状態</th></tr></thead>
+		<tbody>
+			<tr class="hi"><td class="nowrap">ASUS ROG Flow Z13 (GZ302EAC)</td><td class="nowrap">2-in-1 13.4型</td><td class="nowrap">Ryzen AI Max+ 395 (16コア)</td><td class="nowrap">Radeon 8060S (統合)</td><td class="nowrap">最大 96GB</td><td class="nowrap">128GB (統合)</td><td class="nowrap">1TB</td><td class="num">256 GB/s</td><td><span class="badge b-ok">載る</span></td><td><span class="badge b-ok">載る</span></td><td class="num"><strong>665,820 円〜</strong></td><td>通販 (価格.com 最安)</td></tr>
+			<tr><td class="nowrap">MINISFORUM MS-S1 MAX</td><td class="nowrap">ミニ PC</td><td class="nowrap">Ryzen AI Max+ 395 (16コア)</td><td class="nowrap">Radeon 8060S (統合)</td><td class="nowrap">最大 96GB</td><td class="nowrap">128GB (統合)</td><td class="nowrap">2TB</td><td class="num">256 GB/s</td><td><span class="badge b-ok">載る</span></td><td><span class="badge b-ok">載る</span></td><td class="num">704,403 円</td><td>通販 <span class="badge b-warn">要確認</span></td></tr>
+			<tr><td class="nowrap">GMKtec EVO-X2</td><td class="nowrap">ミニ PC</td><td class="nowrap">Ryzen AI Max+ 395 (16コア)</td><td class="nowrap">Radeon 8060S (統合)</td><td class="nowrap">最大 96GB</td><td class="nowrap">128GB (統合)</td><td class="nowrap">2TB</td><td class="num">256 GB/s</td><td><span class="badge b-ok">載る</span></td><td><span class="badge b-ok">載る</span></td><td class="num">718,000 円〜</td><td>通販 (価格.com 最安)</td></tr>
+			<tr><td class="nowrap">MSI PRO MAX EDGE AI+ (11M-008JP)</td><td class="nowrap">ミニ PC</td><td class="nowrap">Ryzen AI Max+ 395 (16コア)</td><td class="nowrap">Radeon 8060S (統合)</td><td class="nowrap">最大 96GB</td><td class="nowrap">128GB (統合)</td><td class="nowrap">2TB</td><td class="num">256 GB/s</td><td><span class="badge b-ok">載る</span></td><td><span class="badge b-ok">載る</span></td><td class="num">818,000 円〜</td><td>通販 (価格.com 最安)。2026-11-05 発売</td></tr>
+			<tr><td class="nowrap">MSI Raider 16 Max HX (B2WJ-2661JP)</td><td class="nowrap">ノート 16型</td><td class="nowrap">Core Ultra 9 290HX Plus (24コア)</td><td class="nowrap">GeForce RTX 5090 Laptop</td><td class="nowrap">24GB</td><td class="nowrap">64GB</td><td class="nowrap">2TB</td><td class="num">896 GB/s</td><td><span class="badge b-warn">分けて載る</span></td><td><span class="badge b-warn">分けて載る</span></td><td class="num">919,800 円〜</td><td>通販 (価格.com 最安)</td></tr>
+		</tbody>
+	</table>
+	</div>
+
+	<p><strong>128GB を持ち運ぶなら ROG Flow Z13 が最安で、665,820 円からです。</strong>据え置きでよければ、MS-S1 MAX と EVO-X2 が 70 万円台で並びます。Core Ultra を選ぶなら RTX 5090 Laptop のゲーミングノートになりますが、VRAM が 24GB なので 70B 級でも分けて載せることになります。</p>
+
+	<div class="callout">
+		<p><strong>マウスコンピューターの DAIV CX-A9A60 (Ryzen AI Max+ 395・128GB・2TB) は 949,800 円〜です。</strong>中身は上の 4 機種と同じ系統で、3 年保証が付く分だけ高くなります。</p>
+	</div>
+</section>
+
+<section class="ch04" id="ch04">
+	<h1>60 万円以下</h1>
+
+	<p>40 万円を超えて 60 万円以下の枠です。<strong>128GB 機はこの枠の上限ちょうどに 1 機種だけ</strong>で、ほかは 64GB 機です。64GB 機は 70B 級までで、120B 級は載りません。</p>
+
+	<div class="tablewrap">
+	<table>
+		<thead><tr><th>機種</th><th>形態</th><th>CPU</th><th>GPU</th><th>VRAM</th><th>RAM</th><th>ストレージ</th><th>帯域</th><th>70B</th><th>120B</th><th>価格</th><th>入手先・状態</th></tr></thead>
+		<tbody>
+			<tr class="hi"><td class="nowrap">GEEKOM A9 MEGA</td><td class="nowrap">ミニ PC</td><td class="nowrap">Ryzen AI Max+ 395 (16コア)</td><td class="nowrap">Radeon 8060S (統合)</td><td class="nowrap">最大 96GB</td><td class="nowrap">128GB (統合)</td><td class="nowrap">2TB</td><td class="num">256 GB/s</td><td><span class="badge b-ok">載る</span></td><td><span class="badge b-ok">載る</span></td><td class="num"><strong>599,900 円〜</strong></td><td>通販 (価格.com 最安)。3 年保証</td></tr>
+			<tr><td class="nowrap">ASUS ROG Flow Z13 (64GB)</td><td class="nowrap">2-in-1 13.4型</td><td class="nowrap">Ryzen AI Max+ 395 (16コア)</td><td class="nowrap">Radeon 8060S (統合)</td><td class="nowrap">最大 48GB</td><td class="nowrap">64GB (統合)</td><td class="nowrap">1TB</td><td class="num">256 GB/s</td><td><span class="badge b-ok">載る</span></td><td><span class="badge b-ng">載らない</span></td><td class="num">509,801 円〜</td><td>通販 (価格.com 最安)</td></tr>
+			<tr><td class="nowrap">MINISFORUM MS-S1 MAX (64GB)</td><td class="nowrap">ミニ PC</td><td class="nowrap">Ryzen AI Max+ 395 (16コア)</td><td class="nowrap">Radeon 8060S (統合)</td><td class="nowrap">最大 48GB</td><td class="nowrap">64GB (統合)</td><td class="nowrap">2TB</td><td class="num">256 GB/s</td><td><span class="badge b-ok">載る</span></td><td><span class="badge b-ng">載らない</span></td><td class="num">460,799 円</td><td>Amazon <span class="badge b-warn">要確認</span></td></tr>
+			<tr><td class="nowrap">GMKtec EVO-X2 (64GB)</td><td class="nowrap">ミニ PC</td><td class="nowrap">Ryzen AI Max+ 395 (16コア)</td><td class="nowrap">Radeon 8060S (統合)</td><td class="nowrap">最大 48GB</td><td class="nowrap">64GB (統合)</td><td class="nowrap">—</td><td class="num">256 GB/s</td><td><span class="badge b-ok">載る</span></td><td><span class="badge b-ng">載らない</span></td><td class="num">450,620 円</td><td>Amazon <span class="badge b-warn">要確認</span></td></tr>
+			<tr><td class="nowrap">ASUS 13.3型 有機EL コンバーチブル (64GB)</td><td class="nowrap">2-in-1 13.3型</td><td class="nowrap">Ryzen AI Max+ 395 (16コア)</td><td class="nowrap">Radeon 8060S (統合)</td><td class="nowrap">最大 48GB</td><td class="nowrap">64GB (統合)</td><td class="nowrap">1TB</td><td class="num">256 GB/s</td><td><span class="badge b-ok">載る</span></td><td><span class="badge b-ng">載らない</span></td><td class="num">449,819 円〜</td><td>通販 (価格.com 最安)</td></tr>
+		</tbody>
+	</table>
+	</div>
+
+	<p><strong>120B 級まで動かしたいなら、GEEKOM A9 MEGA の 599,900 円が最も安い入口です。</strong>70B 級だけでよければ、64GB 機が 45 万円前後からあります。64GB 機では GPU に回せるのが最大 48GB なので、70B 級の 4bit (約 40GB) はほぼ上限いっぱいです。</p>
+
+	<div class="callout callout-warning">
+		<p><strong>通販のクーポン価格は載せていません。</strong>楽天市場などで「クーポンで 34 万円〜」と書かれた出品がありますが、どの構成に効くかを読み取れませんでした。購入する前に、クーポンが 64GB・128GB のどちらに効くかを販売ページで確かめてください。</p>
+	</div>
+</section>
+
+<section class="ch05" id="ch05">
+	<h1>40 万円以下</h1>
+
+	<p>40 万円以下では、<strong>条件に合う完成品は 3 機種しか見つかりませんでした。</strong>どれも 64GB で、70B 級までです。120B 級を GPU に載せられる機種はありません。</p>
+
+	<div class="tablewrap">
+	<table>
+		<thead><tr><th>機種</th><th>形態</th><th>CPU</th><th>GPU</th><th>VRAM</th><th>RAM</th><th>ストレージ</th><th>帯域</th><th>70B</th><th>120B</th><th>価格</th><th>入手先・状態</th></tr></thead>
+		<tbody>
+			<tr class="hi"><td class="nowrap">GEEKOM A9 MEGA (64GB)</td><td class="nowrap">ミニ PC</td><td class="nowrap">Ryzen AI Max+ 388 (8コア)</td><td class="nowrap">Radeon 8060S (統合)</td><td class="nowrap">最大 48GB</td><td class="nowrap">64GB (統合)</td><td class="nowrap">2TB</td><td class="num">256 GB/s</td><td><span class="badge b-ok">載る</span></td><td><span class="badge b-ng">載らない</span></td><td class="num"><strong>389,900 円〜</strong></td><td>通販 (価格.com 最安)。3 年保証</td></tr>
+			<tr><td class="nowrap">GMKtec EVO-X1 Pro</td><td class="nowrap">ミニ PC</td><td class="nowrap">Ryzen AI 9 HX 470 (12コア)</td><td class="nowrap">Radeon 890M (統合)</td><td class="nowrap">最大 48GB</td><td class="nowrap">64GB (統合)</td><td class="nowrap">—</td><td class="num">約 120 GB/s</td><td><span class="badge b-warn">載るが遅い</span></td><td><span class="badge b-ng">載らない</span></td><td class="num">348,498 円</td><td>Amazon・楽天 <span class="badge b-warn">要確認</span></td></tr>
+			<tr><td class="nowrap">MINISFORUM N5 MAX (AI NAS)</td><td class="nowrap">NAS 型</td><td class="nowrap">Ryzen AI Max+ 395 (16コア)</td><td class="nowrap">Radeon 8060S (統合)</td><td class="nowrap">最大 48GB</td><td class="nowrap">64GB (統合)</td><td class="nowrap">128GB (システム) + 5 ベイ</td><td class="num">256 GB/s</td><td><span class="badge b-ok">載る</span></td><td><span class="badge b-ng">載らない</span></td><td class="num">428,737 円</td><td>Amazon <span class="badge b-warn">40 万円をわずかに超える</span></td></tr>
+		</tbody>
+	</table>
+	</div>
+
+	<p><strong>40 万円以下で 70B 級を GPU に載せるなら、GEEKOM A9 MEGA の Ryzen AI Max+ 388 (64GB) が唯一の現実的な選択です。</strong>CPU は 8 コアですが、GPU (Radeon 8060S・40CU) と帯域は 395 と同じなので、LLM の生成速度はほとんど変わらない見込みです。EVO-X1 Pro は帯域が約半分で、70B 級は動いても遅くなります。</p>
+
+	<div class="callout callout-important">
+		<p><strong>GPU を積んだ BTO やメモリの増設では、40 万円以下に収まりませんでした。</strong>2026-11-12 時点で、GeForce RTX 5060 Ti 16GB は単体で 14.5 万円から、メモリも DRAM の値上がりで高く、16GB の GPU と 64GB 以上のメインメモリを揃えると 40 万円を超えます。メモリを後から足すベアボーンのミニ PC (最大 96GB) は本体が 6〜10 万円台ですが、96GB 分のメモリの価格は確かめられていません。</p>
+	</div>
+</section>
+
+<section class="ch06" id="ch06">
+	<h1>枠の外と出典</h1>
+
+	<h2>160 万円を大きく超えるもの</h2>
+
+	<div class="tablewrap">
+	<table>
+		<thead><tr><th>構成</th><th>価格</th><th>理由</th></tr></thead>
+		<tbody>
+			<tr><td class="nowrap">RTX PRO 6000 Blackwell (96GB) 搭載機</td><td class="num">GPU 単体で 2,754,480 円〜</td><td>96GB の VRAM で 120B 級まで GPU に載るが、GPU だけで予算の倍近い</td></tr>
+			<tr><td class="nowrap">HP OMEN Max 16 (Core Ultra 9 290HX Plus・RTX 5090 Laptop・96GB・4TB)</td><td class="num">1,500,210 円</td><td>Amazon の出品。VRAM 24GB で、70B 級も分けて載せる形になる</td></tr>
+		</tbody>
+	</table>
+	</div>
+
+	<h2>OS が Windows でないため外したもの</h2>
+
+	<p>GB10 搭載機 (DGX OS) と Apple (macOS) は、<a href="r260916-01-ローカルLLM機種比較.html">ローカルLLM 機種比較 2026</a> で比べています。128GB の機種は、GB10 搭載機が 1,244,870 円から、Mac Studio M5 Max が 1,031,800 円からです。</p>
+
+	<h2>出典</h2>
+
+	<ul>
+		<li>価格.com の検索・製品ページ (Ryzen AI Max+ 395・RTX Spark・RTX 5090・RTX 5060 Ti) 2026-11-12 確認</li>
+		<li><a href="https://pc.watch.impress.co.jp/docs/news/2050509.html">PC Watch (Ryzen AI Max+ 395 搭載ミニ PC)</a></li>
+		<li><a href="https://www.gdm.or.jp/pressrelease/2026/0805/647042">GDM (GMKtec EVO-X3 の発表)</a></li>
+		<li><a href="https://gpuprix.com/ja/japan/gpus/rtx-pro-6000-blackwell?show=listings">gpuprix (RTX PRO 6000 Blackwell の国内価格)</a></li>
+		<li><a href="https://gazlog.jp/entry/geforce-rtx5090-1m-yen-to-buy/">gazlog (GeForce RTX 5090 の国内価格の動き)</a></li>
+		<li><a href="https://ascii.jp/en/elem/000/004/442/4442741/">ASCII (HP OmniBook Ultra 16 AI PC の発表)</a></li>
+		<li><a href="r261103-01-RTX-Spark機種比較.html">RTX Spark 搭載 PC の比較</a> (このプロジェクトの調査)</li>
+	</ul>
+</section>
+
+</div>
+
+<footer>
+	<a class="homelink" href="../../README.html" aria-label="戻る"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.4 0.8 7.3v0.9h2.1V14h4.0v-3.9h2.2V14h4.0V8.2h2.1V7.3z"/></svg></a>
+</footer>
+
+</body>
+</html>
