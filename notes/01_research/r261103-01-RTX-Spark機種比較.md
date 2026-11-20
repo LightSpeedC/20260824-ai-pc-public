@@ -26,10 +26,10 @@ NVIDIA と Microsoft が 2026-05-31 に発表した、Windows のノート PC �
 
 | 機種 | 画面 | ストレージ | 価格 | 入手先 | 状態 |
 |---|---|---|---:|---|---|
-| [Microsoft Surface Laptop Ultra](https://www.microsoft.com/ja-jp/surface/devices/surface-laptop-ultra) | 15型 | 1TB | **1,094,280 円** | Microsoft Store | ⚠️ **在庫なし** 構成ページで選べるが、在庫が無い |
+| [Microsoft Surface Laptop Ultra](https://www.microsoft.com/ja-jp/surface/devices/surface-laptop-ultra) | 15型 | 1TB | **1,094,280 円** | Microsoft Store | ✅ **在庫あり** 最短 11/25 のお届け (2026-11-21 確認。前回は在庫なし) |
 | [ASUS ProArt P14 (H7407)](https://www.asus.com/jp/laptops/for-creators/proart/proart-p14-h7407/) | 14型 | 1TB | 1,198,000 円 | 通販 (価格.com 最安) | ✅ **販売中** 2026-10-23 発売 |
 | [ASUS ProArt P16 (H7607)](https://www.asus.com/jp/laptops/for-creators/proart/proart-p16-h7607/) | 16型 | 1TB | 1,248,000 円 | 通販 (価格.com 最安) | ✅ **販売中** 2026-10-23 発売 |
-| HP OmniBook Ultra 16 AI PC (エクストリームプロ) | 16型 | 2TB | 1,294,700 円〜 | 日本HP (希望販売価格) | ⬜ **未発売** 2026 年 11 月以降に発売 |
+| HP OmniBook Ultra 16 AI PC (エクストリームプロ) | 16型 | 2TB | 1,298,000 円〜 | 日本HP (希望販売価格) | ⬜ **未発売** 2026 年 11 月以降に発売 |
 | [MSI Prestige N16 Flip AI+](https://jp.msi.com/news/detail/Prestige-N16-Flip-AI--C1XM-150007) (C1XMT-3100JP) | 16型 2-in-1 | 2TB | 1,301,877 円 | ソフマップ (価格.com 最安) | ✅ **販売中** 2026-10-23 発売 |
 
 <strong>最安は 128GB でも約 109 万円で、すべてノート PC です。</strong>国内で 128GB を選べる RTX Spark 機は、この 5 機種だけでした。最安の Surface は在庫が無いため、いま買える最安は ASUS ProArt P14 の 1,198,000 円になります。
@@ -66,7 +66,7 @@ NVIDIA と Microsoft が 2026-05-31 に発表した、Windows のノート PC �
 | ASUS ProArt P14 (RTX Spark) | ノート / Windows | 300.8 GB/s | 1TB | 1,198,000 円 | 9,359 円 | 3,983 円 |
 | MacBook Pro 16インチ M5 Max | ノート / macOS | 614 GB/s | 2TB | 1,209,800 円 | 9,452 円 | 1,971 円 |
 | ASUS ProArt P16 (RTX Spark) | ノート / Windows | 300.8 GB/s | 1TB | 1,248,000 円 | 9,750 円 | 4,149 円 |
-| HP OmniBook Ultra 16 (RTX Spark) | ノート / Windows | 300.8 GB/s | 2TB | 1,294,700 円 | 10,115 円 | 4,304 円 |
+| HP OmniBook Ultra 16 (RTX Spark) | ノート / Windows | 300.8 GB/s | 2TB | 1,298,000 円 | 10,141 円 | 4,315 円 |
 | HP ZGX Nano G1n (GB10) | 据置 / Linux (DGX OS) | 273 GB/s | 4TB | 1,299,100 円 | 10,149 円 | 4,759 円 |
 | MSI Prestige N16 Flip AI+ (RTX Spark) | ノート / Windows | 300.8 GB/s | 2TB | 1,301,877 円 | 10,171 円 | 4,328 円 |
 
