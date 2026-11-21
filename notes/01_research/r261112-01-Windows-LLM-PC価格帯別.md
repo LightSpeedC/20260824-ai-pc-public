@@ -43,16 +43,18 @@ OS が Windows の PC で、**70B 級と 120B 級のモデルを量子化して�
 
 | 機種 | 形態 | CPU | GPU | VRAM | RAM | ストレージ | 帯域 | 70B | 120B | 価格 | 入手先・状態 |
 |---|---|---|---|---|---|---|---:|---|---|---:|---|
-| ASUS ProArt P14 (H7407) | ノート 14型 | RTX Spark N1X (Grace 20コア) | Blackwell 6,144コア (統合) | 128GB 共有 | 128GB (統合) | 1TB | 300.8 GB/s | ✅ **載る** | ✅ **載る** | **1,198,000 円** | 通販 (価格.com 最安) ✅ **販売中** |
+| Microsoft Surface Laptop Ultra | ノート 15型 | RTX Spark N1X (Grace 20コア) | Blackwell 6,144コア (統合) | 128GB 共有 | 128GB (統合) | 1TB | 300.8 GB/s | ✅ **載る** | ✅ **載る** | **1,094,280 円** | Microsoft Store ✅ **在庫あり** 最短 11/25 のお届け |
+| ASUS ProArt P14 (H7407) | ノート 14型 | RTX Spark N1X (Grace 20コア) | Blackwell 6,144コア (統合) | 128GB 共有 | 128GB (統合) | 1TB | 300.8 GB/s | ✅ **載る** | ✅ **載る** | 1,198,000 円 | 通販 (価格.com 最安) ✅ **販売中** |
 | ASUS ProArt P16 (H7607) | ノート 16型 | RTX Spark N1X (Grace 20コア) | Blackwell 6,144コア (統合) | 128GB 共有 | 128GB (統合) | 1TB | 300.8 GB/s | ✅ **載る** | ✅ **載る** | 1,248,000 円 | Amazon (価格.com 最安) ✅ **在庫あり** |
+| HP OmniBook Ultra 16 AI PC (エクストリームプロ) | ノート 16型 | RTX Spark N1X (Grace 20コア) | Blackwell 6,144コア (統合) | 128GB 共有 | 128GB (統合) | 2TB | 300.8 GB/s | ✅ **載る** | ✅ **載る** | 1,298,000 円〜 | 日本HP (希望販売価格) ⬜ **未発売** 価格.com に掲載なし |
 | MSI Prestige N16 Flip AI+ (C1XMT-3100JP) | ノート 16型 2-in-1 | RTX Spark N1X (Grace 20コア) | Blackwell 6,144コア (統合) | 128GB 共有 | 128GB (統合) | 2TB | 300.8 GB/s | ✅ **載る** | ✅ **載る** | 1,301,877 円 | ソフマップ (価格.com 最安) ✅ **販売中** |
 | HP ZBook Ultra G1a | ノート 14型 | Ryzen AI Max+ PRO 395 (16コア) | Radeon 8060S (統合) | 最大 96GB | 128GB (統合) | — | 256 GB/s | ✅ **載る** | ✅ **載る** | 1,340,847 円 | Amazon ⚠️ **要確認** 出品者・保証は個別確認 |
 | デスクトップ (Ryzen 7 9850X3D・RTX 5090) | デスクトップ | Ryzen 7 9850X3D (8コア) | GeForce RTX 5090 | 32GB | 64GB | 2TB | 1,792 GB/s | ⚠️ **分けて載る** | ⚠️ **分けて載る** | 1,649,800 円〜 | BTO (価格.com) ⚠️ **160 万円をわずかに超える** |
 
-<strong>CUDA を使うなら RTX Spark のノートが最安で、ASUS ProArt P14 の 1,198,000 円からです。</strong>RTX 5090 のデスクトップは、VRAM が 32GB しかなく、70B 級の 4bit (約 40GB) でも入りきりません。入りきった分は非常に速いものの、残りをメインメモリから読むため、全体ではモデルの大きさに見合う速さになりません。
+<strong>CUDA を使うなら RTX Spark のノートが最安で、Microsoft Surface Laptop Ultra の 1,094,280 円からです。</strong>RTX 5090 のデスクトップは、VRAM が 32GB しかなく、70B 級の 4bit (約 40GB) でも入りきりません。入りきった分は非常に速いものの、残りをメインメモリから読むため、全体ではモデルの大きさに見合う速さになりません。
 
 > [!NOTE]
-> <strong>Microsoft Surface Laptop Ultra (128GB・1TB) は 1,094,280 円で、この枠の最安です。2026-11-21 に在庫が戻り、注文できます。</strong>HP OmniBook Ultra 16 の 128GB 構成 (希望販売価格 1,298,000 円〜) は、価格.com に掲載がなく、販売の状況を確かめられませんでした。
+> <strong>Microsoft Surface Laptop Ultra は、2026-11-21 に在庫が戻りました。</strong>HP OmniBook Ultra 16 は、価格.com に掲載がなく、販売の状況を確かめられませんでした。表の価格は日本HP の希望販売価格です。
 
 ## 3. 100 万円以下
 
