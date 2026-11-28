@@ -1,0 +1,377 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<title>普段使い PC と LLM サーバを分ける構成の比較 — AI PC 調査プロジェクト</title>
+<style>
+:root {
+	--navy1: #12224d;
+	--navy2: #2f5fbf;
+	--ink: #1c2330;
+	--ink-soft: #4a5568;
+	--line: #d9dfe8;
+	--code-bg: #f4f6fa;
+	--link: #1a4fa0;
+	--accent: var(--navy1);
+	--accent2: var(--navy2);
+	--soft: #f2f5fb;
+}
+/* 章は6個: 色相は 280 / 224 / 168 / 112 / 56 / 0 */
+.ch01 { --accent: hsl(280,78%,25%); --accent2: hsl(280,58%,55%); --soft: hsl(280,28%,95%); }
+.ch02 { --accent: hsl(224,78%,25%); --accent2: hsl(224,58%,55%); --soft: hsl(224,28%,95%); }
+.ch03 { --accent: hsl(168,78%,25%); --accent2: hsl(168,58%,55%); --soft: hsl(168,28%,95%); }
+.ch04 { --accent: hsl(112,78%,25%); --accent2: hsl(112,58%,55%); --soft: hsl(112,28%,95%); }
+.ch05 { --accent: hsl(56,78%,25%);  --accent2: hsl(56,58%,55%);  --soft: hsl(56,28%,95%); }
+.ch06 { --accent: hsl(0,78%,25%);   --accent2: hsl(0,58%,55%);   --soft: hsl(0,28%,95%); }
+
+* { box-sizing: border-box; }
+body {
+	margin: 0;
+	background: #fff;
+	color: var(--ink);
+	font-size: 15.5px;
+	line-height: 1.85;
+	font-family: "Segoe UI", "Yu Gothic UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+a { color: var(--link, #1a4fa0); }
+.titlebar {
+	background: #12224d;
+	background: linear-gradient(135deg, var(--navy1), var(--navy2));
+	color: #fff;
+	padding: 34px 30px 30px;
+}
+.titlebar .inner { max-width: 1600px; margin: 0 auto; }
+.titlebar h1 { font-size: 2.05em; margin: 0 0 8px; color: #fff; line-height: 1.35; }
+.titlebar p { margin: 4px 0 0; color: #d6e2ff; background: transparent; font-size: 0.95em; }
+
+.wrap { max-width: 1600px; margin: 0 auto; padding: 0 30px 40px; }
+.homelink {
+	display: inline-flex;
+	align-items: center;
+	background: #12224d;
+	background: linear-gradient(100deg, var(--navy1), var(--navy2));
+	color: #fff;
+	text-decoration: none;
+	padding: 7px 14px;
+	border-radius: 6px;
+	box-shadow: 0 2px 9px rgba(0,0,0,0.15);
+}
+.homebar { margin: 18px 0 0; }
+
+.toc ol {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	list-style: none;
+	padding: 0;
+	margin: 22px 0 0;
+	counter-reset: toc;
+}
+.toc ol li { counter-increment: toc; margin: 0; }
+.toc ol a {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+	width: 310px;
+	max-width: 100%;
+	background: #12224d;
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	font-weight: 700;
+	text-decoration: none;
+	padding: 6px 12px;
+	border-radius: 6px;
+}
+.toc ol a::before { content: counter(toc) ". "; }
+
+section {
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	padding: 4px 26px 26px;
+	margin: 34px 0;
+}
+section h1 {
+	background: #12224d;
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	font-size: 1.5em;
+	padding: 14px 20px;
+	margin: 26px 0 20px;
+	border-radius: 8px;
+	box-shadow: 0 5px 16px rgba(0,0,0,0.18);
+}
+h2 {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(90deg, var(--soft), #fff);
+	color: var(--accent);
+	font-size: 1.25em;
+	padding: 6px 12px;
+	margin: 30px 0 12px;
+}
+p { margin: 10px 0; }
+ul { margin: 10px 0; padding-left: 1.6em; }
+li { margin: 4px 0; }
+code { background: var(--code-bg); border: 1px solid var(--line); color: #17335f; padding: 0 4px; border-radius: 4px; }
+
+.tablewrap { overflow-x: auto; margin: 14px 0; }
+table {
+	border-collapse: collapse;
+	width: 100%;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 2px 9px rgba(0,0,0,0.09);
+	font-size: 0.94em;
+}
+th {
+	background: #12224d;
+	background: linear-gradient(100deg, var(--accent), var(--accent2));
+	color: #fff;
+	text-align: left;
+	padding: 9px 12px;
+	font-weight: 700;
+	white-space: nowrap;
+}
+td {
+	padding: 9px 12px;
+	vertical-align: top;
+	border-bottom: 1px solid var(--line);
+	background: #fff;
+	color: var(--ink);
+}
+tr:nth-child(even) td { background: #fafbfe; }
+.nowrap { white-space: nowrap; }
+.num { text-align: right; white-space: nowrap; }
+
+.badge {
+	display: inline-block;
+	color: #fff;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-size: 0.84em;
+	font-weight: 700;
+	white-space: nowrap;
+}
+.b-ok { background: #1d7a3c; background: linear-gradient(100deg,#1d7a3c,#45b56c); }
+.b-ng { background: #a51f22; background: linear-gradient(100deg,#a51f22,#e05a5c); }
+.b-none { background: #5a6472; background: linear-gradient(100deg,#5a6472,#97a1ae); }
+.b-warn { background: #b8620a; background: linear-gradient(100deg,#b8620a,#f0a548); }
+
+.callout {
+	border-left: 6px solid var(--accent);
+	background: linear-gradient(180deg, var(--soft), #fff);
+	border-radius: 0 8px 8px 0;
+	padding: 12px 16px;
+	margin: 16px 0;
+	color: var(--ink);
+}
+.callout strong { color: var(--accent); background: transparent; }
+
+footer {
+	max-width: 1600px;
+	margin: 0 auto;
+	padding: 18px 30px 40px;
+	font-size: 0.95em;
+}
+</style>
+</head>
+<body>
+
+<div class="titlebar">
+	<div class="inner">
+		<h1>普段使い PC と LLM サーバを分ける構成の比較</h1>
+		<p class="lead">普段使いのノート PC と、LLM を動かすミニ PC を分ける形を、1 台で済ませる形と比べる。ゲーム用ノート・Ryzen AI Max のミニ PC・MoE をメインメモリに置く推論 (llama.cpp・Strata) を含め、Q4 以上の公開実測値で見る</p>
+		<p class="date">📅 作成: 2026-11-28 / 更新: 2026-11-28</p>
+	</div>
+</div>
+
+<div class="wrap">
+
+<p class="homebar"><a class="homelink" href="../../README.html" aria-label="戻る"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.4 0.8 7.3v0.9h2.1V14h4.0v-3.9h2.2V14h4.0V8.2h2.1V7.3z"/></svg></a></p>
+
+<nav class="toc">
+	<ol>
+		<li class="ch01"><a href="#ch01">調査の条件と見方</a></li>
+		<li class="ch02"><a href="#ch02">分ける形と 1 台の形</a></li>
+		<li class="ch03"><a href="#ch03">LLM サーバにするミニ PC</a></li>
+		<li class="ch04"><a href="#ch04">ゲーム用ノート PC</a></li>
+		<li class="ch05"><a href="#ch05">公開実測値と Strata</a></li>
+		<li class="ch06"><a href="#ch06">組み合わせの案と出典</a></li>
+	</ol>
+</nav>
+
+<section class="ch01" id="ch01">
+<h1>調査の条件と見方</h1>
+<ul>
+	<li>価格はすべて 2026-11-28 に確認しました。国内の通販 (価格.com の最安値・Amazon) とメーカー直販の公開価格です。在庫と価格は数日で動きます</li>
+	<li>量子化は Q4 以上 (Q4_K_M・MXFP4・IQ4_XS 以上) だけを扱います。Q3・Q2 の値は比べません</li>
+	<li>速度は生成 (tg) の tok/s です。プロンプト処理 (pp) は分かるものだけ添えます</li>
+	<li>実測値はメーカーの公表ではなく、個人の報告です。同じ機種でも、ドライバ・llama.cpp の版・コンテキスト長で値が動きます</li>
+</ul>
+<div class="callout callout-important">
+<strong>VRAM 容量の多くは GPU の名前からの推定です。</strong>ノート向けの RTX 5070 Ti は 12GB、5080・5090 は 16GB・24GB が一般的ですが、機種の仕様表で確かめていないものがあります。表では、確かめていない値に ⚠️ を付けます。
+</div>
+</section>
+
+<section class="ch02" id="ch02">
+<h1>分ける形と 1 台の形</h1>
+<h2>2 つの形</h2>
+<div class="tablewrap">
+<table>
+<tr><th>形</th><th>中身</th><th>向くとき</th></tr>
+<tr><td class="nowrap">A. 分ける</td><td>普段使いはふつうのノート PC (またはゲーム用ノート)。LLM はミニ PC に置き、LAN 越しに OpenAI 互換 API (llama-server 等) で使う</td><td>大きいモデルを常時動かしたい。普段使いの PC を軽く・静かにしたい</td></tr>
+<tr><td class="nowrap">B. 1 台</td><td>GPU と大きいメモリを持つ 1 台 (RTX Spark 搭載ノート、Mac、GB10 機など) で、普段使いも LLM も行う</td><td>持ち歩く先でも大きいモデルを使いたい。機器を増やしたくない</td></tr>
+</table>
+</div>
+
+<h2>比べる点</h2>
+<div class="tablewrap">
+<table>
+<tr><th>点</th><th>A. 分ける</th><th>B. 1 台</th></tr>
+<tr><td>大きいモデル (gpt-oss-120b 級)</td><td><span class="badge b-ok">良い</span> 128GB のミニ PC なら 1 台に載る</td><td><span class="badge b-warn">機種次第</span> 128GB 統合メモリの機種は高い</td></tr>
+<tr><td>普段使いへの影響</td><td><span class="badge b-ok">良い</span> 推論中も普段使いの PC は重くならない</td><td><span class="badge b-warn">注意</span> 推論中はメモリと GPU を取られ、ファンも回る</td></tr>
+<tr><td>持ち歩き</td><td><span class="badge b-warn">注意</span> 外からは VPN 等で自宅のサーバへ入る必要がある。API をインターネットへ直に公開しない</td><td><span class="badge b-ok">良い</span> どこでもそのまま動く</td></tr>
+<tr><td>買い替え</td><td><span class="badge b-ok">良い</span> 片方だけ替えられる。LLM 側は進みが速い</td><td><span class="badge b-warn">注意</span> まとめて替える</td></tr>
+<tr><td>電源と置き場</td><td><span class="badge b-warn">注意</span> サーバを常に点けておく電気代と置き場が要る</td><td><span class="badge b-ok">良い</span> 1 台分</td></tr>
+<tr><td>設定の手間</td><td><span class="badge b-warn">注意</span> サーバの起動・更新・LAN の設定が要る</td><td><span class="badge b-ok">良い</span> 手元で完結</td></tr>
+</table>
+</div>
+<p>A の形の要は、LLM 側を 128GB 統合メモリのミニ PC にすれば、普段使い側は安いノートで足りることです。B の形で同じ大きさのモデルを動かすと、本体が 100 万円を超えやすくなります (比較は <a href="r261112-01-Windows-LLM-PC価格帯別.html">Windows で 70B〜120B 級が動く PC の価格帯別比較</a>)。</p>
+</section>
+
+<section class="ch03" id="ch03">
+<h1>LLM サーバにするミニ PC</h1>
+<h2>Ryzen AI Max+ 395 (Strix Halo) の機種</h2>
+<p>統合メモリの帯域は約 256GB/s で、GPU に回せるのは最大 96GB (Linux では設定でさらに増やせるという報告もあります)。gpt-oss-120b (MXFP4・約 63GB) が 128GB の機種に載ります。</p>
+<div class="tablewrap">
+<table>
+<tr><th>機種</th><th>メモリ・SSD</th><th>価格 (税込)</th><th>買える所</th></tr>
+<tr><td>GMKtec EVO-X2</td><td class="nowrap">64GB</td><td class="num">351,999 円</td><td>価格.com 最安</td></tr>
+<tr><td>MINISFORUM MS-S1 MAX</td><td class="nowrap">64GB / 2TB</td><td class="num">460,799 円</td><td>価格.com 最安</td></tr>
+<tr><td>GEEKOM A9 MEGA</td><td class="nowrap">128GB</td><td class="num">599,900 円</td><td>価格.com 最安</td></tr>
+<tr><td>Mavsloly (Ryzen AI Max+ 395 機)</td><td class="nowrap">128GB</td><td class="num">615,100 円</td><td>価格.com 最安</td></tr>
+<tr><td>GMKtec EVO-X2</td><td class="nowrap">128GB / 2TB</td><td class="num">718,000 円</td><td>価格.com 最安</td></tr>
+<tr><td>MSI PRO MAX EDGE AI+</td><td class="nowrap">128GB</td><td class="num">818,000 円</td><td>価格.com 最安</td></tr>
+<tr><td>マウス DAIV CX-A9A60</td><td class="nowrap">128GB</td><td class="num">949,800 円</td><td>価格.com 最安</td></tr>
+<tr><td>HP Z2 Mini G1a</td><td class="nowrap">128GB / 1TB</td><td class="num">1,194,454 円</td><td>Amazon</td></tr>
+<tr><td>HP Z2 Mini G1a</td><td class="nowrap">128GB / 2TB</td><td class="num">2,854,500 円</td><td>HP 直販 (構成を選んだ価格)</td></tr>
+</table>
+</div>
+<ul>
+	<li>64GB の機種は、GPU に回せる量が約 48GB に限られ、gpt-oss-120b は載りません。70B 級の Q4 (約 40GB) は上限いっぱいで載りますが、長いコンテキストは取れません。GEEKOM A9 MEGA には Ryzen AI Max+ 388 の 64GB 構成もあります (<a href="r261112-01-Windows-LLM-PC価格帯別.html">価格帯別比較</a> の 40 万円以下の章)</li>
+	<li>GMKtec EVO-X3 と Framework Desktop は、国内の販売価格が見つかりませんでした</li>
+</ul>
+
+<h2>Ryzen AI 9 HX 370 系 (Strix Point) の機種</h2>
+<p>LPDDR5X-7500 の 128bit で、帯域は約 120GB/s です。Strix Halo の半分ほどなので、同じモデルの生成速度もおおよそ半分になる見込みです (実測は見つけていません)。64GB 以上の構成の国内価格は見つかりませんでした。</p>
+
+<div class="callout callout-tip">
+<strong>NVIDIA GB10 の小型機 (DGX Spark 等) も LLM サーバの候補です。</strong>帯域は約 273GB/s で Strix Halo と近く、CUDA がそのまま使えます。価格は <a href="r260916-01-ローカルLLM機種比較.html">ローカル LLM 機種比較</a> にまとめています。
+</div>
+</section>
+
+<section class="ch04" id="ch04">
+<h1>ゲーム用ノート PC</h1>
+<p>普段使い兼ゲーム用のノートを、そのまま小さい LLM 用にも使う場合です。VRAM 16GB 以上なら gpt-oss-20b (約 13GB) が全部載って速く、8〜12GB の機種や大きいモデルでは MoE の専門家の重みをメインメモリへ逃がして動かします (5 章)。</p>
+<div class="tablewrap">
+<table>
+<tr><th>GPU (ノート向け)</th><th>VRAM</th><th>最安の機種</th><th>メインメモリ</th><th>価格 (税込)</th></tr>
+<tr><td>RTX 5060</td><td class="nowrap">8GB ⚠️</td><td>GIGABYTE A16</td><td class="nowrap">16GB</td><td class="num">215,000 円</td></tr>
+<tr><td>RTX 5070</td><td class="nowrap">8GB ⚠️</td><td>GIGABYTE AERO X16</td><td class="nowrap">16GB</td><td class="num">266,143 円</td></tr>
+<tr><td>RTX 5070 Ti</td><td class="nowrap">12GB ⚠️</td><td>3 機種が同額</td><td class="nowrap">16〜32GB</td><td class="num">399,800 円</td></tr>
+<tr><td>RTX 5080</td><td class="nowrap">16GB ⚠️</td><td>(価格.com 最安)</td><td class="nowrap">32GB</td><td class="num">469,800 円</td></tr>
+<tr><td>RTX 5090</td><td class="nowrap">24GB ⚠️</td><td>(価格.com 最安)</td><td class="nowrap">32GB</td><td class="num">749,800 円</td></tr>
+</table>
+</div>
+<ul>
+	<li>メインメモリ 64GB の構成は少なく、見つかったのは ROG Strix SCAR 18 (RTX 5080・669,801 円・在庫なし) と、ドスパラ GALLERIA NMC9L-R58-H6 (32GB 構成で 859,980 円。注文時に 64GB にできる) だけでした</li>
+	<li>メインメモリが 16〜32GB だと、gpt-oss-120b の専門家の重み (約 60GB) を逃がせません。120B 級の MoE を動かすなら 64GB 以上が要ります</li>
+</ul>
+</section>
+
+<section class="ch05" id="ch05">
+<h1>公開実測値と Strata</h1>
+<h2>Strix Halo 128GB (Ryzen AI Max+ 395)</h2>
+<div class="tablewrap">
+<table>
+<tr><th>モデル</th><th>量子化</th><th>生成 tok/s</th><th>補足</th></tr>
+<tr><td>gpt-oss-120b</td><td class="nowrap">MXFP4</td><td class="num">46〜53</td><td>pp は約 680〜775 tok/s</td></tr>
+<tr><td>Qwen3-30B-A3B</td><td class="nowrap">Q4</td><td class="num">66〜86</td><td></td></tr>
+<tr><td>70B dense</td><td class="nowrap">Q4_K_M</td><td class="num">4.5〜5.1</td><td>dense は帯域で頭打ちになる</td></tr>
+</table>
+</div>
+
+<h2>MoE をメインメモリに置く (llama.cpp)</h2>
+<p>llama.cpp は <code>--cpu-moe</code>・<code>--n-cpu-moe</code>・<code>-ot</code> で、MoE の専門家の重みをメインメモリに置き、注意層などだけを GPU で動かせます。VRAM が小さくても 120B 級の MoE が動きます。</p>
+<div class="tablewrap">
+<table>
+<tr><th>構成</th><th>モデル</th><th>生成 tok/s</th></tr>
+<tr><td>RTX 4070 12GB + DDR5-6000 64GB (<code>--n-cpu-moe 31</code>)</td><td>gpt-oss-120b MXFP4</td><td class="num">約 24〜28</td></tr>
+<tr><td>RTX 5090 + DDR5-6000</td><td>gpt-oss-120b MXFP4</td><td class="num">約 30〜31</td></tr>
+</table>
+</div>
+<p>デスクトップの値です。ノートでは GPU とメモリの電力が低く、これより遅くなる見込みです (ノートの実測は見つけていません)。</p>
+
+<h2>VRAM に全部載せる (gpt-oss-20b・tg128)</h2>
+<div class="tablewrap">
+<table>
+<tr><th>GPU (デスクトップ向け)</th><th>生成 tok/s</th></tr>
+<tr><td>RTX 5080 16GB</td><td class="num">204.85</td></tr>
+<tr><td>RTX 5070 Ti 16GB</td><td class="num">189.45</td></tr>
+<tr><td>RTX 5060 Ti 16GB</td><td class="num">111.51</td></tr>
+<tr><td>RTX 3060 12GB</td><td class="num">約 31</td></tr>
+</table>
+</div>
+
+<h2>Strata</h2>
+<p>Strata (Niko1221/Strata・MIT) は、MoE の専門家の重みをメインメモリや SSD に置き、使う分だけ GPU へ運ぶ推論エンジンです。</p>
+<ul>
+	<li>動くモデルは Qwen の MoE と DeepSeek に限られます。gpt-oss は対象外です</li>
+	<li>バックエンドは CUDA・HIP・SYCL (Linux の Intel Arc だけ)・Metal です</li>
+	<li>0.2.x で作りが大きく動いており、版ごとに使い方が変わります</li>
+	<li>Q4 以上でほかの人が測った値は、Strix Halo のノートで Qwen3.8-Flash-Next UD-IQ4_XS が 42〜59 tok/s、V100 で約 28〜33 tok/s です</li>
+</ul>
+<div class="callout callout-important">
+<strong>Strata の公表値の多くは Q2・Q3 で測ったものです。</strong>たとえば RTX 5070 で 94 tok/s という値は Q2 なので、この資料の比較から外しています。同じ条件の llama.cpp の値と並べて比べてください。
+</div>
+</section>
+
+<section class="ch06" id="ch06">
+<h1>組み合わせの案と出典</h1>
+<h2>組み合わせの案</h2>
+<div class="tablewrap">
+<table>
+<tr><th>案</th><th>普段使い</th><th>LLM 側</th><th>合計 (公開価格)</th><th>動く大きさ</th></tr>
+<tr><td class="nowrap">1. 分ける・120B 級</td><td>手持ちのノート PC</td><td>GEEKOM A9 MEGA 128GB</td><td class="num">599,900 円〜</td><td>gpt-oss-120b を約 50 tok/s</td></tr>
+<tr><td class="nowrap">2. 分ける・ゲームも</td><td>RTX 5070 ノート (266,143 円)</td><td>GEEKOM A9 MEGA 128GB (599,900 円)</td><td class="num">866,043 円</td><td>120B 級はサーバ。手元は VRAM 8GB で、20B 級は一部をメモリに逃がす</td></tr>
+<tr><td class="nowrap">3. 分ける・安く</td><td>手持ちのノート PC</td><td>GMKtec EVO-X2 64GB</td><td class="num">351,999 円〜</td><td>30B 級 MoE まで。120B 級は載らない</td></tr>
+<tr><td class="nowrap">4. 1 台・ゲーム用ノート</td><td colspan="2">RTX 5080 ノート・メインメモリ 64GB (ROG Strix SCAR 18)</td><td class="num">669,801 円</td><td>120B 級を専門家の重みをメモリに置いて動かす (速度は未確認)</td></tr>
+</table>
+</div>
+<p>勧めるのは案 1 (手持ちの PC があるなら) と案 2 です。120B 級の MoE を 1 台で約 50 tok/s で動かせる最も安い道が、128GB の Strix Halo ミニ PC でした。案 4 は 1 台で済みますが、64GB の構成が在庫なしで、ノートで専門家の重みをメモリに置いたときの実測がありません。</p>
+
+<h2>出典</h2>
+<ul>
+	<li>価格.com の検索結果 (ゲーム用ノート・Ryzen AI Max+ 395 搭載機): <a href="https://search.kakaku.com/">https://search.kakaku.com/</a></li>
+	<li>HP Z2 Mini G1a 直販: <a href="https://jp.ext.hp.com/workstations/z2_mini_g1a/">https://jp.ext.hp.com/workstations/z2_mini_g1a/</a></li>
+	<li>ドスパラ GALLERIA NMC9L-R58-H6: <a href="https://www.dospara.co.jp/">https://www.dospara.co.jp/</a></li>
+	<li>PC Watch の記事: <a href="https://pc.watch.impress.co.jp/docs/news/2125186.html">2125186</a>・<a href="https://pc.watch.impress.co.jp/docs/news/2138523.html">2138523</a></li>
+	<li>Strix Halo の実測: <a href="https://community.frame.work/t/72521">Framework Community 72521</a>・<a href="https://community.frame.work/t/77999">77999</a>・<a href="https://github.com/visorcraft/strix-halo-llm-perf">visorcraft/strix-halo-llm-perf</a></li>
+	<li>MoE をメインメモリに置いた実測: <a href="https://carteakey.dev/">carteakey.dev</a>・<a href="https://github.com/ggml-org/llama.cpp/discussions/15396">llama.cpp discussion #15396</a></li>
+	<li>GPU ごとの gpt-oss-20b の値: <a href="https://www.hardware-corner.net/">hardware-corner</a></li>
+	<li>Strata: <a href="https://github.com/Niko1221/Strata">Niko1221/Strata</a> と、note.com の検証記事</li>
+</ul>
+</section>
+
+<footer>
+<a class="homelink" href="../../README.html" aria-label="戻る"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.4 0.8 7.3v0.9h2.1V14h4.0v-3.9h2.2V14h4.0V8.2h2.1V7.3z"/></svg></a>
+</footer>
+
+</div>
+</body>
+</html>
